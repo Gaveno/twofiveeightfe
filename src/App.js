@@ -26,16 +26,16 @@ class App extends Component {
         return (
             <div className="App">
                 <Provider store={store}>
-                <HashRouter>
-                    <div>
-                        <Header />
-                        <Route exact path="/" render={()=><Authentication />}/>
-                        <Route path='/userfeed' render={()=><UserFeed />}/>
-                        <Route path='/globalfeed' render={()=><GlobalFeed />}/>
-                        <Route path='/createpost' render={()=><CreatePost />}/>
-                        <Route path='/homefeed' render={()=><HomeFeed />}/>
-                    </div>
-                </HashRouter>
+                    <HashRouter>
+                        <div>
+                            <Header />
+                            <Route exact path="/" render={()=><Authentication />}/>
+                            <Route path='/userfeed' render={()=><UserFeed />}/>
+                            <Route path='/globalfeed' render={()=><GlobalFeed />}/>
+                            <Route path='/createpost' render={()=><CreatePost />}/>
+                            <Route path='/homefeed' render={()=><HomeFeed />}/>
+                        </div>
+                    </HashRouter>
                 </Provider>
             </div>
         );

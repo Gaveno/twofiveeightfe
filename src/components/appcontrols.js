@@ -12,30 +12,28 @@ class AppControls extends Component {
 
     render() {
         return (
-            <Navbar>
-                <Nav bsStyle="tabs" className="App-footer">
-                    <LinkContainer to="/userfeed">
-                        <NavItem eventKey={1}>
-                            <img className="App-footer-image" src={btnUserFeed} alt="User Feed" />
-                        </NavItem>
-                    </LinkContainer>
-                    <LinkContainer to="/globalfeed">
-                        <NavItem eventKey={1}>
-                            <img className="App-footer-image" src={btnGlobalFeed} alt="Global Feed" />
-                        </NavItem>
-                    </LinkContainer>
-                    <LinkContainer to="/createpost">
-                        <NavItem eventKey={1}>
-                            <img className="App-footer-image" src={btnCreatePost} alt="Create a post" />
-                        </NavItem>
-                    </LinkContainer>
-                    <LinkContainer to="/homefeed">
-                        <NavItem eventKey={1}>
-                            <img className="App-footer-image" src={btnHomeFeed} alt="Home feed" />
-                        </NavItem>
-                    </LinkContainer>
-                </Nav>
-            </Navbar>
+            <Nav bsStyle="tabs" className="App-footer">
+                <LinkContainer to="/userfeed">
+                    <NavItem eventKey={1} className="App-footer-navitem">
+                        <img className="App-footer-image" src={btnUserFeed} alt="User Feed" />
+                    </NavItem>
+                </LinkContainer>
+                <LinkContainer to="/globalfeed">
+                    <NavItem eventKey={1} className="App-footer-navitem">
+                        <img className="App-footer-image" src={btnGlobalFeed} alt="Global Feed" />
+                    </NavItem>
+                </LinkContainer>
+                <LinkContainer to="/createpost">
+                    <NavItem eventKey={1} className="App-footer-navitem">
+                        <img className="App-footer-image" src={btnCreatePost} alt="Create a post" />
+                    </NavItem>
+                </LinkContainer>
+                <LinkContainer to="/homefeed">
+                    <NavItem eventKey={1} className="App-footer-navitem">
+                        <img className="App-footer-image" src={btnHomeFeed} alt="Home feed" />
+                    </NavItem>
+                </LinkContainer>
+            </Nav>
         )
     }
 }
