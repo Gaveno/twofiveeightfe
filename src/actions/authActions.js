@@ -36,6 +36,7 @@ export function submitLogin(data){
                 localStorage.setItem('token', res.token);
 
                 dispatch(userLoggedIn(data.username));
+                window.location.replace("http://2fiveeight.com/#/homefeed");
             })
             .catch( (e) => console.log(e) );
     }

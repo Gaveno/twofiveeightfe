@@ -8,11 +8,15 @@
 }
 
 .App-header {
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  top: 0;
   background-color: #FFF;
   height: 60px;
   padding: 10px;
   color: black;
   border-bottom: 1px solid #ddd;
+  z-index: 2;
 }
 
 .App-title-image {
@@ -24,6 +28,19 @@
   font-size: large;
 }
 
+.App-footer {
+  position: fixed;
+  bottom: -8px;
+  border-top: 1px solid #ddd;
+  z-index: 2;
+  height: 80px;
+  width: 100%;
+}
+
+.App-footer-image {
+  width: 60px;
+  margin-top: -7px;
+}
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

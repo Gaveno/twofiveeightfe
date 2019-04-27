@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import AppControls from "./appcontrols";
 
 class CreatePost extends Component {
 
@@ -13,6 +14,7 @@ class CreatePost extends Component {
         return (
             <div>
                 placeholder - CreatePost
+                <AppControls />
             </div>
         )
     }

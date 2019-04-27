@@ -4,6 +4,7 @@
 
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import AppControls from './appcontrols';
 
 class HomeFeed extends Component {
 
@@ -11,6 +12,7 @@ class HomeFeed extends Component {
         return (
             <div>
                 placeholder - HomeFeed
+                <AppControls />
             </div>
         )
     }
