@@ -20,7 +20,7 @@ class HomeFeed extends Component {
 
 const mapStateToProps = (state) => {
     return {
-
+        homeFeed: state.feed.homeFeed
     }
 };
 

@@ -30,12 +30,13 @@
 
 .App-footer {
   position: fixed;
-  bottom: -1px;
+  bottom: -8px;
   border-top: 1px solid #ddd;
   z-index: 2;
   height: 70px;
   width: 100%;
   display: table;
+  background-color: #fff;
 }
 
 .App-footer-image {
@@ -48,6 +49,21 @@
   width: 70px;
   height: 80px;
   margin-left: 5%;
+}
+
+.search-bar {
+  width: 75%;
+  margin: 3px;
+}
+
+.search-type {
+  width: 60px;
+  margin-top: 3px;
+  margin-left: 20px;
+}
+
+.underline {
+  border-bottom: 1px solid #ddd;
 }
 
 @keyframes App-logo-spin {

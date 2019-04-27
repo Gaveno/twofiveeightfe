@@ -22,7 +22,6 @@ class CreatePost extends Component {
 
 const mapStateToProps = (state) => {
     return {
-
     }
 };
 

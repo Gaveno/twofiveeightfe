@@ -20,7 +20,7 @@ class UserFeed extends Component {
 
 const mapStateToProps = (state) => {
     return {
-
+        userFeed: state.feed.userFeed
     }
 };
 
