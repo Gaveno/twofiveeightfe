@@ -1,7 +1,7 @@
 // Footer for the app with navigation controls
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {Navbar, NavItem, Nav} from 'react-bootstrap';
+import {NavItem, Nav} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 import btnUserFeed from '../images/btnUserFeed.png';
 import btnGlobalFeed from '../images/btnGlobalFeed.png';

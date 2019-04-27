@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { submitLogin } from '../../actions/authActions';
 import { connect } from 'react-redux';
+import {LinkContainer} from 'react-router-bootstrap';
 import { Col, Form, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 
 class Login extends Component {
@@ -66,7 +67,9 @@ class Login extends Component {
 
                 <FormGroup>
                     <Col xs={9}>
-                        <Button onClick={this.login} block>Sign in</Button>
+                        <LinkContainer to="/homefeed">
+                            <Button onClick={this.login} block>Sign in</Button>
+                        </LinkContainer>
                     </Col>
                 </FormGroup>
             </Form>
