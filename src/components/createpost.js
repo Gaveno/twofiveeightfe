@@ -7,13 +7,27 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
+import Camera from 'react-html5-camera-photo';
+import 'react-html5-camera-photo/build/css/index.css';
+
+const cameraResolution = {
+    width: 258,
+    height: 258,
+};
 
 class CreatePost extends Component {
-
+    onTakePhoto(dataUri) {
+        // TO-DO: do stuff with the image
+        console.log('takePhoto');
+    }
     render() {
         return (
             <div>
-                placeholder - CreatePost
+                <div className="App">
+                    <Camera onTakePhoto={(dataUri) => {this.onTakePhoto(dataUri);}}
+                            idealResolution={cameraResolution}
+                    />
+                </div>
                 <AppControls />
             </div>
         )
