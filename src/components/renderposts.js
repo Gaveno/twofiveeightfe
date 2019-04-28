@@ -7,12 +7,19 @@ import profilePhotoCrop from "../images/profilePhotoCrop.png";
 import React from 'react';
 import {Divider} from './divider';
 
+function arrayBufferToBase64(buffer) {
+    let binary = '';
+    let bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => binary += String.fromCharCode(b));
+    return window.btoa(binary);
+}
+
 export const RenderPosts = ({posts}) => {
     return posts.map((post, i) =>
         <Grid key={i} className="post">
             <Col xs={13} sm={8} md={5} className="post-col">
             <Row>
-                <img className="post-image" src={post.image ? post.image : dummyimage} alt="A post" />
+                <img className="post-image" src={post.img ? `data:image/jpeg;base64,${arrayBufferToBase64(post.img.data.data)}` : dummyimage} alt="A post" />
             </Row>
             <Row className="divider2" />
             <Row>

@@ -24,7 +24,7 @@ function homeFeedFetched(feed) {
 
 export function fetchGlobalFeed() {
     const env = runtimeEnv();
-    return dispatch => {
+    /*return dispatch => {
         let feed = [];
         for (let i = 0; i < 20; i++) {
             let post = {
@@ -36,9 +36,9 @@ export function fetchGlobalFeed() {
             feed.push(post);
         }
         dispatch(globalFeedFetched(feed));
-    }
-    /*return dispatch => {
-        return fetch(`${env.REACT_APP_API_URL}/globalfeed`, {
+    }*/
+    return dispatch => {
+        return fetch(`${env.REACT_APP_API_URL}/posts`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -53,10 +53,13 @@ export function fetchGlobalFeed() {
                 return response.json();
             })
             .then((res) => {
-                dispatch(globalFeedFetched(res.feed));
+                //console.log(JSON.stringify(res));
+                let feed = [];
+                feed.push(res.Post);
+                dispatch(globalFeedFetched(feed));
             })
             .catch((e) => console.log(e));
-    }*/
+    }
 }
 
 
