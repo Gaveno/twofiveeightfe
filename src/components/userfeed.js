@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
 import {RenderPosts} from "./renderposts";
 import {fetchUserFeed} from "../actions/feedActions";
+import {Divider} from "./divider";
 
 class UserFeed extends Component {
     constructor(props) {
@@ -23,6 +24,9 @@ class UserFeed extends Component {
 
             <div className="feed-container">
                 <RenderPosts posts={this.props.userFeed} />
+                <Divider />
+                <Divider />
+                <Divider />
                 <AppControls />
             </div>
         )

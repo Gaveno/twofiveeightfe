@@ -25,7 +25,7 @@ export const RenderPosts = ({posts}) => {
                     <b className="post-footer-username">@{post.username ? post.username : "username"}</b>
                 </Col>
                     <Col xs={3} className="post-footer-rightalign">
-                    <b className="post-footer-commentcount">{post.commentCount ? post.commentCount : "---"}</b>
+                    <b className="post-footer-commentcount">{post.commentCount ? post.commentCount : "----"}</b>
                     <img className="repost-button"
                          src={btnComment}
                          alt="comment button" />

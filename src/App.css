@@ -99,7 +99,7 @@
 .post-footer-commentcount {
   position: absolute;
   margin-top: 10px;
-  left: 25%;
+  left: 15%;
 }
 
 .post-footer-rightalign {
@@ -125,6 +125,28 @@
 
 .divider2 {
   height: 15px;
+}
+
+.popup-box {
+  position: fixed;
+  left: 10%;
+  top: 50%;
+  width: 80%;
+  height: 160px;
+  background-color: #fff;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+}
+
+.popup-text {
+  position: relative;
+  top: 25%;
+  text-align: center;
+}
+
+.popup-button {
+  position: relative;
+  top: 35%;
 }
 
 @keyframes App-logo-spin {

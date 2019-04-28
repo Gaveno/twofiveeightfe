@@ -8,20 +8,22 @@ import AppControls from "./appcontrols";
 import {FormControl, FormGroup, Col, Row, Grid} from 'react-bootstrap';
 import {fetchGlobalFeed} from '../actions/feedActions';
 import {RenderPosts} from './renderposts';
+import {Divider} from './divider';
+import {MessagePopUp} from "./popups";
 
 
 class GlobalFeed extends Component {
 
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this);
         this.updateDetails = this.updateDetails.bind(this);
 
         this.state = {
             details: {
                 searchType: 0,
                 searchStr: ""
-            }
+            },
+            popup: false
         }
     }
 
@@ -31,11 +33,6 @@ class GlobalFeed extends Component {
         this.setState({
             details: updateDetails
         });
-    }
-
-    handleChange(e) {
-        let str = e.target.value;
-        // TO-DO: Search
     }
 
     componentDidMount() {
@@ -77,6 +74,9 @@ class GlobalFeed extends Component {
             <div className="feed-container">
                 <SearchBar />
                 <RenderPosts posts={this.props.globalFeed} />
+                <Divider />
+                <Divider />
+                <Divider />
                 <AppControls />
             </div>
         )
