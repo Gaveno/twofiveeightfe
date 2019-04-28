@@ -22,7 +22,7 @@ class UserFeed extends Component {
         return (
 
             <div className="feed-container">
-                    <RenderPosts posts={this.props.userFeed} />
+                <RenderPosts posts={this.props.userFeed} />
                 <AppControls />
             </div>
         )

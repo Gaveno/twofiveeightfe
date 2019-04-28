@@ -46,7 +46,7 @@ class GlobalFeed extends Component {
     render() {
         const SearchBar = () => {
             return (
-                <Grid className="underline">
+                <Grid className="post">
                     <Col xs={3}>
                         <FormGroup controlId="searchType">
                             <FormControl className="search-type"
@@ -75,12 +75,8 @@ class GlobalFeed extends Component {
         return (
 
             <div className="feed-container">
-                <Row>
-                    <SearchBar />
-                </Row>
-                <Row>
-                    <RenderPosts posts={this.props.globalFeed} />
-                </Row>
+                <SearchBar />
+                <RenderPosts posts={this.props.globalFeed} />
                 <AppControls />
             </div>
         )

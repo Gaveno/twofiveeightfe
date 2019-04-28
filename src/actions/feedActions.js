@@ -15,6 +15,13 @@ function userFeedFetched(feed) {
     }
 }
 
+function homeFeedFetched(feed) {
+    return {
+        type: actionTypes.FETCH_HOMEFEED,
+        homeFeed: feed
+    }
+}
+
 export function fetchGlobalFeed() {
     const env = runtimeEnv();
     return dispatch => {
@@ -67,6 +74,43 @@ export function fetchUserFeed() {
             feed.push(post);
         }
         dispatch(userFeedFetched(feed));
+    }
+    /*return dispatch => {
+        return fetch(`${env.REACT_APP_API_URL}/userfeed`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            mode: 'cors'})
+            .then((response) => {
+                if (!response.status) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then((res) => {
+                dispatch(globalFeedFetched(res.feed));
+            })
+            .catch((e) => console.log(e));
+    }*/
+}
+
+export function fetchHomeFeed() {
+    const env = runtimeEnv();
+    return dispatch => {
+        let feed = [];
+        for (let i = 0; i < 10; i++) {
+            let post = {
+                image: "",
+                username: "user"+i,
+                profPhoto: "",
+                commentCount: i,
+            };
+            feed.push(post);
+        }
+        dispatch(homeFeedFetched(feed));
     }
     /*return dispatch => {
         return fetch(`${env.REACT_APP_API_URL}/userfeed`, {

@@ -1,5 +1,5 @@
 import {Col, Grid, Row} from "react-bootstrap";
-import dummyimage from "../images/dummyimage.png";
+import dummyimage from "../images/dummyimage.jpg";
 import btnRepost from "../images/btnRepost.png";
 import btnComment from "../images/btnComment.png";
 import React from 'react';

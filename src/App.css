@@ -69,6 +69,7 @@
 
 .post {
   width: 100%;
+  margin-left: 5%;
 }
 
 .post-image {
@@ -80,8 +81,7 @@
 }
 
 .feed-container {
-  margin-left: 2px;
-  margin-right: 2px;
+  width: 90%;
 }
 
 .repost-button {
