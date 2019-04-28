@@ -72,6 +72,11 @@
   margin-left: 5%;
 }
 
+.post-col {
+  margin-right: -4%;
+  margin-left: -4%;
+}
+
 .post-image {
   width: 110%;
   margin-left: -5%;

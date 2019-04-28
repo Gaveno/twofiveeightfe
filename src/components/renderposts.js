@@ -10,6 +10,7 @@ import {Divider} from './divider';
 export const RenderPosts = ({posts}) => {
     return posts.map((post, i) =>
         <Grid key={i} className="post">
+            <Col xs={13} sm={8} md={5} className="post-col">
             <Row>
                 <img className="post-image" src={post.image ? post.image : dummyimage} alt="A post" />
             </Row>
@@ -36,6 +37,7 @@ export const RenderPosts = ({posts}) => {
                          alt="repost button" />
                     </Col>
             </Row>
+            </Col>
             <Divider />
         </Grid>
     );
