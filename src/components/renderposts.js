@@ -2,6 +2,8 @@ import {Col, Grid, Row} from "react-bootstrap";
 import dummyimage from "../images/dummyimage.jpg";
 import btnRepost from "../images/btnRepost.png";
 import btnComment from "../images/btnComment.png";
+import defaultProfilePhoto from "../images/defaultProfilePhoto.png";
+import profilePhotoCrop from "../images/profilePhotoCrop.png";
 import React from 'react';
 import {Divider} from './divider';
 
@@ -13,22 +15,26 @@ export const RenderPosts = ({posts}) => {
             </Row>
             <Row className="divider2" />
             <Row>
-                <Col xs={5}>
+                <Col xs={6} className="post-footer-rightalign">
                     <img className="post-footer-photo"
-                         src={post.profPhoto ? post.profPhoto : dummyimage}
+                         src={post.profPhoto ? post.profPhoto : defaultProfilePhoto}
                          alt="user profile" />
-                    <b>@{post.username ? post.username : "username"}</b>
+                    <img className="post-footer-crop"
+                         src={profilePhotoCrop}
+                         alt="crop overlay" />
+                    <b className="post-footer-username">@{post.username ? post.username : "username"}</b>
                 </Col>
-                <Col xs={5}>
-                    <b>{post.commentCount ? post.commentCount : "---"}</b>
-                    <img className="repost-button"
-                         src={btnRepost}
-                         alt="repost button" />
+                    <Col xs={3} className="post-footer-rightalign">
+                    <b className="post-footer-commentcount">{post.commentCount ? post.commentCount : "---"}</b>
                     <img className="repost-button"
                          src={btnComment}
                          alt="comment button" />
-
-                </Col>
+                    </Col>
+                    <Col xs={2} className="post-footer-rightalign">
+                    <img className="repost-button"
+                         src={btnRepost}
+                         alt="repost button" />
+                    </Col>
             </Row>
             <Divider />
         </Grid>

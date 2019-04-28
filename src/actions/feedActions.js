@@ -26,10 +26,10 @@ export function fetchGlobalFeed() {
     const env = runtimeEnv();
     return dispatch => {
         let feed = [];
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 20; i++) {
             let post = {
                 image: "",
-                username: "user"+i,
+                username: "globalFeedUser"+i,
                 profPhoto: "",
                 commentCount: i,
             };
@@ -67,7 +67,7 @@ export function fetchUserFeed() {
         for (let i = 0; i < 10; i++) {
             let post = {
                 image: "",
-                username: "user"+i,
+                username: "specificUser",
                 profPhoto: "",
                 commentCount: i,
             };
@@ -101,10 +101,10 @@ export function fetchHomeFeed() {
     const env = runtimeEnv();
     return dispatch => {
         let feed = [];
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 15; i++) {
             let post = {
-                image: "",
-                username: "user"+i,
+                img: "",
+                username: "homeUser"+i,
                 profPhoto: "",
                 commentCount: i,
             };

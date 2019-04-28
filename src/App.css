@@ -73,11 +73,39 @@
 }
 
 .post-image {
-  width: 100%;
+  width: 110%;
+  margin-left: -5%;
+  border: 2px #ddd solid;
 }
 
 .post-footer-photo {
+  position: absolute;
   height: 32px;
+  left: 0;
+}
+
+.post-footer-crop {
+  position: absolute;
+  height: 32px;
+  left: 0;
+}
+
+.post-footer-username {
+  position: absolute;
+  left: 20%;
+  margin-top: 10px;
+}
+
+.post-footer-commentcount {
+  position: absolute;
+  margin-top: 10px;
+  left: 25%;
+}
+
+.post-footer-rightalign {
+  position: relative;
+  text-align: right;
+  margin-right: 9px;
 }
 
 .feed-container {
@@ -85,7 +113,8 @@
 }
 
 .repost-button {
-  float: right;
+  position: relative;
+  right: 0;
   height: 32px;
 }
 
