@@ -5,13 +5,24 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
+import {RenderPosts} from "./renderposts";
+import {fetchUserFeed} from "../actions/feedActions";
 
 class UserFeed extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        const {dispatch} = this.props;
+        dispatch(fetchUserFeed());
+    }
 
     render() {
         return (
-            <div>
-                placeholder - UserFeed
+
+            <div className="feed-container">
+                    <RenderPosts posts={this.props.userFeed} />
                 <AppControls />
             </div>
         )

@@ -37,6 +37,7 @@
   width: 100%;
   display: table;
   background-color: #fff;
+  margin-left: -2px;
 }
 
 .App-footer-image {
@@ -64,6 +65,37 @@
 
 .underline {
   border-bottom: 1px solid #ddd;
+}
+
+.post {
+  width: 100%;
+}
+
+.post-image {
+  width: 100%;
+}
+
+.post-footer-photo {
+  height: 32px;
+}
+
+.feed-container {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.repost-button {
+  float: right;
+  height: 32px;
+}
+
+.divider {
+  height: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.divider2 {
+  height: 15px;
 }
 
 @keyframes App-logo-spin {

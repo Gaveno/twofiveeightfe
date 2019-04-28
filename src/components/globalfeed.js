@@ -7,6 +7,8 @@ import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
 import {FormControl, FormGroup, Col, Row, Grid} from 'react-bootstrap';
 import {fetchGlobalFeed} from '../actions/feedActions';
+import {RenderPosts} from './renderposts';
+
 
 class GlobalFeed extends Component {
 
@@ -33,6 +35,7 @@ class GlobalFeed extends Component {
 
     handleChange(e) {
         let str = e.target.value;
+        // TO-DO: Search
     }
 
     componentDidMount() {
@@ -71,12 +74,12 @@ class GlobalFeed extends Component {
         };
         return (
 
-            <div>
+            <div className="feed-container">
                 <Row>
                     <SearchBar />
                 </Row>
                 <Row>
-
+                    <RenderPosts posts={this.props.globalFeed} />
                 </Row>
                 <AppControls />
             </div>
