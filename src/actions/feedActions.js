@@ -22,6 +22,13 @@ function homeFeedFetched(feed) {
     }
 }
 
+function uploadFile(file) {
+    return {
+        type: actionTypes.UPLOAD_FILE,
+        fileUpload: file
+    }
+}
+
 export function fetchGlobalFeed() {
     const env = runtimeEnv();
     /*return dispatch => {
@@ -136,4 +143,10 @@ export function fetchHomeFeed() {
             })
             .catch((e) => console.log(e));
     }*/
+}
+
+export function setFileUpload(file) {
+    return dispatch => {
+        dispatch(uploadFile(file));
+    }
 }

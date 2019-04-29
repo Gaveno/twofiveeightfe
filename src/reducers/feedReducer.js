@@ -6,12 +6,13 @@ const initialState = {
     searchFeed: [],
     userFeed: [],
     users: [],
-    selectedUser: ''
+    selectedUser: '',
+    fileUpload: ''
 };
 
 export default (state = initialState, action) => {
 
-    var updated = Object.assign({}, state);
+    let updated = Object.assign({}, state);
 
     switch(action.type) {
         case constants.FETCH_HOMEFEED:
@@ -33,6 +34,9 @@ export default (state = initialState, action) => {
         case constants.SEARCH_USERS:
             updated['users'] = action.users;
             return updated;
+
+        case constants.UPLOAD_FILE:
+            updated['fileUpload'] = action.fileUpload;
 
         default:
             return state;
