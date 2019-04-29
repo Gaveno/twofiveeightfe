@@ -54,8 +54,9 @@ export function fetchGlobalFeed() {
             })
             .then((res) => {
                 //console.log(JSON.stringify(res));
+                if (!res.post) throw (JSON.stringify(res));
                 let feed = [];
-                feed.push(res.Post);
+                feed.push(res.post);
                 dispatch(globalFeedFetched(feed));
             })
             .catch((e) => console.log(e));
