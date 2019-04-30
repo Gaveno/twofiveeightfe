@@ -8,10 +8,11 @@ function globalFeedFetched(feed) {
     }
 }
 
-function userFeedFetched(feed) {
+function userFeedFetched(user, feed) {
     return {
         type: actionTypes.FETCH_USERFEED,
-        userFeed: feed
+        userFeed: feed,
+        selectedUser: user
     }
 }
 
@@ -74,6 +75,12 @@ export function fetchGlobalFeed() {
 export function fetchUserFeed() {
     const env = runtimeEnv();
     return dispatch => {
+        let user = {
+            username: "testUser",
+            imgProfile: "",
+            //adjust the followerCount later
+            followerCount: "",
+        };
         let feed = [];
         for (let i = 0; i < 10; i++) {
             let post = {
@@ -84,7 +91,7 @@ export function fetchUserFeed() {
             };
             feed.push(post);
         }
-        dispatch(userFeedFetched(feed));
+        dispatch(userFeedFetched(user, feed));
     }
     /*return dispatch => {
         return fetch(`${env.REACT_APP_API_URL}/userfeed`, {

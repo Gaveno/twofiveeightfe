@@ -154,8 +154,36 @@
   top: 35%;
 }
 
-.hidden {
-  display: none;
+.user-feed {
+  height: 200px;
+  position: relative;
+}
+.user-feed-profile-image {
+  height: 95%;
+  position: absolute;
+  left: 0;
+  padding-top: 20px;
+  padding-left: 20px;
+}
+
+.user-feed-profile-crop {
+  position: absolute;
+  height: 95%;
+  left: 0;
+  padding-top: 20px;
+  padding-left: 20px;
+}
+
+.user-feed-username {
+  text-align: center;
+}
+
+.user-feed-follow-button {
+  width: 100px;
+}
+
+.user-feed-follower-count {
+
 }
 
 @keyframes App-logo-spin {
