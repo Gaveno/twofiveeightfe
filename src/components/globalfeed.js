@@ -41,38 +41,37 @@ class GlobalFeed extends Component {
     }
 
     render() {
-        const SearchBar = () => {
+        /*const SearchBar = () => {
             return (
-                <Grid className="post">
-                    <Col xs={3}>
-                        <FormGroup controlId="searchType">
-                            <FormControl className="search-type"
-                                         onChange={this.updateDetails}
-                                         componentClass="select"
-                                         placeholder="#"
-                                         value={this.state.details.searchType}>
-                                <option value={0}>#</option>
-                                <option value={1}>@</option>
-                            </FormControl>
-                        </FormGroup>
-                    </Col>
-                    <Col xs={8}>
-                        <FormGroup controlId="searchStr">
-                            <FormControl className="search-bar"
-                                         componentClass="input"
-                                         type="text"
-                                         onChange={this.updateDetails}
-                                         placeholder="Search..."
-                                         value={this.state.details.searchStr} />
-                        </FormGroup>
-                    </Col>
-                </Grid>
-            );
-        };
-        return (
 
+            );
+        };*/
+        return (
             <div className="feed-container">
-                <SearchBar />
+                <Grid className="post">
+                <Col xs={3}>
+                    <FormGroup controlId="searchType">
+                        <FormControl className="search-type"
+                                     onChange={this.updateDetails}
+                                     componentClass="select"
+                                     placeholder="#"
+                                     value={this.state.details.searchType}>
+                            <option value={0}>#</option>
+                            <option value={1}>@</option>
+                        </FormControl>
+                    </FormGroup>
+                </Col>
+                <Col xs={8}>
+                    <FormGroup controlId="searchStr">
+                        <FormControl className="search-bar"
+                                     componentClass="input"
+                                     type="text"
+                                     onChange={this.updateDetails}
+                                     placeholder="Search..."
+                                     value={this.state.details.searchStr} />
+                    </FormGroup>
+                </Col>
+            </Grid>
                 <RenderPosts posts={this.props.globalFeed} />
                 <Divider />
                 <Divider />

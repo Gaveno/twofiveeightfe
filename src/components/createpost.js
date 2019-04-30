@@ -24,9 +24,7 @@ class CreatePost extends Component {
         return (
             <div>
                 <div className="App">
-                    <Camera onTakePhoto={(dataUri) => {this.onTakePhoto(dataUri);}}
-                            idealResolution={cameraResolution}
-                    />
+                    Create post placeholder
                 </div>
                 <AppControls />
             </div>
@@ -36,6 +34,7 @@ class CreatePost extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        fileUpload: state.feed.fileUpload,
     }
 };
 
