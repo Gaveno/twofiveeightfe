@@ -163,7 +163,7 @@
   position: absolute;
   left: 0;
   padding-top: 20px;
-  padding-left: 20px;
+  padding-left: 50px;
 }
 
 .user-feed-profile-crop {
@@ -171,21 +171,42 @@
   height: 95%;
   left: 0;
   padding-top: 20px;
-  padding-left: 20px;
+  padding-left: 50px;
 }
 
 .user-feed-username {
-  text-align: center;
+    position: relative;
+    font-size: 30px;
+    @font-face {
+        font-family: "Agency FB Bold", arial;
+    }
 }
 
 .user-feed-follow-button {
-  width: 100px;
+    width: 100px;
 }
 
 .user-feed-follower-count {
-
+    position: relative;
 }
 
+.user-feed-left-column {
+    width: 50%;
+    height: 200px;
+
+}
+.user-feed-right-column {
+    width: 50%;
+    height: 200px;
+    padding-top: 20px;
+}
+.user-feed-row {
+    height: 200px;
+}
+
+.user-feed-row-1 {
+    height: 25%;
+}
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
