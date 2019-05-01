@@ -53,14 +53,16 @@ class CreatePost extends Component {
 
     getValidationState() {
         const length = this.state.details.text.length;
-        if (length > 258) return 'error';
-        if (length > 240) return 'warning';
+        const numHash = this.state.details.text.split("#").length-1;
+        if (length > 258 || numHash > 5) return 'error';
+        if (length > 240 || numHash > 4) return 'warning';
         return 'success';
     }
 
     render() {
         const resized = this.props.imageResized;
         const length = this.state.details.text.length;
+        const numHash = this.state.details.text.split("#").length-1;
         /*console.log("resized: "+resized);
         console.log("img: "+this.props.fileUpload);*/
         /*if (resized) {
@@ -86,7 +88,7 @@ class CreatePost extends Component {
                                      componentClass="textarea"
                                      placeholder="What about it...?"
                         />
-                        <HelpBlock>{length}/258 characters</HelpBlock>
+                        <HelpBlock>{length}/258 characters. {numHash}/5 hashtags.</HelpBlock>
                         <Button>Submit post</Button>
                         <Divider />
                         <Divider />
