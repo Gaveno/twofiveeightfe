@@ -16,6 +16,7 @@ function arrayBufferToBase64(buffer) {
 
 export const RenderUser = ({user}) => {
     return (
+        <div className="user-feed-container">
         <Row>
             <Grid className="user-feed">
                 <Row className="user-feed-row">
@@ -43,5 +44,6 @@ export const RenderUser = ({user}) => {
             </Grid>
             <Divider/>
         </Row>
+    </div>
     )
 };

@@ -202,11 +202,18 @@
 }
 .user-feed-row {
     height: 200px;
+    overflow-x: hidden;
 }
 
 .user-feed-row-1 {
     height: 25%;
+    overflow-x: hidden;
 }
+
+.user-feed-container {
+    width: 90%;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
