@@ -34,7 +34,7 @@ export function submitLogin(data){
             .then( (res) => {
                 localStorage.setItem('username', data.username);
                 localStorage.setItem('token', res.token);
-
+                window.location.href = '/homefeed';
                 dispatch(userLoggedIn(data.username));
             })
             .catch( (e) => console.log(e) );
