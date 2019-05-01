@@ -38,15 +38,17 @@ class AppControls extends Component {
     }
 
     onPhotoCapture(file) {
-        fileToBase64(file).then(
-            data => {
-                if (data) {
-                    // dispatch
-                    const {dispatch} = this.props;
-                    dispatch(setFileUpload(data));
+        if (file && file[0]) {
+            fileToBase64(file).then(
+                data => {
+                    if (data) {
+                        // dispatch
+                        const {dispatch} = this.props;
+                        dispatch(setFileUpload(data));
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 
     render() {

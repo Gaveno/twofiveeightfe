@@ -172,8 +172,13 @@ export function setFileUpload(file) {
 
 export function resizeImage(img) {
     return dispatch => {
-        resizeDataURL(img, 258, 258).then((img) => (
-            dispatch(resizedImage(img))
-        ));
+        if (img) {
+            resizeDataURL(img, 258, 258).then((img) => (
+                dispatch(resizedImage(img))
+            ));
+        }
+        else {
+            dispatch(resizedImage(""));
+        }
     }
 }
