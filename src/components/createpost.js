@@ -7,7 +7,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
-import {FormControl, FormGroup} from "react-bootstrap";
+import {FormControl, FormGroup, Button, ControlLabel, HelpBlock} from "react-bootstrap";
+import {Divider} from './divider';
 import dummyimage from "../images/dummyimage.jpg";
 import {resizeImage} from "../actions/feedActions";
 
@@ -50,29 +51,46 @@ class CreatePost extends Component {
         }
     }
 
+    getValidationState() {
+        const length = this.state.details.text.length;
+        if (length > 258) return 'error';
+        if (length > 240) return 'warning';
+        return 'success';
+    }
+
     render() {
         const resized = this.props.imageResized;
+        const length = this.state.details.text.length;
         /*console.log("resized: "+resized);
         console.log("img: "+this.props.fileUpload);*/
         /*if (resized) {
             console.log("img render after resize: "+this.props.fileUpload);
         }*/
         return (
+
             <div className="feed-container">
                 <div className="post">
-                    <FormGroup controlId="text">
+                    <FormGroup controlId="text"
+                               validationState={this.getValidationState()}
+                    >
                         {resized ?
                             <img className="post-image"
                                  src={`data:image/jpeg;base64,${this.props.fileUpload}`}
                                  alt="new post" />
                                  : <b>loading</b>
                         }
-
-                         <FormControl onChange={this.updateDetails}
-                                      value={this.state.details.text}
-                                      componentClass="textarea"
-                                      placeholder="What about it...?"
-                         />
+                        <Divider />
+                        <ControlLabel>Description</ControlLabel>
+                        <FormControl onChange={this.updateDetails}
+                                     value={this.state.details.text}
+                                     componentClass="textarea"
+                                     placeholder="What about it...?"
+                        />
+                        <HelpBlock>{length}/258 characters</HelpBlock>
+                        <Button>Submit post</Button>
+                        <Divider />
+                        <Divider />
+                        <Divider />
                     </FormGroup>
                 </div>
                 <AppControls />
