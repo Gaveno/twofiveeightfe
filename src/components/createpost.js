@@ -89,7 +89,8 @@ class CreatePost extends Component {
                                      placeholder="What about it...?"
                         />
                         <HelpBlock>{length}/258 characters. {numHash}/5 hashtags.</HelpBlock>
-                        <Button>Submit post</Button>
+                        {(this.getValidationState()==='error' ? <Button disabled>Submit post</Button> :
+                            <Button>Submit post</Button>)}
                         <Divider />
                         <Divider />
                         <Divider />
