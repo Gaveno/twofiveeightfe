@@ -40,10 +40,21 @@ class CreatePost extends Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (!this.props.fileUpload) {
+            window.location.href = "/#/homefeed";
+        }
+        if (!this.props.imageResized) {
+            const {dispatch} = this.props;
+            dispatch(resizeImage(this.props.fileUpload));
+        }
+    }
+
     render() {
         const resized = this.props.imageResized;
         /*console.log("resized: "+resized);
-        if (resized) {
+        console.log("img: "+this.props.fileUpload);*/
+        /*if (resized) {
             console.log("img render after resize: "+this.props.fileUpload);
         }*/
         return (
