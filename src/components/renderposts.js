@@ -19,7 +19,9 @@ export const RenderPosts = ({posts}) => {
         <Grid key={i} className="post">
             <Col xs={13} sm={8} md={5} className="post-col">
             <Row>
-                <img className="post-image" src={post.img ? `data:image/jpeg;base64,${arrayBufferToBase64(post.img.data.data)}` : dummyimage} alt="A post" />
+                <img className="post-image"
+                     src={post.img ? `data:image/jpeg;base64,${arrayBufferToBase64(post.img.data.data)}` : dummyimage}
+                     alt="A post" />
             </Row>
             <Row className="divider2" />
             <Row>

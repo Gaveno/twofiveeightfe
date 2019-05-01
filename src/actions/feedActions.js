@@ -1,5 +1,6 @@
 import actionTypes from '../constants/actionTypes';
 import runtimeEnv from '@mars/heroku-js-runtime-env';
+import {resizeDataURL} from '../actions/helpers';
 
 function globalFeedFetched(feed) {
     return {
@@ -26,7 +27,17 @@ function homeFeedFetched(feed) {
 function uploadFile(file) {
     return {
         type: actionTypes.UPLOAD_FILE,
-        fileUpload: file
+        fileUpload: file,
+        imageResized: false
+    }
+}
+
+function resizedImage(img) {
+    //console.log("img after resize: "+img);
+    return {
+        type: actionTypes.RESIZE_IMAGE,
+        fileUpload: img,
+        imageResized: true
     }
 }
 
@@ -154,6 +165,15 @@ export function fetchHomeFeed() {
 
 export function setFileUpload(file) {
     return dispatch => {
+        window.location.href = "/#/createpost";
         dispatch(uploadFile(file));
+    }
+}
+
+export function resizeImage(img) {
+    return dispatch => {
+        resizeDataURL(img, 258, 258).then((img) => (
+            dispatch(resizedImage(img))
+        ));
     }
 }

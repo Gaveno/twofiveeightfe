@@ -7,7 +7,8 @@ const initialState = {
     userFeed: [],
     users: [],
     selectedUser: '',
-    fileUpload: ''
+    fileUpload: '',
+    imageResized: false
 };
 
 export default (state = initialState, action) => {
@@ -37,6 +38,13 @@ export default (state = initialState, action) => {
 
         case constants.UPLOAD_FILE:
             updated['fileUpload'] = action.fileUpload;
+            updated['imageResized'] = action.imageResized;
+            return updated;
+
+        case constants.RESIZE_IMAGE:
+            updated['fileUpload'] = action.fileUpload;
+            updated['imageResized'] = action.imageResized;
+            return updated;
 
         default:
             return state;

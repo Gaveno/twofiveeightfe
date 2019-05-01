@@ -41,11 +41,6 @@ class GlobalFeed extends Component {
     }
 
     render() {
-        /*const SearchBar = () => {
-            return (
-
-            );
-        };*/
         return (
             <div className="feed-container">
                 <Grid className="post">
