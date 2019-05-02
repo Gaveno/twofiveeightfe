@@ -189,6 +189,7 @@ export function submitPost(img, text) {
     console.log("photo to upload: ", img);
     formData.append('file', img);
     formData.append('text', text);
+    console.log("token: " + localStorage.getItem('token'));
     return fetch(`${env.REACT_APP_API_URL}/posts`, {
         method: 'POST',
         headers: {

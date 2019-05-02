@@ -17,7 +17,7 @@ export function resizeDataURL(data, wantedWidth, wantedHeight){
             canvas.height = wantedHeight;
             // We resize the image with the canvas method drawImage();
             ctx.drawImage(this, 0, 0, wantedWidth, wantedHeight);
-            var dataURI = canvas.toDataURL('image/jpeg', 1.0);
+            var dataURI = canvas.toDataURL('image/jpeg', 0.8);
             // This is the return of the Promise
             resolve(getBase64Encoded(dataURI));
         };
@@ -27,7 +27,7 @@ export function resizeDataURL(data, wantedWidth, wantedHeight){
 }// Use it like : var newDataURI = await resizedataURL('yourDataURIHere', 50, 50);
 
 function getBase64Encoded(dataURI) {
-    console.log("Image before encode: ", dataURI);
+    //console.log("Image before encode: ", dataURI);
     let encoded = dataURI.replace(/^data:(.*;base64,)?/, '');
     if ((encoded.length % 4) > 0) {
         encoded += '='.repeat(4 - (encoded.length % 4));

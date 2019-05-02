@@ -35,7 +35,7 @@ export function submitLogin(data){
                 if (res.success === true) {
                     localStorage.setItem('username', data.username);
                     localStorage.setItem('token', res.token);
-                    window.location.href = '/homefeed';
+                    window.location.href = '/#/homefeed';
                     dispatch(userLoggedIn(data.username));
                 }
             })

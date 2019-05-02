@@ -15,10 +15,6 @@ function fileToBase64(file) {
         const r = new FileReader();
         r.readAsDataURL(file[0]);
         r.onload = () => {
-            /*let encoded = r.result.replace(/^data:(.*;base64,)?/, '');
-            if ((encoded.length % 4) > 0) {
-                encoded += '='.repeat(4 - (encoded.length % 4));
-            }*/
             return res(r.result);
         };
         r.onerror = error => rej(error);
