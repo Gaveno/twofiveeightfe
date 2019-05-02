@@ -43,25 +43,23 @@ function resizedImage(img) {
 
 export function fetchGlobalFeed() {
     const env = runtimeEnv();
-    /*return dispatch => {
-        let feed = [];
-        for (let i = 0; i < 20; i++) {
-            let post = {
-                image: "",
-                username: "globalFeedUser"+i,
-                profPhoto: "",
-                commentCount: i,
-            };
-            feed.push(post);
-        }
-        dispatch(globalFeedFetched(feed));
-    }*/
+    let details = {
+        postTime: Date.now(),
+        resultsNumber: 10,
+    };
+    let formBody = [];
+    for (let property in details) {
+        let encodedKey = encodeURIComponent(property);
+        let encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
     return dispatch => {
-        return fetch(`${env.REACT_APP_API_URL}/posts`, {
+        return fetch(`${env.REACT_APP_API_URL}/posts/global/?numResults=10`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': localStorage.getItem('token')
             },
             mode: 'cors'})
@@ -73,10 +71,8 @@ export function fetchGlobalFeed() {
             })
             .then((res) => {
                 //console.log(JSON.stringify(res));
-                if (!res.post) throw (JSON.stringify(res));
-                let feed = [];
-                feed.push(res.post);
-                dispatch(globalFeedFetched(feed));
+                if (!res.feed) throw (JSON.stringify(res));
+                dispatch(globalFeedFetched(res.feed));
             })
             .catch((e) => console.log(e));
     }
@@ -192,7 +188,8 @@ export function submitPost(img, text) {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
-            'Authorization': localStorage.getItem('token')
+            'Authorization': localStorage.getItem('token'),
+            'Content-Type': "application/x-www-form-urlencoded"
         },
         body: formData,
         mode: 'cors'})
