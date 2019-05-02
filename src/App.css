@@ -126,10 +126,14 @@
 .divider {
   height: 10px;
   border-bottom: 1px solid #ddd;
+  width: 90%;
+  margin-left: 5%;
 }
 
 .divider2 {
   height: 15px;
+  margin-left: 5%;
+  width: 90%;
 }
 
 .popup-box {

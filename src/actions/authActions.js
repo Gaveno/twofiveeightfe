@@ -32,10 +32,12 @@ export function submitLogin(data){
                 return response.json();
             })
             .then( (res) => {
-                localStorage.setItem('username', data.username);
-                localStorage.setItem('token', res.token);
-                window.location.href = '/homefeed';
-                dispatch(userLoggedIn(data.username));
+                if (res.success === true) {
+                    localStorage.setItem('username', data.username);
+                    localStorage.setItem('token', res.token);
+                    window.location.href = '/#/homefeed';
+                    dispatch(userLoggedIn(data.username));
+                }
             })
             .catch( (e) => console.log(e) );
     }

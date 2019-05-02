@@ -1,6 +1,6 @@
 import actionTypes from '../constants/actionTypes';
 import runtimeEnv from '@mars/heroku-js-runtime-env';
-import {resizeDataURL} from '../actions/helpers';
+import {appendFeed, insertFeed, resizeDataURL} from '../actions/helpers';
 
 function globalFeedFetched(feed) {
     return {
@@ -41,43 +41,17 @@ function resizedImage(img) {
     }
 }
 
-function fetchedFollowers(users) {
-    return {
-        type: actionTypes.FETCH_FOLLOWERS,
-        followList: users,
-        displayType: 1
-    }
-}
-
-function fetchedFollowing(users) {
-    return {
-        type: actionTypes.FETCH_FOLLOWING,
-        followList: users,
-        displayType: 2
-    }
-}
-
-export function fetchGlobalFeed() {
+export function fetchGlobalFeed(skip, prevFeed) {
+    let s = 0;
+    if (skip) s = skip;
+    localStorage.setItem('lastFetchGlobal', Date.now());
     const env = runtimeEnv();
-    /*return dispatch => {
-        let feed = [];
-        for (let i = 0; i < 20; i++) {
-            let post = {
-                image: "",
-                username: "globalFeedUser"+i,
-                profPhoto: "",
-                commentCount: i,
-            };
-            feed.push(post);
-        }
-        dispatch(globalFeedFetched(feed));
-    }*/
     return dispatch => {
-        return fetch(`${env.REACT_APP_API_URL}/posts`, {
+        return fetch(`${env.REACT_APP_API_URL}/posts/global/?skip=${s}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': localStorage.getItem('token')
             },
             mode: 'cors'})
@@ -89,10 +63,18 @@ export function fetchGlobalFeed() {
             })
             .then((res) => {
                 //console.log(JSON.stringify(res));
-                if (!res.post) throw (JSON.stringify(res));
-                let feed = [];
-                feed.push(res.post);
-                dispatch(globalFeedFetched(feed));
+                if (!res.feed) throw (JSON.stringify(res));
+                console.log("skip: ", s);
+                console.log("Received Feed: ", res.feed);
+                let newFeed = [];
+                if (s === 0 && prevFeed.length != 0) {
+                    newFeed = insertFeed(prevFeed, res.feed);
+                }
+                else {
+                    newFeed = appendFeed(prevFeed, res.feed);
+                }
+                console.log("New Feed: ", newFeed);
+                dispatch(globalFeedFetched(newFeed));
             })
             .catch((e) => console.log(e));
     }
@@ -100,7 +82,7 @@ export function fetchGlobalFeed() {
 
 
 export function fetchUserFeed() {
-    const env = runtimeEnv();
+    localStorage.setItem('lastFetchUser', Date.now());
     return dispatch => {
         let user = {
             username: "testUser",
@@ -143,7 +125,7 @@ export function fetchUserFeed() {
 }
 
 export function fetchHomeFeed() {
-    const env = runtimeEnv();
+    localStorage.setItem('lastFetchHome', Date.now());
     return dispatch => {
         let feed = [];
         for (let i = 0; i < 15; i++) {
@@ -188,38 +170,42 @@ export function setFileUpload(file) {
 
 export function resizeImage(img) {
     return dispatch => {
-        resizeDataURL(img, 258, 258).then((img) => (
-            dispatch(resizedImage(img))
-        ));
+        if (img) {
+            resizeDataURL(img, 258, 258).then((img) => (
+                dispatch(resizedImage(img))
+            ));
+        }
+        else {
+            dispatch(resizedImage(""));
+        }
     }
 }
 
-export function fetchFollowers() {
-    console.log("yay");
-    return dispatch => {
-        let followers = [];
-        for (let i = 0; i < 10; i++) {
-            let follower = {
-                username: "testFollower",
-                imgProfile: ""
-            };
-            followers.push(follower);
-        }
-        dispatch(fetchedFollowers(followers));
-    };
-}
-
-export function fetchFollowing() {
-    console.log("yay2");
-    return dispatch => {
-        let following = [];
-        for (let i = 0; i < 10; i++) {
-            let followee = {
-                username: "testFollowee",
-                imgProfile: ""
-            };
-            following.push(followee);
-        }
-        dispatch(fetchedFollowing(following));
-    };
+export function submitPost(img, text) {
+    const env = runtimeEnv();
+    let formData = new FormData();
+    console.log("photo to upload: ", img);
+    formData.append('file', img);
+    formData.append('text', text);
+    return fetch(`${env.REACT_APP_API_URL}/posts`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        },
+        body: formData,
+        mode: 'cors'})
+        .then((response) => {
+            if (!response.status) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((res) => {
+            //console.log(JSON.stringify(res));
+            console.log(res.message);
+            if (!res.success) throw (JSON.stringify(res));
+            window.location.href = "/#/homefeed";
+        })
+        .catch((e) => console.log(e));
 }

@@ -15,19 +15,20 @@ function arrayBufferToBase64(buffer) {
 }
 
 export const RenderPosts = ({posts}) => {
+    console.log("posts[0]: ", posts[0]);
     return posts.map((post, i) =>
         <Grid key={i} className="post">
             <Col xs={13} sm={8} md={5} className="post-col">
             <Row>
                 <img className="post-image"
-                     src={post.img ? `data:image/jpeg;base64,${arrayBufferToBase64(post.img.data.data)}` : dummyimage}
+                     src={post.img ? `data:image/jpeg;base64,${post.img.data}` : dummyimage}
                      alt="A post" />
             </Row>
             <Row className="divider2" />
             <Row>
                 <Col xs={6} className="post-footer-rightalign">
                     <img className="post-footer-photo"
-                         src={post.profPhoto ? post.profPhoto : defaultProfilePhoto}
+                         src={(post.profPhoto && post.profPhoto.data) ? post.profPhoto : defaultProfilePhoto}
                          alt="user profile" />
                     <img className="post-footer-crop"
                          src={profilePhotoCrop}

@@ -9,16 +9,54 @@ import GlobalFeed from './components/globalfeed';
 import CreatePost from './components/createpost';
 import UserFeed from './components/userfeed';
 import store from './stores/store';
+import {FormGroup} from 'react-bootstrap';
 
 //add routing configuration
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    handleClick() {
+        let relativePath = window.location.href.split("/").pop();
+        switch (relativePath) {
+            case "globalfeed":
+                window.scroll({top: 0, left: 0, behavior: 'smooth'});
+                break;
+
+            case "userfeed":
+                window.scroll({top: 0, left: 0, behavior: 'smooth'});
+                break;
+
+            case "homefeed":
+                window.scroll({top: 0, left: 0, behavior: 'smooth'});
+                break;
+
+            case "createpost":
+                console.log("clicked createpost tite");
+                break;
+
+            default:
+                if (localStorage.getItem("token")) {
+                    window.location.href = "/#/homefeed";
+                }
+        }
+    }
+
     render() {
         const Header = () => {
             return (
                 <header className="App-header">
                     <h1>
-                        <img className="App-title-image" src={titleImage} alt="2FIVEEIGHT" />
+                        <div className="header-click-area">
+                        <img className="App-title-image"
+                             src={titleImage}
+                             alt="2FIVEEIGHT"
+                             onClick={()=>{
+                                 this.handleClick();
+                             }} />
+                        </div>
                     </h1>
                 </header>
             );

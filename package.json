@@ -5,6 +5,7 @@
   "dependencies": {
     "@mars/heroku-js-runtime-env": "^3.0.2",
     "prop-types": "^15.7.2",
+    "q": "latest",
     "react": "^16.8.6",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.8.6",
@@ -15,8 +16,7 @@
     "react-scripts": "2.1.8",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0",
-    "q": "latest"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
