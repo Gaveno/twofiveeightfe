@@ -184,10 +184,10 @@ export function resizeImage(img) {
 export function submitPost(img, text) {
     const env = runtimeEnv();
     let formData = new FormData();
-    console.log("photo to upload: ", img);
+    //console.log("photo to upload: ", img);
     formData.append('file', img);
     formData.append('text', text);
-    console.log("token: " + localStorage.getItem('token'));
+    //console.log("token: " + localStorage.getItem('token'));
     return fetch(`${env.REACT_APP_API_URL}/posts`, {
         method: 'POST',
         headers: {
