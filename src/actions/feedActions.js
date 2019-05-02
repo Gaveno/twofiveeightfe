@@ -41,6 +41,22 @@ function resizedImage(img) {
     }
 }
 
+function fetchedFollowers(users) {
+    return {
+        type: actionTypes.FETCH_FOLLOWERS,
+        followList: users,
+        displayType: 1
+    }
+}
+
+function fetchedFollowing(users) {
+    return {
+        type: actionTypes.FETCH_FOLLOWING,
+        followList: users,
+        displayType: 2
+    }
+}
+
 export function fetchGlobalFeed() {
     const env = runtimeEnv();
     /*return dispatch => {
@@ -176,4 +192,34 @@ export function resizeImage(img) {
             dispatch(resizedImage(img))
         ));
     }
+}
+
+export function fetchFollowers() {
+    console.log("yay");
+    return dispatch => {
+        let followers = [];
+        for (let i = 0; i < 10; i++) {
+            let follower = {
+                username: "testFollower",
+                imgProfile: ""
+            };
+            followers.push(follower);
+        }
+        dispatch(fetchedFollowers(followers));
+    };
+}
+
+export function fetchFollowing() {
+    console.log("yay2");
+    return dispatch => {
+        let following = [];
+        for (let i = 0; i < 10; i++) {
+            let followee = {
+                username: "testFollowee",
+                imgProfile: ""
+            };
+            following.push(followee);
+        }
+        dispatch(fetchedFollowing(following));
+    };
 }

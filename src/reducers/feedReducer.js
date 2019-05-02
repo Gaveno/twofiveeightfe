@@ -8,7 +8,8 @@ const initialState = {
     users: [],
     selectedUser: '',
     fileUpload: '',
-    imageResized: false
+    imageResized: false,
+    followList: []
 };
 
 export default (state = initialState, action) => {
@@ -26,6 +27,7 @@ export default (state = initialState, action) => {
 
         case constants.FETCH_USERFEED:
             updated['userFeed'] = action.userFeed;
+            updated['displayType'] = action.displayType;
             return updated;
 
         case constants.SEARCH_GLOBALFEED:
@@ -44,6 +46,16 @@ export default (state = initialState, action) => {
         case constants.RESIZE_IMAGE:
             updated['fileUpload'] = action.fileUpload;
             updated['imageResized'] = action.imageResized;
+            return updated;
+
+        case constants.FETCH_FOLLOWERS:
+            updated['followList'] = action.followList;
+            updated['displayType'] = action.displayType;
+            return updated;
+
+        case constants.FETCH_FOLLOWING:
+            updated['followList'] = action.followList;
+            updated['displayType'] = action.displayType;
             return updated;
 
         default:
