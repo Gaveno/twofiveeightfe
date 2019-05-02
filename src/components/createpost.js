@@ -9,18 +9,31 @@ import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
 import {FormControl, FormGroup, Button, ControlLabel, HelpBlock} from "react-bootstrap";
 import {Divider} from './divider';
+import {submitPost} from "../actions/feedActions";
 import dummyimage from "../images/dummyimage.jpg";
 import {resizeImage} from "../actions/feedActions";
+import {dataURLtoFile, dataURItoBlob} from "../actions/helpers";
 
 class CreatePost extends Component {
     constructor(props) {
         super(props);
         this.updateDetails = this.updateDetails.bind(this);
+        this.submitPost = this.submitPost.bind(this);
         this.state = {
             details: {
                 text: ""
             }
         }
+    }
+
+    submitPost() {
+        let file = dataURLtoFile('data:image/jpeg;base64,'+this.props.fileUpload, 'img.jpeg');
+        /*let canvas = document.createElement('canvas');
+        let file = new Blob([window.atob(canvas.toDataURL('image/jpeg').split(',')[1])],
+            {type: 'image/jpeg', encoding: 'utf-8'});*/
+        //let file = new Blob(['data:image/jpeg;base64,'+this.props.fileUpload], {type: 'image/jpeg', encoding: 'utf-8'});
+        //let file = dataURItoBlob(this.props.fileUpload);
+        submitPost(file, this.state.details.text);
     }
 
     updateDetails(e) {
@@ -90,7 +103,7 @@ class CreatePost extends Component {
                         />
                         <HelpBlock>{length}/258 characters. {numHash}/5 hashtags.</HelpBlock>
                         {(this.getValidationState()==='error' ? <Button disabled>Submit post</Button> :
-                            <Button>Submit post</Button>)}
+                            <Button onClick={this.submitPost}>Submit post</Button>)}
                         <Divider />
                         <Divider />
                         <Divider />

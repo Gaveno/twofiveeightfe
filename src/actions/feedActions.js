@@ -182,3 +182,32 @@ export function resizeImage(img) {
         }
     }
 }
+
+export function submitPost(img, text) {
+    const env = runtimeEnv();
+    let formData = new FormData();
+    console.log("photo to upload: ", img);
+    formData.append('file', img);
+    formData.append('text', text);
+    return fetch(`${env.REACT_APP_API_URL}/posts`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        },
+        body: formData,
+        mode: 'cors'})
+        .then((response) => {
+            if (!response.status) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((res) => {
+            //console.log(JSON.stringify(res));
+            console.log(res.message);
+            if (!res.success) throw (JSON.stringify(res));
+            window.location.href = "/#/homefeed";
+        })
+        .catch((e) => console.log(e));
+}
