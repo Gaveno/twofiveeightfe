@@ -72,6 +72,15 @@
   margin-left: 5%;
 }
 
+.post-text {
+  background-color: #ddd;
+  margin-top: 4px;
+  text-align: left;
+  padding: 4px;
+  border-radius: 5px;
+  width: 110%;
+}
+
 .post-col {
   margin-right: -4%;
   margin-left: -4%;

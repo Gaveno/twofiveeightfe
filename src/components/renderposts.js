@@ -4,8 +4,10 @@ import btnRepost from "../images/btnRepost.png";
 import btnComment from "../images/btnComment.png";
 import defaultProfilePhoto from "../images/defaultProfilePhoto.png";
 import profilePhotoCrop from "../images/profilePhotoCrop.png";
-import React from 'react';
+import React, {Component} from 'react';
 import {Divider} from './divider';
+import {connect} from "react-redux";
+import {getPostComments} from "../actions/feedActions";
 
 function arrayBufferToBase64(buffer) {
     let binary = '';
@@ -14,41 +16,64 @@ function arrayBufferToBase64(buffer) {
     return window.btoa(binary);
 }
 
-export const RenderPosts = ({posts}) => {
-    console.log("posts[0]: ", posts[0]);
-    return posts.map((post, i) =>
-        <Grid key={i} className="post">
-            <Col xs={13} sm={8} md={5} className="post-col">
-            <Row>
-                <img className="post-image"
-                     src={post.img ? `data:image/jpeg;base64,${post.img.data}` : dummyimage}
-                     alt="A post" />
-            </Row>
-            <Row className="divider2" />
-            <Row>
-                <Col xs={6} className="post-footer-rightalign">
-                    <img className="post-footer-photo"
-                         src={(post.profPhoto && post.profPhoto.data) ? post.profPhoto : defaultProfilePhoto}
-                         alt="user profile" />
-                    <img className="post-footer-crop"
-                         src={profilePhotoCrop}
-                         alt="crop overlay" />
-                    <b className="post-footer-username">@{post.username ? post.username : "username"}</b>
+//export const RenderPosts = ({posts}) => {
+class RenderPosts extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    getComments(feed, post) {
+        const {dispatch} = this.props;
+        dispatch(getPostComments(feed, post));
+    }
+
+    render() {
+        console.log("posts[0]: ", this.props.posts[0]);
+        return this.props.posts.map((post, i) =>
+            <Grid key={i} className="post">
+                <Col xs={13} sm={8} md={5} className="post-col">
+                    <Row>
+                        <img className="post-image"
+                             src={post.img ? `data:image/jpeg;base64,${post.img.data}` : dummyimage}
+                             alt="A post"/>
+                    </Row>
+                    <Row className="divider2"/>
+                    <Row>
+                        <Col xs={6} className="post-footer-rightalign">
+                            <img className="post-footer-photo"
+                                 src={(post.profPhoto && post.profPhoto.data) ? post.profPhoto : defaultProfilePhoto}
+                                 alt="user profile"/>
+                            <img className="post-footer-crop"
+                                 src={profilePhotoCrop}
+                                 alt="crop overlay"/>
+                            <b className="post-footer-username">@{post.username ? post.username : "username"}</b>
+                        </Col>
+                        <Col xs={3} className="post-footer-rightalign">
+                            <b className="post-footer-commentcount">{post.commentCount ? post.commentCount : "0"}</b>
+                            <img className="repost-button"
+                                 src={btnComment}
+                                 alt="comment button"/>
+                        </Col>
+                        <Col xs={2} className="post-footer-rightalign">
+                            <img className="repost-button"
+                                 src={btnRepost}
+                                 alt="repost button"/>
+                        </Col>
+                    </Row>
+                    <Row className="post-text">
+                        {post.text}
+                    </Row>
                 </Col>
-                    <Col xs={3} className="post-footer-rightalign">
-                    <b className="post-footer-commentcount">{post.commentCount ? post.commentCount : "----"}</b>
-                    <img className="repost-button"
-                         src={btnComment}
-                         alt="comment button" />
-                    </Col>
-                    <Col xs={2} className="post-footer-rightalign">
-                    <img className="repost-button"
-                         src={btnRepost}
-                         alt="repost button" />
-                    </Col>
-            </Row>
-            </Col>
-            <Divider />
-        </Grid>
-    );
+                <Divider/>
+            </Grid>
+        );
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+    }
 };
+
+export default connect(mapStateToProps)(RenderPosts);

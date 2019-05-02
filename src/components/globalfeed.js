@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
 import {FormControl, FormGroup, Col, Grid} from 'react-bootstrap';
 import {fetchGlobalFeed} from '../actions/feedActions';
-import {RenderPosts} from './renderposts';
+import RenderPosts from './renderposts';
 import {Divider} from './divider';
 import {getScrollPercent} from "../actions/helpers";
 

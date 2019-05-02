@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from './appcontrols';
 import {fetchHomeFeed} from "../actions/feedActions";
-import {RenderPosts} from "./renderposts";
+import RenderPosts from "./renderposts";
 import {Divider} from "./divider";
 
 class HomeFeed extends Component {

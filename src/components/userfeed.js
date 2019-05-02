@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
-import {RenderPosts} from "./renderposts";
+import RenderPosts from "./renderposts";
 import {RenderUser} from "./renderuser";
 import {fetchUserFeed} from "../actions/feedActions";
 import {Divider} from "./divider";

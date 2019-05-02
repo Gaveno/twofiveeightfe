@@ -112,10 +112,11 @@ function mergeFeeds(feedTarget, feedSource, type) {
             if (type === 0)
                 newFeed.unshift(feedSource[i]);
             else {
-                console.log("newFeed length: ", newFeed.length);
+                //console.log("newFeed length: ", newFeed.length);
                 newFeed.push(feedSource[i]);
             }
         }
+        newFeed[i] = Object.assign({}, newFeed[i], {expanded: false});
     }
     return newFeed;
 }

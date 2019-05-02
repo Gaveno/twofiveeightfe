@@ -64,8 +64,8 @@ export function fetchGlobalFeed(skip, prevFeed) {
             .then((res) => {
                 //console.log(JSON.stringify(res));
                 if (!res.feed) throw (JSON.stringify(res));
-                console.log("skip: ", s);
-                console.log("Received Feed: ", res.feed);
+                //console.log("skip: ", s);
+                //console.log("Received Feed: ", res.feed);
                 let newFeed = [];
                 if (s === 0 && prevFeed.length != 0) {
                     newFeed = insertFeed(prevFeed, res.feed);
@@ -73,7 +73,7 @@ export function fetchGlobalFeed(skip, prevFeed) {
                 else {
                     newFeed = appendFeed(prevFeed, res.feed);
                 }
-                console.log("New Feed: ", newFeed);
+                //console.log("New Feed: ", newFeed);
                 dispatch(globalFeedFetched(newFeed));
             })
             .catch((e) => console.log(e));
@@ -208,4 +208,10 @@ export function submitPost(img, text) {
             window.location.href = "/#/homefeed";
         })
         .catch((e) => console.log(e));
+}
+
+export function getPostComments(feed, post) {
+    return dispatch => {
+
+    }
 }
