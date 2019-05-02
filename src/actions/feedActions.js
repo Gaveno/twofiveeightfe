@@ -1,6 +1,6 @@
 import actionTypes from '../constants/actionTypes';
 import runtimeEnv from '@mars/heroku-js-runtime-env';
-import {resizeDataURL} from '../actions/helpers';
+import {appendFeed, insertFeed, resizeDataURL} from '../actions/helpers';
 
 function globalFeedFetched(feed) {
     return {
@@ -41,21 +41,13 @@ function resizedImage(img) {
     }
 }
 
-export function fetchGlobalFeed() {
+export function fetchGlobalFeed(skip, prevFeed) {
+    let s = 0;
+    if (skip) s = skip;
+    localStorage.setItem('lastFetchGlobal', Date.now());
     const env = runtimeEnv();
-    let details = {
-        postTime: Date.now(),
-        resultsNumber: 10,
-    };
-    let formBody = [];
-    for (let property in details) {
-        let encodedKey = encodeURIComponent(property);
-        let encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
     return dispatch => {
-        return fetch(`${env.REACT_APP_API_URL}/posts/global/?numResults=10`, {
+        return fetch(`${env.REACT_APP_API_URL}/posts/global/?skip=${s}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -72,7 +64,17 @@ export function fetchGlobalFeed() {
             .then((res) => {
                 //console.log(JSON.stringify(res));
                 if (!res.feed) throw (JSON.stringify(res));
-                dispatch(globalFeedFetched(res.feed));
+                console.log("skip: ", s);
+                console.log("Received Feed: ", res.feed);
+                let newFeed = [];
+                if (s === 0 && prevFeed.length != 0) {
+                    newFeed = insertFeed(prevFeed, res.feed);
+                }
+                else {
+                    newFeed = appendFeed(prevFeed, res.feed);
+                }
+                console.log("New Feed: ", newFeed);
+                dispatch(globalFeedFetched(newFeed));
             })
             .catch((e) => console.log(e));
     }
@@ -80,6 +82,7 @@ export function fetchGlobalFeed() {
 
 
 export function fetchUserFeed() {
+    localStorage.setItem('lastFetchUser', Date.now());
     return dispatch => {
         let user = {
             username: "testUser",
@@ -122,6 +125,7 @@ export function fetchUserFeed() {
 }
 
 export function fetchHomeFeed() {
+    localStorage.setItem('lastFetchHome', Date.now());
     return dispatch => {
         let feed = [];
         for (let i = 0; i < 15; i++) {
@@ -180,16 +184,14 @@ export function resizeImage(img) {
 export function submitPost(img, text) {
     const env = runtimeEnv();
     let formData = new FormData();
-    //console.log("photo to upload: ", img);
+    console.log("photo to upload: ", img);
     formData.append('file', img);
     formData.append('text', text);
-    //console.log("token: " + localStorage.getItem('token'));
     return fetch(`${env.REACT_APP_API_URL}/posts`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
-            'Authorization': localStorage.getItem('token'),
-            'Content-Type': "application/x-www-form-urlencoded"
+            'Authorization': localStorage.getItem('token')
         },
         body: formData,
         mode: 'cors'})

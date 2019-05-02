@@ -9,6 +9,7 @@ import {FormControl, FormGroup, Col, Grid} from 'react-bootstrap';
 import {fetchGlobalFeed} from '../actions/feedActions';
 import {RenderPosts} from './renderposts';
 import {Divider} from './divider';
+import {getScrollPercent} from "../actions/helpers";
 
 
 class GlobalFeed extends Component {
@@ -16,6 +17,7 @@ class GlobalFeed extends Component {
     constructor(props) {
         super(props);
         this.updateDetails = this.updateDetails.bind(this);
+        this.scrolledPage = this.scrolledPage.bind(this);
 
         this.state = {
             details: {
@@ -35,8 +37,30 @@ class GlobalFeed extends Component {
     }
 
     componentDidMount() {
+        window.addEventListener('scroll', this.scrolledPage);
+        const last = localStorage.getItem('lastFetchGlobal');
         const {dispatch} = this.props;
-        dispatch(fetchGlobalFeed());
+        if (this.props.globalFeed.length <= 0 || Date.now() - last > 5000) {
+            dispatch(fetchGlobalFeed(0, this.props.globalFeed));
+        }
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.scrolledPage);
+    }
+
+    scrolledPage() {
+        //console.log("Page scrolled: ", getScrollPercent());
+        const {dispatch} = this.props;
+        const last = localStorage.getItem('lastFetchGlobal');
+        // Make sure last fetch was over 5 seconds ago
+        if (Date.now() - last > 5000) {
+            if (getScrollPercent() <= 0) {
+                dispatch(fetchGlobalFeed(0, this.props.globalFeed));
+            } else if (getScrollPercent() > 80) {
+                dispatch(fetchGlobalFeed(this.props.globalFeed.length, this.props.globalFeed));
+            }
+        }
     }
 
     render() {
@@ -65,7 +89,7 @@ class GlobalFeed extends Component {
                                      value={this.state.details.searchStr} />
                     </FormGroup>
                 </Col>
-            </Grid>
+                </Grid>
                 <RenderPosts posts={this.props.globalFeed} />
                 <Divider />
                 <Divider />

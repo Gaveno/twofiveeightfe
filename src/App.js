@@ -9,16 +9,32 @@ import GlobalFeed from './components/globalfeed';
 import CreatePost from './components/createpost';
 import UserFeed from './components/userfeed';
 import store from './stores/store';
+import {FormGroup} from 'react-bootstrap';
 
 //add routing configuration
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    handleClick() {
+        console.log("Clicked header. Path: "+window.location.href);
+    }
+
     render() {
         const Header = () => {
             return (
                 <header className="App-header">
                     <h1>
-                        <img className="App-title-image" src={titleImage} alt="2FIVEEIGHT" />
+                        <div className="header-click-area">
+                        <img className="App-title-image"
+                             src={titleImage}
+                             alt="2FIVEEIGHT"
+                             onClick={()=>{
+                                 this.handleClick();
+                             }} />
+                        </div>
                     </h1>
                 </header>
             );

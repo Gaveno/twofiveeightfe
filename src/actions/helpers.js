@@ -1,4 +1,3 @@
-
 // Resize data uri from Stack Overflow
 // https://stackoverflow.com/questions/20958078/resize-a-base-64-image-in-javascript-without-using-canvas
 // Takes a data URI and returns the Data URI corresponding to the resized image at the wanted size.
@@ -16,7 +15,16 @@ export function resizeDataURL(data, wantedWidth, wantedHeight){
             canvas.width = wantedWidth;
             canvas.height = wantedHeight;
             // We resize the image with the canvas method drawImage();
-            ctx.drawImage(this, 0, 0, wantedWidth, wantedHeight);
+            if (img.width === img.height) {
+                ctx.drawImage(this, 0, 0, wantedWidth, wantedHeight);
+            }
+            else if (img.width > img.height) {
+                ctx.drawImage(this, (img.width-img.height)/2, 0, img.width-(img.width-img.height), img.height, 0, 0, wantedWidth, wantedHeight);
+            }
+            else {
+                ctx.drawImage(this, 0, (img.height-img.width)/2, img.width, img.height-(img.height-img.width), 0, 0, wantedWidth, wantedHeight);
+            }
+
             var dataURI = canvas.toDataURL('image/jpeg', 1.0);
             // This is the return of the Promise
             resolve(getBase64Encoded(dataURI));
@@ -66,4 +74,56 @@ export function dataURItoBlob(dataURI) {
     }
 
     return new Blob([ia], {type:mimeString});
+}
+
+// Front stack overflow
+// https://stackoverflow.com/questions/2387136/cross-browser-method-to-determine-vertical-scroll-percentage-in-javascript
+export function getScrollPercent() {
+    let h = document.documentElement,
+        b = document.body,
+        st = 'scrollTop',
+        sh = 'scrollHeight';
+    return (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
+}
+
+// Append to a feed ignoring duplicates but overriding non-unique id's
+export function appendFeed(feedTarget, feedSource) {
+    return mergeFeeds(feedTarget, feedSource, 1);
+}
+
+// Insert to a feed ignoring duplicates but overriding non-unique id's
+export function insertFeed(feedTarget, feedSource) {
+    return mergeFeeds(feedTarget, feedSource, 0);
+}
+
+function mergeFeeds(feedTarget, feedSource, type) {
+    let newFeed = feedTarget.slice();
+    for (let i = 0; i < feedSource.length; i++) {
+        let found = false;
+        for (let j = 0; j < newFeed.length; j++) {
+            if (feedSource[i]._id === newFeed[j]._id) {
+                found = true;
+                // Replace with new occurance
+                newFeed[j] = feedSource[i];
+            }
+        }
+        if (!found) {
+            // Didn't exist in target previously so add
+            if (type === 0)
+                newFeed.unshift(feedSource[i]);
+            else {
+                console.log("newFeed length: ", newFeed.length);
+                newFeed.push(feedSource[i]);
+            }
+        }
+    }
+    return newFeed;
+}
+
+export function removeByValue(arr, val) {
+    for (let i = 0; i < arr.length; i++) {
+         if (arr[i] === val)
+             arr.splice(i, 1);
+    }
+    return arr;
 }
