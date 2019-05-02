@@ -5,11 +5,10 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
-import {FormControl, FormGroup, Col, Row, Grid} from 'react-bootstrap';
+import {FormControl, FormGroup, Col, Grid} from 'react-bootstrap';
 import {fetchGlobalFeed} from '../actions/feedActions';
 import {RenderPosts} from './renderposts';
 import {Divider} from './divider';
-import {MessagePopUp} from "./popups";
 
 
 class GlobalFeed extends Component {

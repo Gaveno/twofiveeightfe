@@ -17,7 +17,7 @@ export function resizeDataURL(data, wantedWidth, wantedHeight){
             canvas.height = wantedHeight;
             // We resize the image with the canvas method drawImage();
             ctx.drawImage(this, 0, 0, wantedWidth, wantedHeight);
-            var dataURI = canvas.toDataURL('image/jpeg', 0.8);
+            var dataURI = canvas.toDataURL('image/jpeg', 1.0);
             // This is the return of the Promise
             resolve(getBase64Encoded(dataURI));
         };

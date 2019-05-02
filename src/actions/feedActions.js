@@ -84,7 +84,6 @@ export function fetchGlobalFeed() {
 
 
 export function fetchUserFeed() {
-    const env = runtimeEnv();
     return dispatch => {
         let user = {
             username: "testUser",
@@ -127,7 +126,6 @@ export function fetchUserFeed() {
 }
 
 export function fetchHomeFeed() {
-    const env = runtimeEnv();
     return dispatch => {
         let feed = [];
         for (let i = 0; i < 15; i++) {
