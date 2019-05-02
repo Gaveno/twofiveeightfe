@@ -19,8 +19,7 @@ class App extends Component {
     }
 
     handleClick() {
-        let pathPieces = window.location.href.split("/");
-        let relativePath = pathPieces[pathPieces.length-1];
+        let relativePath = window.location.href.split("/").pop();
         switch (relativePath) {
             case "globalfeed":
                 window.scroll({top: 0, left: 0, behavior: 'smooth'});

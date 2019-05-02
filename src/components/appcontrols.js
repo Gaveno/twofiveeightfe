@@ -8,6 +8,7 @@ import btnGlobalFeed from '../images/btnGlobalFeed.png';
 import btnCreatePost from '../images/btnCreatePost.png';
 import btnHomeFeed from '../images/btnHomeFeed.png';
 import {setFileUpload} from '../actions/feedActions';
+import {getOrientation, resetOrientation} from "../actions/helpers";
 
 function fileToBase64(file) {
     console.log("file to convert: ",file[0]);
@@ -35,15 +36,21 @@ class AppControls extends Component {
 
     onPhotoCapture(file) {
         if (file && file[0]) {
-            fileToBase64(file).then(
-                data => {
-                    if (data) {
-                        // dispatch
-                        const {dispatch} = this.props;
-                        dispatch(setFileUpload(data));
+            let orientation = 0;
+            getOrientation(file[0], (ori) => {
+                orientation = ori;
+                fileToBase64(file).then(
+                    data => {
+                        if (data) {
+                            // dispatch
+                            resetOrientation(data, orientation, (rotated) => {
+                                const {dispatch} = this.props;
+                                dispatch(setFileUpload(rotated));
+                            })
+                        }
                     }
-                }
-            )
+                )
+            })
         }
     }
 
