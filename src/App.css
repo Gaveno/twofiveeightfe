@@ -126,10 +126,23 @@
   width: 90%;
 }
 
+.post-comments-start {
+  margin-top: 3px;
+  border: 2px solid #ccc;
+  text-align: left;
+  padding: 4px;
+  border-radius: 5px;
+  width: 110%;
+}
+
 .repost-button {
   position: relative;
   right: 0;
   height: 32px;
+}
+
+.post-center-text {
+  text-align: center;
 }
 
 .divider {

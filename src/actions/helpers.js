@@ -222,3 +222,7 @@ export function getOrientation(file, callback) {
     };
     reader.readAsArrayBuffer(file);
 }
+
+export function getPath() {
+    return window.location.href.split("/").pop();
+}

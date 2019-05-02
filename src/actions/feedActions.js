@@ -1,6 +1,6 @@
 import actionTypes from '../constants/actionTypes';
 import runtimeEnv from '@mars/heroku-js-runtime-env';
-import {appendFeed, insertFeed, resizeDataURL} from '../actions/helpers';
+import {appendFeed, getPath, insertFeed, resizeDataURL} from '../actions/helpers';
 
 function globalFeedFetched(feed) {
     return {
@@ -83,7 +83,7 @@ export function fetchGlobalFeed(skip, prevFeed) {
                 //console.log("skip: ", s);
                 //console.log("Received Feed: ", res.feed);
                 let newFeed = [];
-                if (s === 0 && prevFeed.length != 0) {
+                if (s === 0 && prevFeed.length !== 0) {
                     newFeed = insertFeed(prevFeed, res.feed);
                 }
                 else {
@@ -227,9 +227,74 @@ export function submitPost(img, text) {
 }
 
 export function getPostComments(feed, post) {
+    const env = runtimeEnv();
     return dispatch => {
-
+        // Duplicate feed and find index of post
+        let newFeed = feed.slice();
+        let index = 0;
+        for (let i = 0; i < newFeed.length; i++) {
+            if (newFeed[i]._id === post._id) {
+                index = i;
+                newFeed[i].expanded = true;
+                break;
+            }
+        }
+        // Fetch comments
+        return fetch(`${env.REACT_APP_API_URL}/comments/${post._id}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            mode: 'cors'})
+            .then((response) => {
+                if (!response.status) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then((res) => {
+                if (!res.success) throw (JSON.stringify(res));
+                newFeed[index] = Object.assign({}, newFeed[index], {comments: res.comments});
+                console.log("comments retreived: ", res.comments);
+                switch (getPath()) {
+                    case "globalfeed":
+                        return dispatch(globalFeedFetched(newFeed));
+                    case "userfeed":
+                        return dispatch(userFeedFetched(newFeed));
+                    case "homefeed":
+                        return dispatch(homeFeedFetched(newFeed));
+                    default:
+                        return;
+                }
+            })
+            .catch((e) => console.log(e));
     }
+}
+
+export function submitComment(post_id, text) {
+    const env = runtimeEnv();
+    return fetch(`${env.REACT_APP_API_URL}/comments`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': localStorage.getItem('token'),
+            'Content-Type': 'application/json'
+        },
+        mode: 'cors',
+        body: JSON.stringify({post_id: post_id, comment: text})
+        })
+        .then((response) => {
+            if (!response.status) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((res) => {
+            if (!res.success) throw (JSON.stringify(res));
+            console.log("Success: "+res.message);
+        })
+        .catch((e) => console.log(e));
 }
 
 export function fetchFollowers() {

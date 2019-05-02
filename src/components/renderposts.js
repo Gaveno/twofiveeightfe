@@ -7,7 +7,8 @@ import profilePhotoCrop from "../images/profilePhotoCrop.png";
 import React, {Component} from 'react';
 import {Divider} from './divider';
 import {connect} from "react-redux";
-import {getPostComments} from "../actions/feedActions";
+import {getPostComments, submitComment} from "../actions/feedActions";
+import {FormControl, FormGroup, Button, ControlLabel, HelpBlock} from "react-bootstrap";
 
 function arrayBufferToBase64(buffer) {
     let binary = '';
@@ -21,6 +22,14 @@ class RenderPosts extends Component {
 
     constructor(props) {
         super(props);
+        this.getComments = this.getComments.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.updateDetails = this.updateDetails.bind(this);
+        this.state = {
+            details: {
+                commentText: ""
+            }
+        }
     }
 
     getComments(feed, post) {
@@ -28,14 +37,47 @@ class RenderPosts extends Component {
         dispatch(getPostComments(feed, post));
     }
 
+    handleClick(post) {
+        //console.log("post clicked: ", post);
+        this.getComments(this.props.posts, post)
+    }
+
+    updateDetails(e) {
+        let updateDetails = Object.assign({}, this.state.details);
+        updateDetails[e.target.id] = e.target.value;
+        this.setState({
+            details: updateDetails
+        });
+    }
+
+    getValidationState() {
+        const length = this.state.details.commentText.length;
+        if (length > 258) return 'error';
+        if (length > 240) return 'warning';
+        return 'success';
+    }
+
+    submitComment(post) {
+        submitComment(post._id, this.state.details.commentText);
+    }
+
     render() {
-        console.log("posts[0]: ", this.props.posts[0]);
+        const length = this.state.details.commentText.length;
+        //console.log("posts[0]: ", this.props.posts[0]);
+        const RenderComments = ({comments}) => {
+            return comments.map((comment, i) =>
+                <Grid key={i}>
+                    <b>@{comment.username}:</b> {comment.text}
+                </Grid>
+            )
+        };
         return this.props.posts.map((post, i) =>
             <Grid key={i} className="post">
                 <Col xs={13} sm={8} md={5} className="post-col">
                     <Row>
                         <img className="post-image"
                              src={post.img ? `data:image/jpeg;base64,${post.img.data}` : dummyimage}
+                             onClick={()=>this.handleClick(post)}
                              alt="A post"/>
                     </Row>
                     <Row className="divider2"/>
@@ -64,6 +106,27 @@ class RenderPosts extends Component {
                     <Row className="post-text">
                         {post.text}
                     </Row>
+                    <Row className="post-comments-start">
+                        {post.expanded && post.comments ? <RenderComments comments={post.comments} /> : ""}
+                    </Row>
+                    {post.expanded ?
+                    <Row className="post-comments-start">
+                        <FormGroup controlId="commentText"
+                                   validationState={this.getValidationState()}>
+                            <div className="post-center-text">
+                                <ControlLabel>Leave comment</ControlLabel>
+                                <FormControl value={this.state.details.text}
+                                             onChange={this.updateDetails}
+                                             componentClass="textarea"
+                                             placeholder="Say something nice..."
+                                />
+                                <HelpBlock>{length}/258 characters.</HelpBlock>
+                                {(this.getValidationState()==='error' ? <Button disabled>Submit comment</Button> :
+                                    <Button onClick={()=>this.submitComment(post)}>Submit comment</Button>)}
+                            </div>
+                        </FormGroup>
+                    </Row>
+                    : ""}
                 </Col>
                 <Divider/>
             </Grid>
