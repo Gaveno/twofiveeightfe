@@ -9,10 +9,24 @@ import RenderPosts from "./renderposts";
 import {RenderUser} from "./renderuser";
 import {fetchUserFeed} from "../actions/feedActions";
 import {Divider} from "./divider";
+import {RenderFollowers} from "./renderfollowers";
+import {RenderFollowing} from "./renderfollowing";
+import RenderUser from "./renderuser";
 
 class UserFeed extends Component {
     constructor(props) {
         super(props);
+        this.setDisplayType = this.setDisplayType.bind(this);
+
+        this.state = {
+            displayType: 0
+        }
+    }
+
+    setDisplayType(e) {
+        let setDisplayType = Object.assign({}, this.state);
+        setDisplayType.displayType = e;
+        this.setState(setDisplayType);
     }
 
     componentDidMount() {
@@ -20,32 +34,53 @@ class UserFeed extends Component {
         dispatch(fetchUserFeed());
     }
 
-    //instagram user page
-    //click followers and get all followers
-    //follow button to follow that user
-        //if the user is us, cannot follow ourselves
-        //if we already follow them, cannot follow them again
-    //see all out posts
     render() {
-        return (
-            <div className="userInfoContainer">
-                <RenderUser user={this.props.selectedUser} />
-                <div className="feed-container">
-                     <RenderPosts posts={this.props.userFeed} />
-                     <Divider />
-                     <Divider />
-                     <Divider />
-                     <AppControls />
+        const displayType = this.state.displayType;
+console.log(displayType);
+        const RenderUserFeed = ({user, feed}) => {
+            return (
+                <div className="userInfoContainer">
+                        <RenderUser selectedUser={user} />
+                        <div className="feed-container">
+                            <RenderPosts posts={feed}/>
+                            <Divider/>
+                            <Divider/>
+                            <Divider/>
+                            <AppControls/>
+                        </div>
+                    </div>
+                )
+        };
+        const RenderFollowers = ({followList}) => {
+            return(
+                <div className="user-followers-container">
+
                 </div>
+                )
+        };
+        const RenderFollowing = ({followList}) => {
+            return(
+                <div className="user-following-container">
+
+                </div>
+            )
+        };
+        return (
+            <div>
+                {(displayType === 0) ? <RenderUserFeed user={this.props.selectedUser} feed={this.props.userFeed} /> : ""}
+                {(displayType === 1) ? <RenderFollowers followList={this.props.followList} /> : ""}
+                {(displayType === 2) ? <RenderFollowing followList={this.props.followList}/> : ""}
             </div>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
         userFeed: state.feed.userFeed,
-        selectedUser: state.feed.selectedUser
+        selectedUser: state.feed.selectedUser,
+        followList: state.feed.followList,
+        displayType: state.feed.displayType
     }
 };
 

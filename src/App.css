@@ -221,6 +221,7 @@
 .user-feed-row-1 {
     height: 25%;
     overflow-x: hidden;
+    font-weight: bold;
 }
 
 .user-feed-container {
