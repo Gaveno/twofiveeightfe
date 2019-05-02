@@ -19,7 +19,30 @@ class App extends Component {
     }
 
     handleClick() {
-        console.log("Clicked header. Path: "+window.location.href);
+        let pathPieces = window.location.href.split("/");
+        let relativePath = pathPieces[pathPieces.length-1];
+        switch (relativePath) {
+            case "globalfeed":
+                window.scroll({top: 0, left: 0, behavior: 'smooth'});
+                break;
+
+            case "userfeed":
+                window.scroll({top: 0, left: 0, behavior: 'smooth'});
+                break;
+
+            case "homefeed":
+                window.scroll({top: 0, left: 0, behavior: 'smooth'});
+                break;
+
+            case "createpost":
+                console.log("clicked createpost tite");
+                break;
+
+            default:
+                if (localStorage.getItem("token")) {
+                    window.location.href = "/#/homefeed";
+                }
+        }
     }
 
     render() {
