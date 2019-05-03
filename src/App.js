@@ -9,15 +9,10 @@ import GlobalFeed from './components/globalfeed';
 import CreatePost from './components/createpost';
 import UserFeed from './components/userfeed';
 import store from './stores/store';
-import {FormGroup} from 'react-bootstrap';
 
 //add routing configuration
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     handleClick() {
         let relativePath = window.location.href.split("/").pop();
         switch (relativePath) {

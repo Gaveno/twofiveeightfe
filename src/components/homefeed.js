@@ -10,10 +10,6 @@ import RenderPosts from "./renderposts";
 import {Divider} from "./divider";
 
 class HomeFeed extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
         const {dispatch} = this.props;
         dispatch(fetchHomeFeed());

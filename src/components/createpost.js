@@ -10,9 +10,8 @@ import AppControls from "./appcontrols";
 import {FormControl, FormGroup, Button, ControlLabel, HelpBlock} from "react-bootstrap";
 import {Divider} from './divider';
 import {submitPost} from "../actions/feedActions";
-import dummyimage from "../images/dummyimage.jpg";
 import {resizeImage} from "../actions/feedActions";
-import {dataURLtoFile, dataURItoBlob} from "../actions/helpers";
+import {dataURLtoFile} from "../actions/helpers";
 
 class CreatePost extends Component {
     constructor(props) {

@@ -4,7 +4,7 @@ import {Button, Col, Grid, Row} from "react-bootstrap";
 import defaultProfilePhoto from "../images/defaultProfilePhoto.png";
 import profilePhotoCrop from "../images/profilePhotoCrop.png";
 import {Divider} from './divider';
-import {fetchFollowers, fetchGlobalFeed} from "../actions/feedActions";
+import {fetchFollowers} from "../actions/feedActions";
 import {fetchFollowing} from "../actions/feedActions";
 
 class RenderUser extends Component {

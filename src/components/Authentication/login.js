@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { submitLogin } from '../../actions/authActions';
 import { connect } from 'react-redux';
-import {LinkContainer} from 'react-router-bootstrap';
 import { Col, Form, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 
 class Login extends Component {
