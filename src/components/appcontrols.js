@@ -54,6 +54,10 @@ class AppControls extends Component {
         }
     }
 
+    componentDidMount() {
+        document.body.style.zoom = "90%";
+    }
+
     render() {
         return (
             <div>

@@ -69,6 +69,7 @@ class RenderPosts extends Component {
             return comments.map((comment, i) =>
                 <Grid key={i}>
                     <b>@{comment.username}:</b> {comment.text}
+                    <div className="divider2" />
                 </Grid>
             )
         };
@@ -83,7 +84,7 @@ class RenderPosts extends Component {
                     </Row>
                     <Row className="divider2"/>
                     <Row>
-                        <Col xs={6} className="post-footer-rightalign">
+                        <Col xs={8} className="post-footer-rightalign">
                             <img className="post-footer-photo"
                                  src={(post.profPhoto && post.profPhoto.data) ? post.profPhoto : defaultProfilePhoto}
                                  alt="user profile"/>
@@ -98,36 +99,33 @@ class RenderPosts extends Component {
                                  src={btnComment}
                                  alt="comment button"/>
                         </Col>
-                        <Col xs={2} className="post-footer-rightalign">
-                            <img className="repost-button"
-                                 src={btnRepost}
-                                 alt="repost button"/>
-                        </Col>
                     </Row>
                     <Row className="post-text">
                         {post.text}
                     </Row>
                     <Row className="post-comments-start">
                         {post.expanded && post.comments ? <RenderComments comments={post.comments} /> : ""}
+                        {post.expanded ?
+                            <FormGroup controlId="commentText"
+                                       validationState={this.getValidationState()}>
+                                <Col xs={6} className="post-center-text">
+                                    <FormControl value={this.state.details.text}
+                                                 onChange={this.updateDetails}
+                                                 componentClass="textarea"
+                                                 placeholder="Say something nice..."
+                                    />
+
+
+                                </Col>
+                                <Col xs={2} className="post-comment-button-col">
+                                    {(this.getValidationState()==='error' ? <Button disabled>Submit</Button> :
+                                        <Button onClick={()=>this.submitComment(post)}>Submit</Button>)}
+                                    <HelpBlock>{length}/258</HelpBlock>
+                                </Col>
+                            </FormGroup>
+
+                        : ""}
                     </Row>
-                    {post.expanded ?
-                    <Row className="post-comments-start">
-                        <FormGroup controlId="commentText"
-                                   validationState={this.getValidationState()}>
-                            <div className="post-center-text">
-                                <ControlLabel>Leave comment</ControlLabel>
-                                <FormControl value={this.state.details.text}
-                                             onChange={this.updateDetails}
-                                             componentClass="textarea"
-                                             placeholder="Say something nice..."
-                                />
-                                <HelpBlock>{length}/258 characters.</HelpBlock>
-                                {(this.getValidationState()==='error' ? <Button disabled>Submit comment</Button> :
-                                    <Button onClick={()=>this.submitComment(post)}>Submit comment</Button>)}
-                            </div>
-                        </FormGroup>
-                    </Row>
-                    : ""}
                 </Col>
                 <Divider/>
             </Grid>

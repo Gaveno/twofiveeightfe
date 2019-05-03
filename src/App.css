@@ -128,7 +128,8 @@
 
 .post-comments-start {
   margin-top: 3px;
-  border: 2px solid #ccc;
+
+  background-color: #ddd;
   text-align: left;
   padding: 4px;
   border-radius: 5px;
@@ -143,6 +144,11 @@
 
 .post-center-text {
   text-align: center;
+  width: 75%;
+}
+
+.post-comment-button-col {
+  margin-left: -20px;
 }
 
 .divider {
