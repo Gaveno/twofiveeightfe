@@ -6,16 +6,18 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
 import RenderPosts from "./renderposts";
-import {fetchUserFeed} from "../actions/feedActions";
+import {fetchGlobalFeed, fetchUserFeed} from "../actions/feedActions";
 import {Divider} from "./divider";
 import {RenderFollowers} from "./renderfollowers";
 import {RenderFollowing} from "./renderfollowing";
 import RenderUser from "./renderuser";
+import {getScrollPercent} from "../actions/helpers";
 
 class UserFeed extends Component {
     constructor(props) {
         super(props);
         this.setDisplayType = this.setDisplayType.bind(this);
+        this.scrolledPage = this.scrolledPage.bind(this);
     }
 
     setDisplayType(e) {
@@ -25,19 +27,36 @@ class UserFeed extends Component {
     }
 
     componentDidMount() {
-        console.log("fetching userfeed");
+        window.addEventListener('scroll', this.scrolledPage);
+        const last = localStorage.getItem('lastFetchUser');
         const {dispatch} = this.props;
-        dispatch(fetchUserFeed());
+        if (this.props.userFeed.length <= 0 || Date.now() - last > 5000) {
+            dispatch(fetchUserFeed(0, this.props.userFeed));
+        }
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.scrolledPage);
+    }
+
+    scrolledPage() {
+        //console.log("Page scrolled: ", getScrollPercent());
+        const {dispatch} = this.props;
+        const last = localStorage.getItem('lastFetchUser');
+        // Make sure last fetch was over 5 seconds ago
+        if (Date.now() - last > 5000) {
+            if (getScrollPercent() <= 0) {
+                dispatch(fetchUserFeed(0, this.props.userFeed));
+            } else if (getScrollPercent() > 80) {
+                dispatch(fetchUserFeed(this.props.userFeed.length, this.props.userFeed));
+            }
+        }
     }
 
     render() {
-        console.log("display type in user feed: ", this.props.displayType);
         if (this.props.displayType === undefined) {
             return (
                 <div>
-                    <Divider />
-                    <Divider />
-                    <Divider />
                     Loading...
                 </div>
             )

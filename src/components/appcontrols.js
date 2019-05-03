@@ -71,7 +71,7 @@ class AppControls extends Component {
                     />
                 </FormGroup>
                 <Nav bsStyle="tabs" className="App-footer">
-                    <LinkContainer to="/userfeed">
+                    <LinkContainer to={"/userfeed/"+localStorage.getItem("username")}>
                         <NavItem eventKey={1} className="App-footer-navitem">
                             <img className="App-footer-image" src={btnUserFeed} alt="User Feed" />
                         </NavItem>

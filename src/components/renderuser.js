@@ -33,7 +33,7 @@ class RenderUser extends Component {
                         <Row className="user-feed-row">
                             <Col xs={5} className="user-feed-left-column">
                                 <img className="user-feed-profile-image" alt="user profile"
-                                     src={selectedUser.imgProfile ? selectedUser.imgProfile : defaultProfilePhoto}/>
+                                     src={(selectedUser.imgProfile && selectedUser.imgProfile.data) ? selectedUser.imgProfile : defaultProfilePhoto}/>
                                 <img className="user-feed-profile-crop" alt="profile crop"
                                      src={profilePhotoCrop}/>
                             </Col>

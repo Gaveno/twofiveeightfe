@@ -1,6 +1,7 @@
 import actionTypes from '../constants/actionTypes';
 import runtimeEnv from '@mars/heroku-js-runtime-env';
 import {appendFeed, getPath, insertFeed, resizeDataURL} from '../actions/helpers';
+import {getPathUser} from "./helpers";
 
 function globalFeedFetched(feed) {
     return {
@@ -14,6 +15,14 @@ function userFeedFetched(user, feed) {
         type: actionTypes.FETCH_USERFEED,
         userFeed: feed,
         selectedUser: user,
+        displayType: 0
+    }
+}
+
+function userFeedFetchedNOU(feed) {
+    return {
+        type: actionTypes.FETCH_USERFEEDNOU,
+        userFeed: feed,
         displayType: 0
     }
 }
@@ -98,33 +107,17 @@ export function fetchGlobalFeed(skip, prevFeed) {
 }
 
 
-export function fetchUserFeed() {
+export function fetchUserFeed(skip, prevFeed) {
+    let s = 0;
+    if (skip) s = skip;
     localStorage.setItem('lastFetchUser', Date.now());
+    const env = runtimeEnv();
     return dispatch => {
-        let user = {
-            username: "testUser",
-            imgProfile: "",
-            //adjust the followerCount later
-            followerCount: "",
-        };
-        let feed = [];
-        for (let i = 0; i < 10; i++) {
-            let post = {
-                image: "",
-                username: "specificUser",
-                profPhoto: "",
-                commentCount: i,
-            };
-            feed.push(post);
-        }
-        return dispatch(userFeedFetched(user, feed));
-    }
-    /*return dispatch => {
-        return fetch(`${env.REACT_APP_API_URL}/userfeed`, {
+        return fetch(`${env.REACT_APP_API_URL}/posts/user/${getPathUser()}?skip=${s}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': localStorage.getItem('token')
             },
             mode: 'cors'})
@@ -135,10 +128,22 @@ export function fetchUserFeed() {
                 return response.json();
             })
             .then((res) => {
-                dispatch(globalFeedFetched(res.feed));
+                //console.log(JSON.stringify(res));
+                if (!res.feed || !res.user) throw (JSON.stringify(res));
+                //console.log("skip: ", s);
+                //console.log("Received Feed: ", res.feed);
+                let newFeed = [];
+                if (s === 0 && prevFeed.length !== 0) {
+                    newFeed = insertFeed(prevFeed, res.feed);
+                }
+                else {
+                    newFeed = appendFeed(prevFeed, res.feed);
+                }
+                //console.log("New Feed: ", newFeed);
+                return dispatch(userFeedFetched(res.user, newFeed));
             })
             .catch((e) => console.log(e));
-    }*/
+    }
 }
 
 export function fetchHomeFeed() {
@@ -262,7 +267,7 @@ export function getPostComments(feed, post) {
                     case "globalfeed":
                         return dispatch(globalFeedFetched(newFeed));
                     case "userfeed":
-                        return dispatch(userFeedFetched(newFeed));
+                        return dispatch(userFeedFetchedNOU(newFeed));
                     case "homefeed":
                         return dispatch(homeFeedFetched(newFeed));
                     default:

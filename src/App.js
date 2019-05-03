@@ -9,12 +9,13 @@ import GlobalFeed from './components/globalfeed';
 import CreatePost from './components/createpost';
 import UserFeed from './components/userfeed';
 import store from './stores/store';
+import {getPath} from "./actions/helpers";
 
 //add routing configuration
 
 class App extends Component {
     handleClick() {
-        let relativePath = window.location.href.split("/").pop();
+        let relativePath = getPath();
         switch (relativePath) {
             case "globalfeed":
                 window.scroll({top: 0, left: 0, behavior: 'smooth'});

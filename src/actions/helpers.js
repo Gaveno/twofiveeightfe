@@ -224,5 +224,14 @@ export function getOrientation(file, callback) {
 }
 
 export function getPath() {
+    let pathSplit = window.location.href.split("/");
+    console.log("path split: ", pathSplit);
+    if (pathSplit[pathSplit.length-2] === "userfeed")
+        return "userfeed";
+    else
+        return pathSplit.pop();
+}
+
+export function getPathUser() {
     return window.location.href.split("/").pop();
 }

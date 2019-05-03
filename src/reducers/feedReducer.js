@@ -28,6 +28,12 @@ export default (state = initialState, action) => {
 
         case constants.FETCH_USERFEED:
             updated['userFeed'] = action.userFeed;
+            updated['selectedUser'] = action.selectedUser;
+            updated['displayType'] = action.displayType;
+            return updated;
+
+        case constants.FETCH_USERFEEDNOU:
+            updated['userFeed'] = action.userFeed;
             updated['displayType'] = action.displayType;
             return updated;
 
