@@ -84,7 +84,7 @@ class RenderPosts extends Component {
                     </Row>
                     <Row className="divider2"/>
                     <Row>
-                        <Col xs={8} className="post-footer-rightalign">
+                        <Col xs={7} className="post-footer-rightalign">
                             <img className="post-footer-photo"
                                  src={(post.profPhoto && post.profPhoto.data) ? post.profPhoto : defaultProfilePhoto}
                                  alt="user profile"/>
