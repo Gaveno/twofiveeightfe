@@ -32,6 +32,7 @@ export function submitLogin(data){
                 return response.json();
             })
             .then( (res) => {
+                console.log("response: ", res);
                 if (res.success === true) {
                     localStorage.setItem('username', data.username);
                     localStorage.setItem('token', res.token);

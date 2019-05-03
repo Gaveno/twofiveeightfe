@@ -67,9 +67,7 @@ class Login extends Component {
 
                 <FormGroup>
                     <Col xs={9}>
-                        <LinkContainer to="/homefeed">
-                            <Button onClick={this.login} block>Sign in</Button>
-                        </LinkContainer>
+                        <Button onClick={this.login} block>Sign in</Button>
                     </Col>
                 </FormGroup>
             </Form>
