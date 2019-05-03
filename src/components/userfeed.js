@@ -16,10 +16,6 @@ class UserFeed extends Component {
     constructor(props) {
         super(props);
         this.setDisplayType = this.setDisplayType.bind(this);
-
-        this.state = {
-            displayType: 0
-        }
     }
 
     setDisplayType(e) {
@@ -29,13 +25,23 @@ class UserFeed extends Component {
     }
 
     componentDidMount() {
+        console.log("fetching userfeed");
         const {dispatch} = this.props;
         dispatch(fetchUserFeed());
     }
 
     render() {
-        const displayType = this.state.displayType;
-console.log(displayType);
+        console.log("display type in user feed: ", this.props.displayType);
+        if (this.props.displayType === undefined) {
+            return (
+                <div>
+                    <Divider />
+                    <Divider />
+                    <Divider />
+                    Loading...
+                </div>
+            )
+        }
         const RenderUserFeed = ({user, feed}) => {
             return (
                 <div className="userInfoContainer">
@@ -53,22 +59,28 @@ console.log(displayType);
         const RenderFollowers = ({followList}) => {
             return(
                 <div className="user-followers-container">
-
+                    <Divider />
+                    <Divider />
+                    <Divider />
+                    rendering followers
                 </div>
                 )
         };
         const RenderFollowing = ({followList}) => {
             return(
                 <div className="user-following-container">
-
+                    <Divider />
+                    <Divider />
+                    <Divider />
+                    Rendering following
                 </div>
             )
         };
         return (
             <div>
-                {(displayType === 0) ? <RenderUserFeed user={this.props.selectedUser} feed={this.props.userFeed} /> : ""}
-                {(displayType === 1) ? <RenderFollowers followList={this.props.followList} /> : ""}
-                {(displayType === 2) ? <RenderFollowing followList={this.props.followList}/> : ""}
+                {(this.props.displayType === 0) ? <RenderUserFeed user={this.props.selectedUser} feed={this.props.userFeed} /> : ""}
+                {(this.props.displayType === 1) ? <RenderFollowers followList={this.props.followList} /> : ""}
+                {(this.props.displayType === 2) ? <RenderFollowing followList={this.props.followList}/> : ""}
             </div>
         );
     }

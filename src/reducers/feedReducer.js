@@ -9,7 +9,8 @@ const initialState = {
     selectedUser: '',
     fileUpload: '',
     imageResized: false,
-    followList: []
+    followList: [],
+    displayType: 0
 };
 
 export default (state = initialState, action) => {
@@ -54,6 +55,7 @@ export default (state = initialState, action) => {
             return updated;
 
         case constants.FETCH_FOLLOWING:
+            console.log("displaytype: ", action.displayType);
             updated['followList'] = action.followList;
             updated['displayType'] = action.displayType;
             return updated;

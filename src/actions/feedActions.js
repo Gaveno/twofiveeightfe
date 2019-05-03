@@ -13,7 +13,8 @@ function userFeedFetched(user, feed) {
     return {
         type: actionTypes.FETCH_USERFEED,
         userFeed: feed,
-        selectedUser: user
+        selectedUser: user,
+        displayType: 0
     }
 }
 
@@ -116,7 +117,7 @@ export function fetchUserFeed() {
             };
             feed.push(post);
         }
-        dispatch(userFeedFetched(user, feed));
+        return dispatch(userFeedFetched(user, feed));
     }
     /*return dispatch => {
         return fetch(`${env.REACT_APP_API_URL}/userfeed`, {
@@ -308,7 +309,7 @@ export function fetchFollowers() {
             };
             followers.push(follower);
         }
-        dispatch(fetchedFollowers(followers));
+        return dispatch(fetchedFollowers(followers));
     };
 }
 
@@ -323,6 +324,6 @@ export function fetchFollowing() {
             };
             following.push(followee);
         }
-        dispatch(fetchedFollowing(following));
+        return dispatch(fetchedFollowing(following));
     };
 }

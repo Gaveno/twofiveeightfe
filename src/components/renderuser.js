@@ -32,9 +32,9 @@ class RenderUser extends Component {
                     <Grid className="user-feed">
                         <Row className="user-feed-row">
                             <Col xs={5} className="user-feed-left-column">
-                                <img className="user-feed-profile-image"
+                                <img className="user-feed-profile-image" alt="user profile"
                                      src={selectedUser.imgProfile ? selectedUser.imgProfile : defaultProfilePhoto}/>
-                                <img className="user-feed-profile-crop"
+                                <img className="user-feed-profile-crop" alt="profile crop"
                                      src={profilePhotoCrop}/>
                             </Col>
                             <Col xs={5} className="user-feed-right-column">
@@ -66,7 +66,8 @@ class RenderUser extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        followList: state.feed.followList
+        followList: state.feed.followList,
+        displayType: state.feed.displayType
     }
 };
 
