@@ -58,7 +58,8 @@ class RenderPosts extends Component {
     }
 
     submitComment(post) {
-        submitComment(post._id, this.state.details.commentText);
+        const {dispatch} = this.props;
+        dispatch(submitComment(post, this.state.details.commentText, this.props.posts));
     }
 
     render() {

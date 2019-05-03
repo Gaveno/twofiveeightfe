@@ -273,29 +273,32 @@ export function getPostComments(feed, post) {
     }
 }
 
-export function submitComment(post_id, text) {
+export function submitComment(post, text, posts) {
     const env = runtimeEnv();
-    return fetch(`${env.REACT_APP_API_URL}/comments`, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Authorization': localStorage.getItem('token'),
-            'Content-Type': 'application/json'
-        },
-        mode: 'cors',
-        body: JSON.stringify({post_id: post_id, comment: text})
+    return dispatch => {
+        return fetch(`${env.REACT_APP_API_URL}/comments`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            },
+            mode: 'cors',
+            body: JSON.stringify({post_id: post._id, comment: text})
         })
-        .then((response) => {
-            if (!response.status) {
-                throw Error(response.statusText);
-            }
-            return response.json();
-        })
-        .then((res) => {
-            if (!res.success) throw (JSON.stringify(res));
-            console.log("Success: "+res.message);
-        })
-        .catch((e) => console.log(e));
+            .then((response) => {
+                if (!response.status) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then((res) => {
+                if (!res.success) throw (JSON.stringify(res));
+                console.log("Success: " + res.message);
+                dispatch(getPostComments(posts, post));
+            })
+            .catch((e) => console.log(e));
+    }
 }
 
 export function fetchFollowers() {
