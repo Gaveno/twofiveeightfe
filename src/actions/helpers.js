@@ -116,7 +116,6 @@ function mergeFeeds(feedTarget, feedSource, type) {
                 newFeed.push(feedSource[i]);
             }
         }
-        console.log("post: ", newFeed[i]);
         if (newFeed[i].profPhoto.data && newFeed[i].profPhoto.data.data)
             newFeed[i].profPhoto.data = arrayBufferToBase64(newFeed[i].profPhoto.data.data);
         newFeed[i] = Object.assign({}, newFeed[i], {expanded: false});
@@ -228,7 +227,7 @@ export function getOrientation(file, callback) {
 
 export function getPath() {
     let pathSplit = window.location.href.split("/");
-    console.log("path split: ", pathSplit);
+    //console.log("path split: ", pathSplit);
     if (pathSplit[pathSplit.length-2] === "userfeed")
         return "userfeed";
     else

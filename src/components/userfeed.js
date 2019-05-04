@@ -64,7 +64,7 @@ class UserFeed extends Component {
         const RenderUserFeed = ({user, feed}) => {
             return (
                 <div className="userInfoContainer">
-                        <RenderUser selectedUser={user} />
+                        <RenderUser />
                         <div className="feed-container">
                             <RenderPosts posts={feed}/>
                             <Divider/>

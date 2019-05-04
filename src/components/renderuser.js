@@ -71,11 +71,6 @@ class RenderUser extends Component {
         }
     }
 
-    componentDidMount() {
-        if(this.props.selectedUser.imgProfile)
-            console.log(arrayBufferToBase64(this.props.selectedUser.imgProfile.data.data));
-    }
-
     render() {
         return (
             <div className="user-feed-container">

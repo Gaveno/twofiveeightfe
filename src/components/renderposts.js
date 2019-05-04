@@ -1,6 +1,5 @@
 import {Col, Grid, Row} from "react-bootstrap";
 import dummyimage from "../images/dummyimage.jpg";
-import btnRepost from "../images/btnRepost.png";
 import btnComment from "../images/btnComment.png";
 import defaultProfilePhoto from "../images/defaultProfilePhoto.png";
 import profilePhotoCrop from "../images/profilePhotoCrop.png";
@@ -8,14 +7,8 @@ import React, {Component} from 'react';
 import {Divider} from './divider';
 import {connect} from "react-redux";
 import {getPostComments, submitComment} from "../actions/feedActions";
-import {FormControl, FormGroup, Button, ControlLabel, HelpBlock} from "react-bootstrap";
-
-function arrayBufferToBase64(buffer) {
-    let binary = '';
-    let bytes = [].slice.call(new Uint8Array(buffer));
-    bytes.forEach((b) => binary += String.fromCharCode(b));
-    return window.btoa(binary);
-}
+import {FormControl, FormGroup, Button, HelpBlock} from "react-bootstrap";
+import Username from './username';
 
 //export const RenderPosts = ({posts}) => {
 class RenderPosts extends Component {
@@ -68,7 +61,7 @@ class RenderPosts extends Component {
         const RenderComments = ({comments}) => {
             return comments.map((comment, i) =>
                 <Grid key={i}>
-                    <b>@{comment.username}:</b> {comment.text}
+                    <Username username={comment.username} /> {comment.text}
                     <div className="divider2" />
                 </Grid>
             )
@@ -86,12 +79,16 @@ class RenderPosts extends Component {
                     <Row>
                         <Col xs={7} className="post-footer-rightalign">
                             <img className="post-footer-photo"
-                                 src={(post.profPhoto && post.profPhoto.data) ? `data:image/jpeg;base64,${post.profPhoto.data}` : defaultProfilePhoto}
+                                 src={(post.profPhoto && post.profPhoto.data) ?
+                                     `data:image/jpeg;base64,${post.profPhoto.data}` :
+                                     defaultProfilePhoto}
                                  alt="user profile"/>
                             <img className="post-footer-crop"
                                  src={profilePhotoCrop}
                                  alt="crop overlay"/>
-                            <b className="post-footer-username">@{post.username ? post.username : "username"}</b>
+                            <b className="post-footer-username">
+                                {post.username ? <Username username={post.username} /> : "username"}
+                            </b>
                         </Col>
                         <Col xs={3} className="post-footer-rightalign">
                             <b className="post-footer-commentcount">{post.commentCount ? post.commentCount : "0"}</b>
