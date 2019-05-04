@@ -99,6 +99,9 @@ export function insertFeed(feedTarget, feedSource) {
 function mergeFeeds(feedTarget, feedSource, type) {
     let newFeed = feedTarget.slice();
     for (let i = 0; i < feedSource.length; i++) {
+        if (feedSource[i].profPhoto.data && feedSource[i].profPhoto.data.data) {
+            feedSource[i].profPhoto['data'] = arrayBufferToBase64(feedSource[i].profPhoto.data.data);
+        }
         let found = false;
         for (let j = 0; j < newFeed.length; j++) {
             if (feedSource[i]._id === newFeed[j]._id) {
@@ -109,15 +112,14 @@ function mergeFeeds(feedTarget, feedSource, type) {
         }
         if (!found) {
             // Didn't exist in target previously so add
-            if (type === 0)
+            if (type === 0) {
                 newFeed.unshift(feedSource[i]);
+            }
             else {
                 //console.log("newFeed length: ", newFeed.length);
                 newFeed.push(feedSource[i]);
             }
         }
-        if (newFeed[i].profPhoto.data && newFeed[i].profPhoto.data.data)
-            newFeed[i].profPhoto.data = arrayBufferToBase64(newFeed[i].profPhoto.data.data);
         newFeed[i] = Object.assign({}, newFeed[i], {expanded: false});
     }
     return newFeed;
@@ -182,7 +184,7 @@ export function getOrientation(file, callback) {
     reader.onload = function(e) {
 
         var view = new DataView(e.target.result);
-        if (view.getUint16(0, false) != 0xFFD8)
+        if (view.getUint16(0, false) !== 0xFFD8)
         {
             return callback(-2);
         }
@@ -192,26 +194,26 @@ export function getOrientation(file, callback) {
             if (view.getUint16(offset+2, false) <= 8) return callback(-1);
             var marker = view.getUint16(offset, false);
             offset += 2;
-            if (marker == 0xFFE1)
+            if (marker === 0xFFE1)
             {
-                if (view.getUint32(offset += 2, false) != 0x45786966)
+                if (view.getUint32(offset += 2, false) !== 0x45786966)
                 {
                     return callback(-1);
                 }
 
-                var little = view.getUint16(offset += 6, false) == 0x4949;
+                var little = view.getUint16(offset += 6, false) === 0x4949;
                 offset += view.getUint32(offset + 4, little);
                 var tags = view.getUint16(offset, little);
                 offset += 2;
                 for (var i = 0; i < tags; i++)
                 {
-                    if (view.getUint16(offset + (i * 12), little) == 0x0112)
+                    if (view.getUint16(offset + (i * 12), little) === 0x0112)
                     {
                         return callback(view.getUint16(offset + (i * 12) + 8, little));
                     }
                 }
             }
-            else if ((marker & 0xFF00) != 0xFF00)
+            else if ((marker & 0xFF00) !== 0xFF00)
             {
                 break;
             }
