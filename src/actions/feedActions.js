@@ -1,6 +1,6 @@
 import actionTypes from '../constants/actionTypes';
 import runtimeEnv from '@mars/heroku-js-runtime-env';
-import {appendFeed, getPath, insertFeed, resizeDataURL} from '../actions/helpers';
+import {appendFeed, arrayBufferToBase64, dataURLtoFile, getPath, insertFeed, resizeDataURL} from '../actions/helpers';
 import {getPathUser} from "./helpers";
 
 function globalFeedFetched(feed) {
@@ -64,6 +64,13 @@ function fetchedFollowing(users) {
         type: actionTypes.FETCH_FOLLOWING,
         followList: users,
         displayType: 2
+    }
+}
+
+function uploadedProfilePhoto(user) {
+    return {
+        type: actionTypes.UPDATE_USER,
+        selectedUser: user
     }
 }
 
@@ -136,6 +143,9 @@ export function fetchUserFeed(skip, prevFeed) {
                 if (!res.feed || !res.user) throw (JSON.stringify(res));
                 //console.log("skip: ", s);
                 //console.log("Received Feed: ", res.feed);
+                console.log("Got user: ", res.user);
+                res.user.imgProfile.data = arrayBufferToBase64(res.user.imgProfile.data.data);
+                console.log("Got user: ", res.user);
                 let newFeed = [];
                 if (s === 0 && prevFeed.length !== 0 && !changeFeed) {
                     newFeed = insertFeed(prevFeed, res.feed);
@@ -338,4 +348,38 @@ export function fetchFollowing() {
         }
         return dispatch(fetchedFollowing(following));
     };
+}
+
+export function submitProfilePhoto(img, user) {
+    return dispatch => {
+        resizeDataURL(img, 128, 128).then((img) => {
+        let file = dataURLtoFile('data:image/jpeg;base64,'+img, 'img.jpeg');
+        const env = runtimeEnv();
+            let formData = new FormData();
+            console.log("photo to upload: ", file);
+            formData.append('file', file);
+            return fetch(`${env.REACT_APP_API_URL}/users/photo`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': localStorage.getItem('token')
+                },
+                body: formData,
+                mode: 'cors'
+            })
+                .then((response) => {
+                    if (!response.status) {
+                        throw Error(response.statusText);
+                    }
+                    return response.json();
+                })
+                .then((res) => {
+                    //console.log(JSON.stringify(res));
+                    console.log(res.message);
+                    if (!res.success) throw (JSON.stringify(res));
+                    return dispatch(uploadedProfilePhoto(user));
+                })
+                .catch((e) => console.log(e));
+        })
+    }
 }

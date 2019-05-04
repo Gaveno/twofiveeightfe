@@ -206,12 +206,18 @@
   padding-left: 50px;
 }
 
+.edit-profile-photo {
+  position: absolute;
+  height: 40px;
+  left: 0;
+  padding-top: 21px;
+  padding-left: 218px;
+}
+
 .user-feed-username {
     position: relative;
     font-size: 30px;
-    @font-face {
-        font-family: "Agency FB Bold", arial;
-    }
+
 }
 
 .user-feed-follow-button {
@@ -247,6 +253,9 @@
     width: 90%;
 }
 
+.no-bullets {
+  list-style-type: none;
+}
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

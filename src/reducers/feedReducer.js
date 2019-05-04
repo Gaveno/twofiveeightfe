@@ -66,6 +66,10 @@ export default (state = initialState, action) => {
             updated['displayType'] = action.displayType;
             return updated;
 
+        case constants.UPDATE_USER:
+            updated['selectedUser'] = action.selectedUser;
+            return updated;
+
         default:
             return state;
     }
