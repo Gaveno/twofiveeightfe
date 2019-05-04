@@ -260,3 +260,7 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.dynamic-text {
+  font-family: "Arial", Arial, sans-serif;
+}

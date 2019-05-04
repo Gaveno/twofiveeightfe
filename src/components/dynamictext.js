@@ -11,9 +11,9 @@ export default class DynamicText extends Component {
         else {
             const text = this.props.text.split(" ");
             return text.map((word, i) =>
-                <i key={i}>
+                <samp className="dynamic-text" key={i}>
                     {word[0] === "@" ? <Username username={word.slice(1, word.length) + " "}/> : word + " "}
-                </i>
+                </samp>
             )
         }
     }
