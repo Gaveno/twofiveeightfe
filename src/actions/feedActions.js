@@ -148,11 +148,15 @@ export function fetchUserFeed(skip, prevFeed) {
                     res.user.imgProfile.data = arrayBufferToBase64(res.user.imgProfile.data.data);
                 //console.log("Got user: ", res.user);
                 let newFeed = [];
-                if (s === 0 && prevFeed.length !== 0 && !changeFeed) {
-                    newFeed = insertFeed(prevFeed, res.feed);
+                if (changeFeed) {
+                    newFeed = appendFeed([], res.feed);
                 }
                 else {
-                    newFeed = appendFeed(prevFeed, res.feed);
+                    if (s === 0 && prevFeed.length !== 0) {
+                        newFeed = insertFeed(prevFeed, res.feed);
+                    } else {
+                        newFeed = appendFeed(prevFeed, res.feed);
+                    }
                 }
                 //console.log("New Feed: ", newFeed);
                 return dispatch(userFeedFetched(res.user, newFeed));
