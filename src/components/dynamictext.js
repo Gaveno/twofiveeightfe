@@ -6,11 +6,15 @@ export default class DynamicText extends Component {
         super(props);
     }
     render() {
-        const text = this.props.text.split(" ");
-        return text.map((word, i) =>
-            <i key={i}>
-                {word[0] === "@" ? <Username username={word.slice(1, word.length)+" "} /> : word+" " }
-            </i>
-        )
+        if (!this.props.text)
+            return "";
+        else {
+            const text = this.props.text.split(" ");
+            return text.map((word, i) =>
+                <i key={i}>
+                    {word[0] === "@" ? <Username username={word.slice(1, word.length) + " "}/> : word + " "}
+                </i>
+            )
+        }
     }
 }
