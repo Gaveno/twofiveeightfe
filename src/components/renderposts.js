@@ -91,7 +91,7 @@ class RenderPosts extends Component {
                                 {post.username ? <Username username={post.username} /> : "username"}
                             </b>
                         </Col>
-                        <Col xs={3} className="post-footer-rightalign">
+                        <Col xs={4} className="post-footer-rightalign">
                             <b className="post-footer-commentcount">{post.commentCount ? post.commentCount : "0"}</b>
                             <img className="repost-button"
                                  src={btnComment}

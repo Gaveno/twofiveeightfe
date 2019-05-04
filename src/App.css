@@ -111,9 +111,9 @@
 }
 
 .post-footer-commentcount {
-  position: absolute;
+  position: relative;
   margin-top: 10px;
-  left: 15%;
+  right: 15%;
 }
 
 .post-footer-rightalign {
@@ -139,6 +139,7 @@
 .repost-button {
   position: relative;
   right: 0;
+  margin-right: -80px;
   height: 32px;
 }
 
