@@ -88,12 +88,13 @@ class RenderPosts extends Component {
                                  src={profilePhotoCrop}
                                  alt="crop overlay"/>
                             <b className="post-footer-username">
-                                {post.username ? <Username username={post.username} /> : "username"}
+                                <Username username={post.username} />
                             </b>
                         </Col>
                         <Col xs={4} className="post-footer-rightalign">
                             <b className="post-footer-commentcount">{post.commentCount ? post.commentCount : "0"}</b>
                             <img className="repost-button"
+                                 onClick={()=>this.handleClick(post)}
                                  src={btnComment}
                                  alt="comment button"/>
                         </Col>

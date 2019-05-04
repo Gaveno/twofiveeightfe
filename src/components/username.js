@@ -6,11 +6,15 @@ export default class Username extends Component {
         super(props);
     }
     render() {
-        const username = this.props.username;
-        return (
-            <LinkContainer to={"/userfeed/"+username.split(" ")[0]}>
-                <b>@{username}</b>
-            </LinkContainer>
-        )
+        if (!this.props.username)
+            return "@usernotfound";
+        else {
+            const username = this.props.username;
+            return (
+                <LinkContainer to={"/userfeed/" + username.split(" ")[0]}>
+                    <b>@{username}</b>
+                </LinkContainer>
+            )
+        }
     }
 }
