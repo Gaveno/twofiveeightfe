@@ -99,7 +99,7 @@ class RenderPosts extends Component {
                         </Col>
                     </Row>
                     <Row className="post-text">
-                        {post.text}
+                        <DynamicText text={post.text} />
                     </Row>
                     <Row className="post-comments-start">
                         {post.expanded && post.comments ? <RenderComments comments={post.comments} /> : ""}
