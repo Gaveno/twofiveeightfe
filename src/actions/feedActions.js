@@ -108,9 +108,13 @@ export function fetchGlobalFeed(skip, prevFeed) {
 
 
 export function fetchUserFeed(skip, prevFeed) {
-    let s = 0;
-    if (skip) s = skip;
+    let lastUser = (localStorage.getItem('lastUserFetched') ? localStorage.getItem('lastUserFetched') : "");
+    localStorage.setItem('lastUserFetched', getPathUser());
     localStorage.setItem('lastFetchUser', Date.now());
+    let changeFeed = !(lastUser === getPathUser());
+    //console.log("Getting user feed")
+    let s = 0;
+    if (skip && !changeFeed) s = skip;
     const env = runtimeEnv();
     return dispatch => {
         return fetch(`${env.REACT_APP_API_URL}/posts/user/${getPathUser()}?skip=${s}`, {
@@ -133,7 +137,7 @@ export function fetchUserFeed(skip, prevFeed) {
                 //console.log("skip: ", s);
                 //console.log("Received Feed: ", res.feed);
                 let newFeed = [];
-                if (s === 0 && prevFeed.length !== 0) {
+                if (s === 0 && prevFeed.length !== 0 && !changeFeed) {
                     newFeed = insertFeed(prevFeed, res.feed);
                 }
                 else {
