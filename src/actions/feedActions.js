@@ -353,10 +353,11 @@ export function fetchFollowing() {
 export function submitProfilePhoto(img, user) {
     return dispatch => {
         resizeDataURL(img, 128, 128).then((img) => {
-        let file = dataURLtoFile('data:image/jpeg;base64,'+img, 'img.jpeg');
-        const env = runtimeEnv();
+            console.log("file1: ", img);
+            let file = dataURLtoFile('data:image/jpeg;base64,'+img, 'img.jpeg');
+            console.log("file2: ", file);
+            const env = runtimeEnv();
             let formData = new FormData();
-            console.log("photo to upload: ", file);
             formData.append('file', file);
             return fetch(`${env.REACT_APP_API_URL}/users/photo`, {
                 method: 'PUT',
