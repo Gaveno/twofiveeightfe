@@ -78,7 +78,7 @@ class RenderPosts extends Component {
                     </Row>
                     <Row className="divider2"/>
                     <Row>
-                        <Col xs={6} className="post-footer-rightalign">
+                        <Col xs={6} className="post-footer-leftalign">
                             <img className="post-footer-photo"
                                  src={(post.profPhoto && post.profPhoto.data) ?
                                      `data:image/jpeg;base64,${post.profPhoto.data}` :
