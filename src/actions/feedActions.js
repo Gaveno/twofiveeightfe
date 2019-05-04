@@ -143,9 +143,9 @@ export function fetchUserFeed(skip, prevFeed) {
                 if (!res.feed || !res.user) throw (JSON.stringify(res));
                 //console.log("skip: ", s);
                 //console.log("Received Feed: ", res.feed);
-                console.log("Got user: ", res.user);
+                //console.log("Got user: ", res.user);
                 res.user.imgProfile.data = arrayBufferToBase64(res.user.imgProfile.data.data);
-                console.log("Got user: ", res.user);
+                //console.log("Got user: ", res.user);
                 let newFeed = [];
                 if (s === 0 && prevFeed.length !== 0 && !changeFeed) {
                     newFeed = insertFeed(prevFeed, res.feed);

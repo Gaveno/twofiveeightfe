@@ -86,7 +86,7 @@ class RenderPosts extends Component {
                     <Row>
                         <Col xs={7} className="post-footer-rightalign">
                             <img className="post-footer-photo"
-                                 src={(post.profPhoto && post.profPhoto.data) ? post.profPhoto : defaultProfilePhoto}
+                                 src={(post.profPhoto && post.profPhoto.data) ? `data:image/jpeg;base64,${post.profPhoto.data}` : defaultProfilePhoto}
                                  alt="user profile"/>
                             <img className="post-footer-crop"
                                  src={profilePhotoCrop}

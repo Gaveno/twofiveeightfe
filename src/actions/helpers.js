@@ -116,6 +116,9 @@ function mergeFeeds(feedTarget, feedSource, type) {
                 newFeed.push(feedSource[i]);
             }
         }
+        console.log("post: ", newFeed[i]);
+        if (newFeed[i].profPhoto.data && newFeed[i].profPhoto.data.data)
+            newFeed[i].profPhoto.data = arrayBufferToBase64(newFeed[i].profPhoto.data.data);
         newFeed[i] = Object.assign({}, newFeed[i], {expanded: false});
     }
     return newFeed;

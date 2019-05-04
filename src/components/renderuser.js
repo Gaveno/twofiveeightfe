@@ -95,7 +95,7 @@ class RenderUser extends Component {
                                 <img className="user-feed-profile-image"
                                      alt="user profile"
                                      src={(this.props.selectedUser.imgProfile && this.props.selectedUser.imgProfile.data)
-                                         ? this.props.selectedUser.imgProfile.data
+                                         ? `data:image/jpeg;base64,${this.props.selectedUser.imgProfile.data}`
                                          : defaultProfilePhoto}/>
                                 <img className="user-feed-profile-crop"
                                      alt="profile crop"
