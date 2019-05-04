@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import {getPostComments, submitComment} from "../actions/feedActions";
 import {FormControl, FormGroup, Button, HelpBlock} from "react-bootstrap";
 import Username from './username';
+import DynamicText from './dynamictext';
 
 //export const RenderPosts = ({posts}) => {
 class RenderPosts extends Component {
@@ -61,7 +62,7 @@ class RenderPosts extends Component {
         const RenderComments = ({comments}) => {
             return comments.map((comment, i) =>
                 <Grid key={i}>
-                    <Username username={comment.username} /> {comment.text}
+                    <Username username={comment.username} />: <DynamicText text={comment.text} />
                     <div className="divider2" />
                 </Grid>
             )

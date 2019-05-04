@@ -1,6 +1,14 @@
 import actionTypes from '../constants/actionTypes';
 import runtimeEnv from '@mars/heroku-js-runtime-env';
-import {appendFeed, arrayBufferToBase64, dataURLtoFile, getPath, insertFeed, resizeDataURL} from '../actions/helpers';
+import {
+    addLinksToUsernames,
+    appendFeed,
+    arrayBufferToBase64,
+    dataURLtoFile,
+    getPath,
+    insertFeed,
+    resizeDataURL
+} from '../actions/helpers';
 import {getPathUser} from "./helpers";
 
 function globalFeedFetched(feed) {
@@ -281,7 +289,11 @@ export function getPostComments(feed, post) {
             .then((res) => {
                 if (!res.success) throw (JSON.stringify(res));
                 newFeed[index] = Object.assign({}, newFeed[index], {comments: res.comments});
-                console.log("comments retreived: ", res.comments);
+                /*console.log("comments retreived: ", res.comments);
+                for (let i = 0; i < res.comments.length; i++) {
+                    console.log("comment text: ", res.comments[i].text);
+                    res.comments[i].text = addLinksToUsernames(res.comments[i].text);
+                }*/
                 switch (getPath()) {
                     case "globalfeed":
                         return dispatch(globalFeedFetched(newFeed));

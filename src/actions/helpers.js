@@ -246,3 +246,15 @@ export function arrayBufferToBase64(buffer) {
     bytes.forEach((b) => binary += String.fromCharCode(b));
     return window.btoa(binary);
 }
+
+export function addLinksToUsernames(text) {
+    console.log("text: ", text);
+    let textSplit = text.split(' ');
+    textSplit.forEach((word, i, arr) => {
+        if (word[0] === "@") {
+            arr[i] = "\@<Username username={"+word.slice(1)+"}/>";
+        }
+    });
+    console.log("textSplit: ", textSplit);
+    return textSplit.join(" ");
+}

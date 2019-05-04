@@ -8,7 +8,7 @@ export default class Username extends Component {
     render() {
         const username = this.props.username;
         return (
-            <LinkContainer to={"/userfeed/"+username}>
+            <LinkContainer to={"/userfeed/"+username.split(" ")[0]}>
                 <b>@{username}</b>
             </LinkContainer>
         )
