@@ -7,8 +7,12 @@ import btnUserFeed from '../images/btnUserFeed.png';
 import btnGlobalFeed from '../images/btnGlobalFeed.png';
 import btnCreatePost from '../images/btnCreatePost.png';
 import btnHomeFeed from '../images/btnHomeFeed.png';
+import btnUserFeedSel from '../images/btnUserFeedSel.png';
+import btnGlobalFeedSel from '../images/btnGlobalFeedSel.png';
+import btnCreatePostSel from '../images/btnCreatePostSel.png';
+import btnHomeFeedSel from '../images/btnHomeFeedSel.png';
 import {setFileUpload} from '../actions/feedActions';
-import {getOrientation, resetOrientation} from "../actions/helpers";
+import {getOrientation, getPath, resetOrientation} from "../actions/helpers";
 
 function fileToBase64(file) {
     console.log("file to convert: ",file[0]);
@@ -73,24 +77,32 @@ class AppControls extends Component {
                 <Nav bsStyle="tabs" className="App-footer">
                     <LinkContainer to={"/userfeed/"+localStorage.getItem("username")}>
                         <NavItem eventKey={1} className="App-footer-navitem">
-                            <img className="App-footer-image" src={btnUserFeed} alt="User Feed" />
+                            <img className="App-footer-image" src={
+                                getPath()==="userfeed" ? btnUserFeedSel : btnUserFeed
+                            } alt="User Feed" />
                         </NavItem>
                     </LinkContainer>
                     <LinkContainer to="/globalfeed">
                         <NavItem eventKey={2} className="App-footer-navitem">
-                            <img className="App-footer-image" src={btnGlobalFeed} alt="Global Feed" />
+                            <img className="App-footer-image" src={
+                                getPath()==="globalfeed" ? btnGlobalFeedSel : btnGlobalFeed
+                            } alt="Global Feed" />
                         </NavItem>
                     </LinkContainer>
                     {/*<LinkContainer to="/createpost">*/}
                         <NavItem eventKey={3} className="App-footer-navitem">
                             <div onClick={this.openPhotoSelect}>
-                                <img className="App-footer-image" src={btnCreatePost} alt="Create a post" />
+                                <img className="App-footer-image" src={
+                                    getPath()==="createpost" ? btnCreatePostSel : btnCreatePost
+                                } alt="Create a post" />
                             </div>
                         </NavItem>
                     {/*</LinkContainer>*/}
                     <LinkContainer to="/homefeed">
                         <NavItem eventKey={4} className="App-footer-navitem">
-                            <img className="App-footer-image" src={btnHomeFeed} alt="Home feed" />
+                            <img className="App-footer-image" src={
+                                getPath()==="homefeed" ? btnHomeFeedSel : btnHomeFeed
+                            } alt="Home feed" />
                         </NavItem>
                     </LinkContainer>
                 </Nav>

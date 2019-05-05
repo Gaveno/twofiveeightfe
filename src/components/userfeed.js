@@ -100,7 +100,9 @@ class UserFeed extends Component {
                         Close
                     </Button>
                     <Divider />
-                    <RenderFollowers users={followList} />
+                    <div onClick={this.onClickFollowArea}>
+                        <RenderFollowers users={followList} />
+                    </div>
                     <Divider />
                     <Divider />
                     <Divider />
@@ -114,10 +116,8 @@ class UserFeed extends Component {
                 </div>
                 <div className="feed-container">
                     {(this.props.displayType === 0) ? <RenderUserFeed user={this.props.selectedUser} feed={this.props.userFeed} /> : ""}
-                    <div onClick={this.onClickFollowArea}>
                     {(this.props.displayType === 1) ? <Followers title="Followers" followList={this.props.followList} /> : ""}
                     {(this.props.displayType === 2) ? <Followers title="Following" followList={this.props.followList}/> : ""}
-                    </div>
                 </div>
                 <AppControls/>
             </div>
