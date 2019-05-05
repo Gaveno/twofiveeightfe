@@ -122,7 +122,6 @@ class RenderPosts extends Component {
                                     <HelpBlock>{length}/258</HelpBlock>
                                 </Col>
                             </FormGroup>
-
                         : ""}
                     </Row>
                 </Col>

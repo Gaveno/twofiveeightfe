@@ -8,11 +8,39 @@ import AppControls from './appcontrols';
 import {fetchHomeFeed} from "../actions/feedActions";
 import RenderPosts from "./renderposts";
 import {Divider} from "./divider";
+import {getScrollPercent} from "../actions/helpers";
 
 class HomeFeed extends Component {
+    constructor(props) {
+        super(props);
+        this.scrolledPage = this.scrolledPage.bind(this);
+    }
+
     componentDidMount() {
+        window.addEventListener('scroll', this.scrolledPage);
+        const last = localStorage.getItem('lastFetchHome');
         const {dispatch} = this.props;
-        dispatch(fetchHomeFeed());
+        if (this.props.homeFeed.length <= 0 || Date.now() - last > 5000) {
+            dispatch(fetchHomeFeed(0, this.props.homeFeed));
+        }
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.scrolledPage);
+    }
+
+    scrolledPage() {
+        //console.log("Page scrolled: ", getScrollPercent());
+        const {dispatch} = this.props;
+        const last = localStorage.getItem('lastFetchHome');
+        // Make sure last fetch was over 5 seconds ago
+        if (Date.now() - last > 5000) {
+            if (getScrollPercent() <= 0) {
+                dispatch(fetchHomeFeed(0, this.props.homeFeed));
+            } else if (getScrollPercent() > 80) {
+                dispatch(fetchHomeFeed(this.props.homeFeed.length, this.props.homeFeed));
+            }
+        }
     }
 
     render() {

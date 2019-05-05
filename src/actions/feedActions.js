@@ -173,27 +173,17 @@ export function fetchUserFeed(skip, prevFeed) {
     }
 }
 
-export function fetchHomeFeed() {
+export function fetchHomeFeed(skip, prevFeed) {
+    let s = 0;
+    if (skip) s = skip;
     localStorage.setItem('lastFetchHome', Date.now());
+    const env = runtimeEnv();
     return dispatch => {
-        let feed = [];
-        for (let i = 0; i < 15; i++) {
-            let post = {
-                img: "",
-                username: "homeUser"+i,
-                profPhoto: "",
-                commentCount: i,
-            };
-            feed.push(post);
-        }
-        dispatch(homeFeedFetched(feed));
-    }
-    /*return dispatch => {
-        return fetch(`${env.REACT_APP_API_URL}/userfeed`, {
+        return fetch(`${env.REACT_APP_API_URL}/posts/home/?skip=${s}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': localStorage.getItem('token')
             },
             mode: 'cors'})
@@ -204,10 +194,22 @@ export function fetchHomeFeed() {
                 return response.json();
             })
             .then((res) => {
-                dispatch(globalFeedFetched(res.feed));
+                //console.log(JSON.stringify(res));
+                if (!res.feed) throw (JSON.stringify(res));
+                //console.log("skip: ", s);
+                //console.log("Received Feed: ", res.feed);
+                let newFeed = [];
+                if (s === 0 && prevFeed.length !== 0) {
+                    newFeed = insertFeed(prevFeed, res.feed);
+                }
+                else {
+                    newFeed = appendFeed(prevFeed, res.feed);
+                }
+                //console.log("New Feed: ", newFeed);
+                dispatch(homeFeedFetched(newFeed));
             })
             .catch((e) => console.log(e));
-    }*/
+    }
 }
 
 export function setFileUpload(file) {
