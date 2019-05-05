@@ -2,6 +2,7 @@ import defaultProfilePhoto from "../images/defaultProfilePhoto.png";
 import React from 'react';
 import Username from "./username";
 import {Divider} from "./divider";
+import {arrayBufferToBase64} from "../actions/helpers";
 
 
 export const RenderFollowers = ({users}) => {
@@ -9,7 +10,7 @@ export const RenderFollowers = ({users}) => {
         <div key={i} className="followers">
             <img className="follower-list"
                  src={(user.imgProfile && user.imgProfile.data) ?
-                     `data:image/jpeg;base64,${user.imgProfile.data}` :
+                     `data:image/jpeg;base64,${arrayBufferToBase64(user.imgProfile.data.data)}` :
                      defaultProfilePhoto}
                  alt="user profile"/>
             <Username username={user.username} />
