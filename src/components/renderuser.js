@@ -33,6 +33,7 @@ class RenderUser extends Component {
         this.onClickUpdateProfilePhoto = this.onClickUpdateProfilePhoto.bind(this);
         this.onClickUpdateAbout = this.onClickUpdateAbout.bind(this);
         this.updateDetails = this.updateDetails.bind(this);
+        this.onClickFollow = this.onClickFollow.bind(this);
         this.state = {
             details: {
                 aboutText: ""
@@ -100,7 +101,8 @@ class RenderUser extends Component {
     }
 
     onClickFollow() {
-        submitFollow();
+        const {dispatch} = this.props;
+        dispatch(submitFollow(this.props.userFeed));
     }
     render() {
         return (
@@ -144,7 +146,11 @@ class RenderUser extends Component {
                                     getPathUser() !== localStorage.getItem("username") ?
                                         <Row className="user-feed-row-1">
                                             <Button className="user-feed-follow-button" type="button"
-                                            onClick={this.onClickFollow}>Follow</Button>
+                                                    onClick={this.onClickFollow}>
+                                                {
+                                                    this.props.selectedUser.following ? "Unfollow" : "Follow"
+                                                }
+                                            </Button>
                                         </Row>
                                         :
                                         ""
@@ -211,7 +217,8 @@ const mapStateToProps = (state) => {
         followList: state.feed.followList,
         displayType: state.feed.displayType,
         fileUpload: state.feed.fileUpload,
-        selectedUser: state.feed.selectedUser
+        selectedUser: state.feed.selectedUser,
+        userFeed: state.feed.userFeed
     }
 };
 
