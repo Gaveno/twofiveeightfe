@@ -152,7 +152,7 @@ export function fetchUserFeed(skip, prevFeed) {
                 //console.log("skip: ", s);
                 //console.log("Received Feed: ", res.feed);
                 //console.log("Got user: ", res.user);
-                if (res.user.imgProfile.data && res.user.imgProfile.data.data)
+                if (res.user.imgProfile && res.user.imgProfile.data && res.user.imgProfile.data.data)
                     res.user.imgProfile.data = arrayBufferToBase64(res.user.imgProfile.data.data);
                 //console.log("Got user: ", res.user);
                 let newFeed = [];
