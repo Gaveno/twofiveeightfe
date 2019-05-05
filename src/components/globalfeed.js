@@ -60,7 +60,7 @@ class GlobalFeed extends Component {
 
     onSearch(e) {
         const search = this.state.details.searchStr;
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' || e.key === 'Return') {
             const {dispatch} = this.props;
             if (this.state.details.searchType === 0) {
                 if (search.length > 0) {
