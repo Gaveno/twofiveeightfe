@@ -45,6 +45,10 @@ class UserFeed extends Component {
         //console.log("Page scrolled: ", getScrollPercent());
         const {dispatch} = this.props;
         const last = localStorage.getItem('lastFetchUser');
+        if(this.props.displayType !== 0)
+        {
+            return;
+        }
         // Make sure last fetch was over 5 seconds ago
         if (Date.now() - last > 5000) {
             if (getScrollPercent() <= 0) {
@@ -81,9 +85,10 @@ class UserFeed extends Component {
             return(
                 <div className="user-followers-container">
                     <Divider />
-                    <Divider />
-                    <Divider />
                     <RenderFollowers users={followList} />
+                    <Divider />
+                    <Divider />
+                    <Divider />
                 </div>
                 )
         };
