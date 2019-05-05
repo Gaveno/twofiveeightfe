@@ -71,7 +71,7 @@ class GlobalFeed extends Component {
         const last = parseInt((localStorage.getItem('lastSearch') ? localStorage.getItem('lastSearch') : "0"));
         if (Date.now() - last > 1000) {
             localStorage.setItem('lastSearch', Date.now().toString());
-            const search = this.state.details.searchStr;
+            const search = this.state.details.searchStr.toLowerCase();
             const {dispatch} = this.props;
             if (this.state.details.searchType === 0) {
                 if (search.length > 0) {
@@ -112,7 +112,7 @@ class GlobalFeed extends Component {
                     if (lastTag.length > 0 && lastTag === this.state.details.searchStr)
                         newTag = false;
                     localStorage.setItem('lastHashtag', this.state.details.searchStr);
-                    dispatch(fetchHashtagFeed(0, this.state.details.searchStr, this.props.searchFeed, newTag));
+                    dispatch(fetchHashtagFeed(0, this.state.details.searchStr.toLowerCase(), this.props.searchFeed, newTag));
                 } else if (getScrollPercent() > 80) {
                     const lastTag = (localStorage.getItem('lastHashtag') ? localStorage.getItem('lastHashtag') : "");
                     let newTag = true;
@@ -121,7 +121,7 @@ class GlobalFeed extends Component {
                     localStorage.setItem('lastHashtag', this.state.details.searchStr);
                     dispatch(fetchHashtagFeed(
                         this.props.searchFeed.length,
-                        this.state.details.searchStr,
+                        this.state.details.searchStr.toLowerCase(),
                         this.props.searchFeed,
                         newTag));
                 }
