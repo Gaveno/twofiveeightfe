@@ -1,7 +1,6 @@
 import actionTypes from '../constants/actionTypes';
 import runtimeEnv from '@mars/heroku-js-runtime-env';
 import {
-    addLinksToUsernames,
     appendFeed,
     arrayBufferToBase64,
     dataURLtoFile,
@@ -39,6 +38,13 @@ function homeFeedFetched(feed) {
     return {
         type: actionTypes.FETCH_HOMEFEED,
         homeFeed: feed
+    }
+}
+
+export function usersFetched(users) {
+    return {
+        type: actionTypes.FETCH_USERS,
+        users: users
     }
 }
 
@@ -386,6 +392,33 @@ export function submitComment(post, text, posts) {
                 dispatch(getPostComments(posts, post));
             })
             .catch((e) => console.log(e));
+    }
+}
+
+export function fetchUsers(name) {
+    const env = runtimeEnv();
+    return dispatch => {
+        return fetch(`${env.REACT_APP_API_URL}/users/${name}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            mode: 'cors'
+        })
+        .then((response) => {
+            if (!response.status) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((res) => {
+            //console.log(JSON.stringify(res));
+            console.log("Success: " + res.success);
+            if (!res.success) throw (JSON.stringify(res));
+            return dispatch(usersFetched(res.users));
+        })
+        .catch((e) => console.log(e));
     }
 }
 

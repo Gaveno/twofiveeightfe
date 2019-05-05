@@ -247,18 +247,6 @@ export function arrayBufferToBase64(buffer) {
     return window.btoa(binary);
 }
 
-export function addLinksToUsernames(text) {
-    console.log("text: ", text);
-    let textSplit = text.split(' ');
-    textSplit.forEach((word, i, arr) => {
-        if (word[0] === "@") {
-            arr[i] = "\@<Username username={"+word.slice(1)+"}/>";
-        }
-    });
-    console.log("textSplit: ", textSplit);
-    return textSplit.join(" ");
-}
-
 export function fileToBase64(file) {
     console.log("file to convert: ",file[0]);
     return new Promise((res, rej) => {

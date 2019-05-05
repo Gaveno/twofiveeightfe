@@ -74,6 +74,10 @@ export default (state = initialState, action) => {
             updated['selectedUser'] = action.selectedUser;
             return updated;
 
+        case constants.FETCH_USERS:
+            updated['users'] = action.users;
+            return updated;
+
         default:
             return state;
     }

@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
 import RenderPosts from "./renderposts";
-import {fetchGlobalFeed, fetchUserFeed} from "../actions/feedActions";
+import {fetchUserFeed} from "../actions/feedActions";
 import {Divider} from "./divider";
 import {RenderFollowers} from "./renderfollowers";
 import RenderUser from "./renderuser";

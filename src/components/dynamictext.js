@@ -2,9 +2,6 @@ import React, {Component} from 'react';
 import Username from './username';
 
 export default class DynamicText extends Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         if (!this.props.text)
             return "";

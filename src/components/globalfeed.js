@@ -6,10 +6,11 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
 import {FormControl, FormGroup, Col, Grid, Button} from 'react-bootstrap';
-import {fetchGlobalFeed, fetchHashtagFeed, searchFeedFetched} from '../actions/feedActions';
+import {fetchGlobalFeed, fetchHashtagFeed, fetchUsers, searchFeedFetched, usersFetched} from '../actions/feedActions';
 import RenderPosts from './renderposts';
 import {Divider} from './divider';
 import {getScrollPercent} from "../actions/helpers";
+import {RenderFollowers} from "./renderfollowers";
 
 
 class GlobalFeed extends Component {
@@ -69,10 +70,10 @@ class GlobalFeed extends Component {
     onSendSearch() {
         console.log("send search");
         const last = parseInt((localStorage.getItem('lastSearch') ? localStorage.getItem('lastSearch') : "0"));
+        const search = this.state.details.searchStr.toLowerCase();
+        const {dispatch} = this.props;
         if (Date.now() - last > 1000) {
             localStorage.setItem('lastSearch', Date.now().toString());
-            const search = this.state.details.searchStr.toLowerCase();
-            const {dispatch} = this.props;
             if (this.state.details.searchType === 0) {
                 if (search.length > 0) {
                     console.log("searching for hashtag: " + search);
@@ -88,6 +89,10 @@ class GlobalFeed extends Component {
                 }
             } else {
                 console.log("searching for user: " + this.state.details.searchStr);
+                if (search.length > 0)
+                    dispatch(fetchUsers(search));
+                else
+                    dispatch(usersFetched([]));
             }
         }
     }
@@ -159,7 +164,12 @@ class GlobalFeed extends Component {
                     <Button onClick={()=>this.onSendSearch()} className="search-button">Search</Button>
                 </Col>
                 </Grid>
-                <RenderPosts posts={(this.props.searchFeed.length > 0) ? this.props.searchFeed : this.props.globalFeed} />
+                { this.props.searchUsers.length <= 0 ?
+                    <RenderPosts posts={(this.props.searchFeed.length > 0) ? this.props.searchFeed : this.props.globalFeed} />
+                    :
+                    <RenderFollowers users={this.props.searchUsers} />
+                }
+
                 <Divider />
                 <Divider />
                 <Divider />
@@ -172,7 +182,8 @@ class GlobalFeed extends Component {
 const mapStateToProps = (state) => {
     return {
         globalFeed: state.feed.globalFeed,
-        searchFeed: state.feed.searchFeed
+        searchFeed: state.feed.searchFeed,
+        searchUsers: state.feed.users
     }
 };
 
