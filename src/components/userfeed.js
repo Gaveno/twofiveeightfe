@@ -9,7 +9,6 @@ import RenderPosts from "./renderposts";
 import {fetchGlobalFeed, fetchUserFeed} from "../actions/feedActions";
 import {Divider} from "./divider";
 import {RenderFollowers} from "./renderfollowers";
-import {RenderFollowing} from "./renderfollowing";
 import RenderUser from "./renderuser";
 import {getScrollPercent} from "../actions/helpers";
 
