@@ -23,10 +23,13 @@ class HomeFeed extends Component {
         if (this.props.homeFeed.length <= 0 || Date.now() - last > 5000) {
             dispatch(fetchHomeFeed(0, this.props.homeFeed));
         }
+        if (localStorage.getItem('homeScroll'))
+            window.scroll({top: parseInt(localStorage.getItem('homeScroll'))});
     }
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.scrolledPage);
+        localStorage.setItem('homeScroll', window.scrollY.toString());
     }
 
     scrolledPage() {

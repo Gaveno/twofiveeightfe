@@ -33,10 +33,13 @@ class UserFeed extends Component {
         if (this.props.userFeed.length <= 0 || Date.now() - last > 5000) {
             dispatch(fetchUserFeed(0, this.props.userFeed));
         }
+        if (localStorage.getItem('userScroll'))
+            window.scroll({top: parseInt(localStorage.getItem('userScroll'))});
     }
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.scrolledPage);
+        localStorage.setItem('userScroll', window.scrollY.toString());
     }
 
     scrolledPage() {

@@ -43,10 +43,13 @@ class GlobalFeed extends Component {
         if (this.props.globalFeed.length <= 0 || Date.now() - last > 5000) {
             dispatch(fetchGlobalFeed(0, this.props.globalFeed));
         }
+        if (localStorage.getItem('globalScroll'))
+            window.scroll({top: parseInt(localStorage.getItem('globalScroll'))});
     }
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.scrolledPage);
+        localStorage.setItem('globalScroll', window.scrollY.toString());
     }
 
     scrolledPage() {
