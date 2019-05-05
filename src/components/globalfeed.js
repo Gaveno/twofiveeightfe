@@ -13,7 +13,6 @@ import {getScrollPercent} from "../actions/helpers";
 import {RenderFollowers} from "./renderfollowers";
 
 const TYPE_HASHTAG = 0;
-const TYPE_USER = 1;
 
 class GlobalFeed extends Component {
 

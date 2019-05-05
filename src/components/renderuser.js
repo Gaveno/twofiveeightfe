@@ -4,7 +4,12 @@ import {Button, Col, FormControl, FormGroup, Grid, HelpBlock, NavItem, Row} from
 import defaultProfilePhoto from "../images/defaultProfilePhoto.png";
 import profilePhotoCrop from "../images/profilePhotoCrop.png";
 import {Divider} from './divider';
-import {fetchFollowers, submitFollow, submitProfilePhoto} from "../actions/feedActions";
+import {
+    fetchFollowers,
+    submitFollow,
+    submitProfilePhoto,
+    submitUnfollow,
+} from "../actions/feedActions";
 import {fetchFollowing} from "../actions/feedActions";
 import {submitAbout} from "../actions/feedActions";
 import btnEdit from "../images/btnEdit.png";
@@ -32,12 +37,11 @@ class RenderUser extends Component {
         this.onClickFollowing = this.onClickFollowing.bind(this);
         this.onClickUpdateProfilePhoto = this.onClickUpdateProfilePhoto.bind(this);
         this.onClickUpdateAbout = this.onClickUpdateAbout.bind(this);
-        this.updateDetails = this.updateDetails.bind(this);
+        this.updateAbout = this.updateAbout.bind(this);
         this.onClickFollow = this.onClickFollow.bind(this);
         this.state = {
-            details: {
-                aboutText: ""
-            }
+            aboutText: "",
+            editAbout: false
         }
     }
 
@@ -58,7 +62,7 @@ class RenderUser extends Component {
 
     onClickUpdateAbout() {
         const {dispatch} = this.props;
-        dispatch(submitAbout(this.props.selectedUser, this.state.details.aboutText));
+        dispatch(submitAbout(this.props.selectedUser, this.state.aboutText));
     }
 
     openPhotoSelect() {
@@ -85,16 +89,12 @@ class RenderUser extends Component {
         }
     }
 
-    updateDetails(e) {
-        let updateDetails = Object.assign({}, this.state.details);
-        updateDetails[e.target.id] = e.target.value;
-        this.setState({
-            details: updateDetails
-        });
+    updateAbout(e) {
+        this.setState({aboutText: e.target.value});
     }
 
     getValidationState() {
-        const length = this.state.details.aboutText.length;
+        const length = this.state.aboutText.length;
         if (length > 258) return 'error';
         if (length > 240) return 'warning';
         return 'success';
@@ -102,8 +102,16 @@ class RenderUser extends Component {
 
     onClickFollow() {
         const {dispatch} = this.props;
-        dispatch(submitFollow(this.props.userFeed));
+        if (this.props.selectedUser.following)
+            dispatch(submitUnfollow(this.props.userFeed));
+        else
+            dispatch(submitFollow(this.props.userFeed));
     }
+
+    onClickEditAbout = () => {
+        this.setState({aboutText: this.props.selectedUser.about, editAbout: true});
+    };
+
     render() {
         return (
             <div className="user-feed-container">
@@ -158,8 +166,8 @@ class RenderUser extends Component {
                                 <div onClick={this.onClickFollowers}>
                                     <Row className="user-feed-row-1">
                                         <NavItem className="no-bullets">
-                                            <p className="user-feed-follower-count">{this.props.selectedUser.followerCount
-                                                ? this.props.selectedUser.followerCount
+                                            <p className="user-feed-follower-count">{this.props.selectedUser.followersCount
+                                                ? this.props.selectedUser.followersCount
                                                 : "0"} Followers</p>
                                         </NavItem>
                                     </Row>
@@ -167,8 +175,8 @@ class RenderUser extends Component {
                                 <div onClick={this.onClickFollowing}>
                                     <Row className="user-feed-row-1">
                                         <NavItem className="no-bullets">
-                                            <p className="user-feed-following-count">Following {this.props.selectedUser.following
-                                                ? this.props.selectedUser.following
+                                            <p className="user-feed-following-count">Following {this.props.selectedUser.followingCount
+                                                ? this.props.selectedUser.followingCount
                                                 : "0"}</p>
                                         </NavItem>
                                     </Row>
@@ -178,27 +186,32 @@ class RenderUser extends Component {
                     </Grid>
                     <Divider/>
                     {
-                        getPathUser() ===  localStorage.getItem("username") ?
+                        (getPathUser() ===  localStorage.getItem("username") && this.state.editAbout) ?
                             <Row className="about-text">
                                 <FormGroup controlId="aboutText"
                                            validationState={this.getValidationState()}>
                                     <Col xs={6}>
-                                        <FormControl value={this.state.details.aboutText}
-                                                     onChange={this.updateDetails}
+                                        <FormControl value={this.state.aboutText}
+                                                     onChange={this.updateAbout}
                                                      componentClass="textarea"
                                                      placeholder="Tell us about yourself..."/>
                                     </Col>
                                     <Col xs={2} className="submit-about-button-col">
-                                        {(this.getValidationState()==='error' ? <Button disabled>Submit</Button> :
+                                        {(this.getValidationState()==='error' ? <Button disabled>Update</Button> :
                                             <Button onClick={()=>this.onClickUpdateAbout()}>Update</Button>)}
-                                        <HelpBlock>{this.state.details.aboutText.length}/258</HelpBlock>
+                                        <HelpBlock>{this.state.aboutText.length}/258</HelpBlock>
                                     </Col>
                                 </FormGroup>
                             </Row>
                             :
                             <div>
                                 <div>
-                                <b>About</b>
+                                    {getPathUser()===localStorage.getItem('username') ?
+                                        <img className="edit-about-text"
+                                             alt="profile edit"
+                                             src={btnEdit} onClick={this.onClickEditAbout}/>
+                                    : ""}
+                                    <b>About</b>
                                 </div>
                                 {this.props.selectedUser.about}
                             </div>

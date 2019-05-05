@@ -6,23 +6,31 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
 import RenderPosts from "./renderposts";
-import {fetchUserFeed} from "../actions/feedActions";
+import {fetchUserFeed, userFeedFetchedNOU} from "../actions/feedActions";
 import {Divider} from "./divider";
 import {RenderFollowers} from "./renderfollowers";
 import RenderUser from "./renderuser";
 import {getScrollPercent} from "../actions/helpers";
+import {Button} from "react-bootstrap";
+//import btnClose from "../images/btnClose.png";
 
 class UserFeed extends Component {
     constructor(props) {
         super(props);
         this.setDisplayType = this.setDisplayType.bind(this);
         this.scrolledPage = this.scrolledPage.bind(this);
+        this.onClickClose = this.onClickClose.bind(this);
     }
 
     setDisplayType(e) {
         let setDisplayType = Object.assign({}, this.state);
         setDisplayType.displayType = e;
         this.setState(setDisplayType);
+    }
+
+    onClickClose() {
+        const {dispatch} = this.props;
+        dispatch(userFeedFetchedNOU(this.props.userFeed));
     }
 
     componentDidMount() {
@@ -69,21 +77,21 @@ class UserFeed extends Component {
         }
         const RenderUserFeed = ({user, feed}) => {
             return (
-                <div className="userInfoContainer">
-                        <RenderUser />
-                        <div className="feed-container">
-                            <RenderPosts posts={feed}/>
-                            <Divider/>
-                            <Divider/>
-                            <Divider/>
-
-                        </div>
+                    <div>
+                        <RenderPosts posts={feed}/>
+                        <Divider/>
+                        <Divider/>
+                        <Divider/>
                     </div>
                 )
         };
-        const Followers = ({followList}) => {
+        const Followers = ({title, followList}) => {
             return(
                 <div className="user-followers-container">
+                    <b>{title}</b>
+                    <Button onClick={this.onClickClose} className="userlist-close">
+                        Close
+                    </Button>
                     <Divider />
                     <RenderFollowers users={followList} />
                     <Divider />
@@ -94,9 +102,14 @@ class UserFeed extends Component {
         };
         return (
             <div>
-                {(this.props.displayType === 0) ? <RenderUserFeed user={this.props.selectedUser} feed={this.props.userFeed} /> : ""}
-                {(this.props.displayType === 1) ? <Followers followList={this.props.followList} /> : ""}
-                {(this.props.displayType === 2) ? <Followers followList={this.props.followList}/> : ""}
+                <div className="userInfoContainer">
+                    <RenderUser />
+                </div>
+                <div className="feed-container">
+                    {(this.props.displayType === 0) ? <RenderUserFeed user={this.props.selectedUser} feed={this.props.userFeed} /> : ""}
+                    {(this.props.displayType === 1) ? <Followers title="Followers" followList={this.props.followList} /> : ""}
+                    {(this.props.displayType === 2) ? <Followers title="Following" followList={this.props.followList}/> : ""}
+                </div>
                 <AppControls/>
             </div>
         );

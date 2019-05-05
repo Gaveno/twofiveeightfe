@@ -26,7 +26,7 @@ function userFeedFetched(user, feed) {
     }
 }
 
-function userFeedFetchedNOU(feed) {
+export function userFeedFetchedNOU(feed) {
     return {
         type: actionTypes.FETCH_USERFEEDNOU,
         userFeed: feed,
@@ -524,11 +524,12 @@ export function submitAbout(user, about) {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
-                'Authorization': localStorage.getItem('token')
+                'Authorization': localStorage.getItem('token'),
+                'Content-Type': 'application/json',
             },
-            body: {
+            body: JSON.stringify({
                 text: about
-            } ,
+            }),
             mode: 'cors'
         })
             .then((response) => {
@@ -572,5 +573,30 @@ export function submitFollow(feed) {
             })
             .catch((e) => console.log(e));
     }
+}
 
+export function submitUnfollow(feed) {
+    const env = runtimeEnv();
+    return dispatch => {
+        return fetch(`${env.REACT_APP_API_URL}/follow/${getPathUser()}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            mode: 'cors'})
+            .then((response) => {
+                if (!response.status) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then((res) => {
+                //console.log(JSON.stringify(res));
+                console.log(res.message);
+                if (!res.success) throw (JSON.stringify(res));
+                return dispatch(fetchUserFeed(0, feed))
+            })
+            .catch((e) => console.log(e));
+    }
 }
