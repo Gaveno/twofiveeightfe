@@ -73,36 +73,27 @@ class UserFeed extends Component {
                             <Divider/>
                             <Divider/>
                             <Divider/>
-                            <AppControls/>
+
                         </div>
                     </div>
                 )
         };
-        const RenderFollowers = ({followList}) => {
+        const Followers = ({followList}) => {
             return(
                 <div className="user-followers-container">
                     <Divider />
                     <Divider />
                     <Divider />
-
+                    <RenderFollowers users={followList} />
                 </div>
                 )
-        };
-        const RenderFollowing = ({followList}) => {
-            return(
-                <div className="user-following-container">
-                    <Divider />
-                    <Divider />
-                    <Divider />
-
-                </div>
-            )
         };
         return (
             <div>
                 {(this.props.displayType === 0) ? <RenderUserFeed user={this.props.selectedUser} feed={this.props.userFeed} /> : ""}
-                {(this.props.displayType === 1) ? <RenderFollowers followList={this.props.followList} /> : ""}
-                {(this.props.displayType === 2) ? <RenderFollowing followList={this.props.followList}/> : ""}
+                {(this.props.displayType === 1) ? <Followers followList={this.props.followList} /> : ""}
+                {(this.props.displayType === 2) ? <Followers followList={this.props.followList}/> : ""}
+                <AppControls/>
             </div>
         );
     }
