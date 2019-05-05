@@ -10,7 +10,7 @@ import {fetchUserFeed, userFeedFetchedNOU} from "../actions/feedActions";
 import {Divider} from "./divider";
 import {RenderFollowers} from "./renderfollowers";
 import RenderUser from "./renderuser";
-import {getScrollPercent} from "../actions/helpers";
+import {getPathUser, getScrollPercent} from "../actions/helpers";
 import {Button} from "react-bootstrap";
 //import btnClose from "../images/btnClose.png";
 
@@ -20,6 +20,7 @@ class UserFeed extends Component {
         this.setDisplayType = this.setDisplayType.bind(this);
         this.scrolledPage = this.scrolledPage.bind(this);
         this.onClickClose = this.onClickClose.bind(this);
+        this.onClickFollowArea = this.onClickFollowArea.bind(this);
     }
 
     setDisplayType(e) {
@@ -67,6 +68,12 @@ class UserFeed extends Component {
         }
     }
 
+    onClickFollowArea() {
+        if (this.props.selectedUser.username !== getPathUser()) {
+            window.location.reload();
+        }
+    }
+
     render() {
         if (this.props.displayType === undefined) {
             return (
@@ -107,8 +114,10 @@ class UserFeed extends Component {
                 </div>
                 <div className="feed-container">
                     {(this.props.displayType === 0) ? <RenderUserFeed user={this.props.selectedUser} feed={this.props.userFeed} /> : ""}
+                    <div onClick={this.onClickFollowArea}>
                     {(this.props.displayType === 1) ? <Followers title="Followers" followList={this.props.followList} /> : ""}
                     {(this.props.displayType === 2) ? <Followers title="Following" followList={this.props.followList}/> : ""}
+                    </div>
                 </div>
                 <AppControls/>
             </div>
