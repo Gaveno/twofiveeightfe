@@ -8,7 +8,7 @@ import {fetchFollowers, submitProfilePhoto} from "../actions/feedActions";
 import {fetchFollowing} from "../actions/feedActions";
 import {submitAbout} from "../actions/feedActions";
 import btnEdit from "../images/btnEdit.png";
-import {arrayBufferToBase64, getOrientation, resetOrientation} from "../actions/helpers";
+import {arrayBufferToBase64, getOrientation, getPath, getPathUser, resetOrientation} from "../actions/helpers";
 
 function fileToBase64(file) {
     console.log("file to convert: ",file[0]);
@@ -137,9 +137,14 @@ class RenderUser extends Component {
                                         ? this.props.selectedUser.username
                                         : "username"}</b>
                                 </Row>
-                                <Row className="user-feed-row-1">
-                                    <Button className="user-feed-follow-button" type="button">Follow</Button>
-                                </Row>
+                                {
+                                    getPathUser() !== localStorage.getItem("username") ?
+                                        <Row className="user-feed-row-1">
+                                            <Button className="user-feed-follow-button" type="button">Follow</Button>
+                                        </Row>
+                                        :
+                                        ""
+                                }
                                 <div onClick={this.onClickFollowers}>
                                     <Row className="user-feed-row-1">
                                         <NavItem className="no-bullets">
@@ -162,22 +167,34 @@ class RenderUser extends Component {
                         </Row>
                     </Grid>
                     <Divider/>
+                    {
+                        getPathUser() ===  localStorage.getItem("username") ?
                             <Row className="about-text">
                                 <FormGroup controlId="aboutText"
                                            validationState={this.getValidationState()}>
-                                <Col xs={6}>
-                                    <FormControl value={this.state.details.aboutText}
-                                                 onChange={this.updateDetails}
-                                                 componentClass="textarea"
-                                                 placeholder="Say something nice..."/>
-                                </Col>
+                                    <Col xs={6}>
+                                        <FormControl value={this.state.details.aboutText}
+                                                     onChange={this.updateDetails}
+                                                     componentClass="textarea"
+                                                     placeholder="Say something nice..."/>
+                                    </Col>
                                     <Col xs={2} className="submit-about-button-col">
                                         {(this.getValidationState()==='error' ? <Button disabled>Submit</Button> :
                                             <Button onClick={()=>this.onClickUpdateAbout()}>Update</Button>)}
                                         <HelpBlock>{this.state.details.aboutText.length}/258</HelpBlock>
                                     </Col>
-                            </FormGroup>
+                                </FormGroup>
                             </Row>
+                            :
+                            <div>
+                                <div>
+                                <b>About</b>
+                                </div>
+                                {this.props.selectedUser.about}
+                            </div>
+
+
+                    }
                 </Row>
                 <Divider/>
             </div>
