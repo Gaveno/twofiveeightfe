@@ -44,14 +44,16 @@ function homeFeedFetched(feed) {
 export function usersFetched(users) {
     return {
         type: actionTypes.FETCH_USERS,
-        users: users
+        users: users,
+        searchFeed: []
     }
 }
 
 export function searchFeedFetched(feed) {
     return {
         type: actionTypes.FETCH_SEARCHFEED,
-        searchFeed: feed
+        searchFeed: feed,
+        users: []
     }
 }
 

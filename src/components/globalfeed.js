@@ -12,6 +12,8 @@ import {Divider} from './divider';
 import {getScrollPercent} from "../actions/helpers";
 import {RenderFollowers} from "./renderfollowers";
 
+const TYPE_HASHTAG = 0;
+const TYPE_USER = 1;
 
 class GlobalFeed extends Component {
 
@@ -21,17 +23,19 @@ class GlobalFeed extends Component {
         this.scrolledPage = this.scrolledPage.bind(this);
         this.onSearch = this.onSearch.bind(this);
         this.onSendSearch = this.onSendSearch.bind(this);
+        this.onTypeChange = this.onTypeChange.bind(this);
 
         this.state = {
             details: {
-                searchType: 0,
                 searchStr: ""
             },
+            searchType: TYPE_HASHTAG,
             popup: false
         }
     }
 
     updateDetails(e) {
+        console.log("event: ", e);
         let updateDetails = Object.assign({}, this.state.details);
         updateDetails[e.target.id] = e.target.value;
         const numSpaces = updateDetails.searchStr.split(' ').length - 1;
@@ -63,32 +67,32 @@ class GlobalFeed extends Component {
 
     onSearch(e) {
         if (e.key === 'Enter' || e.key === 'Return') {
-            this.onSendSearch();
+            this.onSendSearch(this.state.searchType);
         }
     }
 
-    onSendSearch() {
-        console.log("send search");
+    onSendSearch(type) {
+        //console.log("send search, state: ", type);
         const last = parseInt((localStorage.getItem('lastSearch') ? localStorage.getItem('lastSearch') : "0"));
         const search = this.state.details.searchStr.toLowerCase();
         const {dispatch} = this.props;
         if (Date.now() - last > 1000) {
             localStorage.setItem('lastSearch', Date.now().toString());
-            if (this.state.details.searchType === 0) {
+            if (type == TYPE_HASHTAG) {
                 if (search.length > 0) {
-                    console.log("searching for hashtag: " + search);
+                    //console.log("searching for hashtag: " + search);
                     const lastTag = (localStorage.getItem('lastHashtag') ? localStorage.getItem('lastHashtag') : "");
                     let newTag = true;
                     if (lastTag.length > 0 && lastTag === search)
                         newTag = false;
-                    console.log("newTag: ", newTag);
+                    //console.log("newTag: ", newTag);
                     localStorage.setItem('lastHashtag', search);
                     dispatch(fetchHashtagFeed(0, search, this.props.searchFeed, newTag));
                 } else {
                     dispatch(searchFeedFetched([]));
                 }
             } else {
-                console.log("searching for user: " + this.state.details.searchStr);
+                //console.log("searching for user: " + this.state.details.searchStr);
                 if (search.length > 0)
                     dispatch(fetchUsers(search));
                 else
@@ -97,11 +101,18 @@ class GlobalFeed extends Component {
         }
     }
 
+    onTypeChange() {
+        //console.log("inputE1.value: ", this.inputE1.value);
+        this.setState({
+            searchType: this.inputE1.value
+        });
+    }
+
     scrolledPage() {
         const {dispatch} = this.props;
         const last = localStorage.getItem('lastFetchGlobal');
         if (Date.now() - last > 5000) {
-            if (this.props.searchFeed.length <= 0) {
+            if (this.props.searchFeed.length <= 0 && this.props.searchUsers.length <= 0) {
                 // Make sure last fetch was over 5 seconds ago
                 if (getScrollPercent() <= 0) {
                     dispatch(fetchGlobalFeed(0, this.props.globalFeed));
@@ -135,16 +146,17 @@ class GlobalFeed extends Component {
     }
 
     render() {
+        const type = this.state.searchType;
         return (
             <div className="feed-container">
                 <Grid className="post">
                 <Col xs={3}>
                     <FormGroup controlId="searchType">
                         <FormControl className="search-type"
-                                     onChange={this.updateDetails}
+                                     inputRef={ e1 => this.inputE1=e1 }
+                                     onChange={this.onTypeChange}
                                      componentClass="select"
-                                     placeholder="#"
-                                     value={this.state.details.searchType}>
+                                     placeholder="#">
                             <option value={0}>#</option>
                             <option value={1}>@</option>
                         </FormControl>
@@ -161,10 +173,10 @@ class GlobalFeed extends Component {
                     </FormGroup>
                 </Col>
                 <Col xs={2}>
-                    <Button onClick={()=>this.onSendSearch()} className="search-button">Search</Button>
+                    <Button onClick={()=>this.onSendSearch(this.state.searchType)} className="search-button">Search</Button>
                 </Col>
                 </Grid>
-                { this.props.searchUsers.length <= 0 ?
+                { (this.props.searchUsers.length <= 0 || type === TYPE_HASHTAG) ?
                     <RenderPosts posts={(this.props.searchFeed.length > 0) ? this.props.searchFeed : this.props.globalFeed} />
                     :
                     <RenderFollowers users={this.props.searchUsers} />

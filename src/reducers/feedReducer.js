@@ -28,6 +28,7 @@ export default (state = initialState, action) => {
 
         case constants.FETCH_SEARCHFEED:
             updated['searchFeed'] = action.searchFeed;
+            updated['users'] = action.users;
             return updated;
 
         case constants.FETCH_USERFEED:
@@ -76,6 +77,7 @@ export default (state = initialState, action) => {
 
         case constants.FETCH_USERS:
             updated['users'] = action.users;
+            updated['searchFeed'] = action.searchFeed;
             return updated;
 
         default:
