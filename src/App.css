@@ -275,6 +275,43 @@
     width: 90%;
 }
 
+.followers {
+  width: 200px;
+  margin-left: 25%;
+  margin-right: auto;
+  border: 1px solid #ddd;
+  text-align: left;
+  padding: 5px;
+}
+
+.followers-photo {
+  position: relative;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.followers-photo-container {
+  position: relative;
+  left: 0;
+  width: 50px;
+  height: 50px;
+}
+
+.followers-photo-container .after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+}
+
+.followers-username {
+  position: relative;
+  margin-left: 55px;
+  margin-top: -15px;
+}
+
 .userlist-close {
   margin-left: 100px;
 }
