@@ -8,7 +8,7 @@ import {fetchFollowers, submitFollow, submitProfilePhoto} from "../actions/feedA
 import {fetchFollowing} from "../actions/feedActions";
 import {submitAbout} from "../actions/feedActions";
 import btnEdit from "../images/btnEdit.png";
-import {arrayBufferToBase64, getOrientation, getPath, getPathUser, resetOrientation} from "../actions/helpers";
+import {getOrientation, getPathUser, resetOrientation} from "../actions/helpers";
 
 function fileToBase64(file) {
     console.log("file to convert: ",file[0]);

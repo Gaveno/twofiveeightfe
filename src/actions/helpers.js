@@ -258,3 +258,15 @@ export function addLinksToUsernames(text) {
     console.log("textSplit: ", textSplit);
     return textSplit.join(" ");
 }
+
+export function fileToBase64(file) {
+    console.log("file to convert: ",file[0]);
+    return new Promise((res, rej) => {
+        const r = new FileReader();
+        r.readAsDataURL(file[0]);
+        r.onload = () => {
+            return res(r.result);
+        };
+        r.onerror = error => rej(error);
+    });
+}
