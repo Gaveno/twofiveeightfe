@@ -225,7 +225,7 @@
 
 .user-feed-username {
     position: relative;
-    font-size: 30px;
+    font-size: 25px;
 
 }
 
@@ -264,6 +264,11 @@
 
 .no-bullets {
   list-style-type: none;
+}
+
+.about-text {
+  position: relative;
+  padding-left: 40px;
 }
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

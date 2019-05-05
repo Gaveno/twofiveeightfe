@@ -403,3 +403,34 @@ export function submitProfilePhoto(img, user) {
         })
     }
 }
+
+export function submitAbout(user, about) {
+    return dispatch => {
+        const env = runtimeEnv();
+        return fetch(`${env.REACT_APP_API_URL}/users/about`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            body: {
+                text: about
+            } ,
+            mode: 'cors'
+        })
+            .then((response) => {
+                if (!response.status) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then((res) => {
+                //console.log(JSON.stringify(res));
+                console.log(res.message);
+                if (!res.success) throw (JSON.stringify(res));
+                let updatedUser = Object.assign({}, user, {about: about});
+                return dispatch(uploadedProfilePhoto(updatedUser));
+            })
+            .catch((e) => console.log(e));
+    }
+}

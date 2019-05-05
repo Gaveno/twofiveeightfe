@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {Button, Col, FormGroup, Grid, NavItem, Row} from "react-bootstrap";
+import {Button, Col, FormControl, FormGroup, Grid, HelpBlock, NavItem, Row} from "react-bootstrap";
 import defaultProfilePhoto from "../images/defaultProfilePhoto.png";
 import profilePhotoCrop from "../images/profilePhotoCrop.png";
 import {Divider} from './divider';
-import {fetchFollowers, setFileUpload, submitProfilePhoto} from "../actions/feedActions";
+import {fetchFollowers, submitProfilePhoto} from "../actions/feedActions";
 import {fetchFollowing} from "../actions/feedActions";
+import {submitAbout} from "../actions/feedActions";
 import btnEdit from "../images/btnEdit.png";
 import {arrayBufferToBase64, getOrientation, resetOrientation} from "../actions/helpers";
 
@@ -30,6 +31,13 @@ class RenderUser extends Component {
         this.onClickFollowers = this.onClickFollowers.bind(this);
         this.onClickFollowing = this.onClickFollowing.bind(this);
         this.onClickUpdateProfilePhoto = this.onClickUpdateProfilePhoto.bind(this);
+        this.onClickUpdateAbout = this.onClickUpdateAbout.bind(this);
+        this.updateDetails = this.updateDetails.bind(this);
+        this.state = {
+            details: {
+                aboutText: ""
+            }
+        }
     }
 
     onClickFollowers() {
@@ -45,6 +53,11 @@ class RenderUser extends Component {
     onClickUpdateProfilePhoto() {
         const {dispatch} = this.props;
         dispatch(submitProfilePhoto());
+    }
+
+    onClickUpdateAbout() {
+        const {dispatch} = this.props;
+        dispatch(submitAbout(this.props.selectedUser, this.state.details.aboutText));
     }
 
     openPhotoSelect() {
@@ -69,6 +82,21 @@ class RenderUser extends Component {
                 )
             })
         }
+    }
+
+    updateDetails(e) {
+        let updateDetails = Object.assign({}, this.state.details);
+        updateDetails[e.target.id] = e.target.value;
+        this.setState({
+            details: updateDetails
+        });
+    }
+
+    getValidationState() {
+        const length = this.state.details.aboutText.length;
+        if (length > 258) return 'error';
+        if (length > 240) return 'warning';
+        return 'success';
     }
 
     render() {
@@ -116,7 +144,8 @@ class RenderUser extends Component {
                                     <Row className="user-feed-row-1">
                                         <NavItem className="no-bullets">
                                             <p className="user-feed-follower-count">{this.props.selectedUser.followerCount
-                                                ? this.props.selectedUser.followerCount : "0"} Followers</p>
+                                                ? this.props.selectedUser.followerCount
+                                                : "0"} Followers</p>
                                         </NavItem>
                                     </Row>
                                 </div>
@@ -124,7 +153,8 @@ class RenderUser extends Component {
                                     <Row className="user-feed-row-1">
                                         <NavItem className="no-bullets">
                                             <p className="user-feed-following-count">Following {this.props.selectedUser.following
-                                                ? this.props.selectedUser.following : "0"}</p>
+                                                ? this.props.selectedUser.following
+                                                : "0"}</p>
                                         </NavItem>
                                     </Row>
                                 </div>
@@ -132,7 +162,24 @@ class RenderUser extends Component {
                         </Row>
                     </Grid>
                     <Divider/>
+                            <Row className="about-text">
+                                <FormGroup controlId="aboutText"
+                                           validationState={this.getValidationState()}>
+                                <Col xs={6}>
+                                    <FormControl value={this.state.details.aboutText}
+                                                 onChange={this.updateDetails}
+                                                 componentClass="textarea"
+                                                 placeholder="Say something nice..."/>
+                                </Col>
+                                    <Col xs={2} className="submit-about-button-col">
+                                        {(this.getValidationState()==='error' ? <Button disabled>Submit</Button> :
+                                            <Button onClick={()=>this.onClickUpdateAbout()}>Update</Button>)}
+                                        <HelpBlock>{this.state.details.aboutText.length}/258</HelpBlock>
+                                    </Col>
+                            </FormGroup>
+                            </Row>
                 </Row>
+                <Divider/>
             </div>
         )
     }
