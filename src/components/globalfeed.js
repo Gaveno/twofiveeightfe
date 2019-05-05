@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
-import {FormControl, FormGroup, Col, Grid} from 'react-bootstrap';
+import {FormControl, FormGroup, Col, Grid, Button} from 'react-bootstrap';
 import {fetchGlobalFeed, fetchHashtagFeed, searchFeedFetched} from '../actions/feedActions';
 import RenderPosts from './renderposts';
 import {Divider} from './divider';
@@ -145,16 +145,18 @@ class GlobalFeed extends Component {
                         </FormControl>
                     </FormGroup>
                 </Col>
-                <Col xs={8}>
+                <Col xs={7}>
                     <FormGroup controlId="searchStr">
                         <FormControl className="search-bar"
                                      componentClass="input"
                                      type="text"
                                      onChange={this.updateDetails}
-                                     onBlur={this.onSendSearch}
                                      placeholder="Search..."
                                      value={this.state.details.searchStr} />
                     </FormGroup>
+                </Col>
+                <Col xs={2}>
+                    <Button onClick={()=>this.onSendSearch()} className="search-button">Search</Button>
                 </Col>
                 </Grid>
                 <RenderPosts posts={(this.props.searchFeed.length > 0) ? this.props.searchFeed : this.props.globalFeed} />

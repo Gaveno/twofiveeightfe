@@ -63,6 +63,11 @@
   margin-left: 20px;
 }
 
+.search-button {
+  margin-left: -80px;
+  margin-top: 3px;
+}
+
 .underline {
   border-bottom: 1px solid #ddd;
 }
