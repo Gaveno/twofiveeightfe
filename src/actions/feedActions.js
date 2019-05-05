@@ -341,32 +341,60 @@ export function submitComment(post, text, posts) {
 
 export function fetchFollowers() {
     console.log("yay");
+    const env = runtimeEnv();
     return dispatch => {
-        let followers = [];
-        for (let i = 0; i < 10; i++) {
-            let follower = {
-                username: "testFollower",
-                imgProfile: ""
-            };
-            followers.push(follower);
+        return fetch(`${env.REACT_APP_API_URL}/followers`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            mode: 'cors'
+        })
+
+            .then((response) => {
+                if (!response.status) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then((res) => {
+                //console.log(JSON.stringify(res));
+                console.log(res.message);
+                if (!res.success) throw (JSON.stringify(res));
+                return dispatch(fetchedFollowers(res.users));
+            })
+            .catch((e) => console.log(e));
         }
-        return dispatch(fetchedFollowers(followers));
-    };
 }
 
 export function fetchFollowing() {
     console.log("yay2");
+    const env = runtimeEnv();
     return dispatch => {
-        let following = [];
-        for (let i = 0; i < 10; i++) {
-            let followee = {
-                username: "testFollowee",
-                imgProfile: ""
-            };
-            following.push(followee);
-        }
-        return dispatch(fetchedFollowing(following));
-    };
+        return fetch(`${env.REACT_APP_API_URL}/follows`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            mode: 'cors'
+        })
+
+            .then((response) => {
+                if (!response.status) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then((res) => {
+                //console.log(JSON.stringify(res));
+                console.log(res.message);
+                if (!res.success) throw (JSON.stringify(res));
+                return dispatch(fetchedFollowing(res.users));
+            })
+            .catch((e) => console.log(e));
+    }
 }
 
 export function submitProfilePhoto(img, user) {
