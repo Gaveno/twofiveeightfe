@@ -4,7 +4,7 @@ import {Button, Col, FormControl, FormGroup, Grid, HelpBlock, NavItem, Row} from
 import defaultProfilePhoto from "../images/defaultProfilePhoto.png";
 import profilePhotoCrop from "../images/profilePhotoCrop.png";
 import {Divider} from './divider';
-import {fetchFollowers, submitProfilePhoto} from "../actions/feedActions";
+import {fetchFollowers, submitFollow, submitProfilePhoto} from "../actions/feedActions";
 import {fetchFollowing} from "../actions/feedActions";
 import {submitAbout} from "../actions/feedActions";
 import btnEdit from "../images/btnEdit.png";
@@ -99,6 +99,9 @@ class RenderUser extends Component {
         return 'success';
     }
 
+    onClickFollow() {
+        submitFollow();
+    }
     render() {
         return (
             <div className="user-feed-container">
@@ -140,7 +143,8 @@ class RenderUser extends Component {
                                 {
                                     getPathUser() !== localStorage.getItem("username") ?
                                         <Row className="user-feed-row-1">
-                                            <Button className="user-feed-follow-button" type="button">Follow</Button>
+                                            <Button className="user-feed-follow-button" type="button"
+                                            onClick={this.onClickFollow}>Follow</Button>
                                         </Row>
                                         :
                                         ""
@@ -176,7 +180,7 @@ class RenderUser extends Component {
                                         <FormControl value={this.state.details.aboutText}
                                                      onChange={this.updateDetails}
                                                      componentClass="textarea"
-                                                     placeholder="Say something nice..."/>
+                                                     placeholder="Tell us about yourself..."/>
                                     </Col>
                                     <Col xs={2} className="submit-about-button-col">
                                         {(this.getValidationState()==='error' ? <Button disabled>Submit</Button> :

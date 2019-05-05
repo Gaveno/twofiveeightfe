@@ -84,7 +84,7 @@ class UserFeed extends Component {
                     <Divider />
                     <Divider />
                     <Divider />
-                    rendering followers
+
                 </div>
                 )
         };
@@ -94,7 +94,7 @@ class UserFeed extends Component {
                     <Divider />
                     <Divider />
                     <Divider />
-                    Rendering following
+
                 </div>
             )
         };
