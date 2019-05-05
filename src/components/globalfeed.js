@@ -19,6 +19,7 @@ class GlobalFeed extends Component {
         this.updateDetails = this.updateDetails.bind(this);
         this.scrolledPage = this.scrolledPage.bind(this);
         this.onSearch = this.onSearch.bind(this);
+        this.onSendSearch = this.onSendSearch.bind(this);
 
         this.state = {
             details: {
@@ -48,8 +49,9 @@ class GlobalFeed extends Component {
         if (this.props.globalFeed.length <= 0 || Date.now() - last > 5000) {
             dispatch(fetchGlobalFeed(0, this.props.globalFeed));
         }
-        if (localStorage.getItem('globalScroll'))
+        if (localStorage.getItem('globalScroll')) {
             window.scroll({top: parseInt(localStorage.getItem('globalScroll'))});
+        }
     }
 
     componentWillUnmount() {
@@ -59,8 +61,17 @@ class GlobalFeed extends Component {
     }
 
     onSearch(e) {
-        const search = this.state.details.searchStr;
         if (e.key === 'Enter' || e.key === 'Return') {
+            this.onSendSearch();
+        }
+    }
+
+    onSendSearch() {
+        console.log("send search");
+        const last = parseInt((localStorage.getItem('lastSearch') ? localStorage.getItem('lastSearch') : "0"));
+        if (Date.now() - last > 1000) {
+            localStorage.setItem('lastSearch', Date.now().toString());
+            const search = this.state.details.searchStr;
             const {dispatch} = this.props;
             if (this.state.details.searchType === 0) {
                 if (search.length > 0) {
@@ -69,14 +80,13 @@ class GlobalFeed extends Component {
                     let newTag = true;
                     if (lastTag.length > 0 && lastTag === search)
                         newTag = false;
+                    console.log("newTag: ", newTag);
                     localStorage.setItem('lastHashtag', search);
                     dispatch(fetchHashtagFeed(0, search, this.props.searchFeed, newTag));
-                }
-                else {
+                } else {
                     dispatch(searchFeedFetched([]));
                 }
-            }
-            else {
+            } else {
                 console.log("searching for user: " + this.state.details.searchStr);
             }
         }
@@ -141,6 +151,7 @@ class GlobalFeed extends Component {
                                      componentClass="input"
                                      type="text"
                                      onChange={this.updateDetails}
+                                     onBlur={this.onSendSearch}
                                      placeholder="Search..."
                                      value={this.state.details.searchStr} />
                     </FormGroup>
