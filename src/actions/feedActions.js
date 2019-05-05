@@ -434,3 +434,26 @@ export function submitAbout(user, about) {
             .catch((e) => console.log(e));
     }
 }
+
+export function submitFollow() {
+    const env = runtimeEnv();
+    return fetch(`${env.REACT_APP_API_URL}/follow/${getPathUser()}`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        },
+        mode: 'cors'})
+        .then((response) => {
+            if (!response.status) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((res) => {
+            //console.log(JSON.stringify(res));
+            console.log(res.message);
+            if (!res.success) throw (JSON.stringify(res));
+        })
+        .catch((e) => console.log(e));
+}
