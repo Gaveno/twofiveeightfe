@@ -148,7 +148,7 @@ class RenderUser extends Component {
                                 <Row className="user-feed-row-1">
                                     <b className="user-feed-username">{this.props.selectedUser.username
                                         ? this.props.selectedUser.username
-                                        : "username"}</b>
+                                        : "usernotfound"}</b>
                                 </Row>
                                 {
                                     getPathUser() !== localStorage.getItem("username") ?
