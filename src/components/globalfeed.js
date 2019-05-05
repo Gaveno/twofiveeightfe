@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
 import {FormControl, FormGroup, Col, Grid} from 'react-bootstrap';
-import {fetchGlobalFeed} from '../actions/feedActions';
+import {fetchGlobalFeed, fetchHashtagFeed, searchFeedFetched} from '../actions/feedActions';
 import RenderPosts from './renderposts';
 import {Divider} from './divider';
 import {getScrollPercent} from "../actions/helpers";
@@ -18,6 +18,7 @@ class GlobalFeed extends Component {
         super(props);
         this.updateDetails = this.updateDetails.bind(this);
         this.scrolledPage = this.scrolledPage.bind(this);
+        this.onSearch = this.onSearch.bind(this);
 
         this.state = {
             details: {
@@ -31,6 +32,9 @@ class GlobalFeed extends Component {
     updateDetails(e) {
         let updateDetails = Object.assign({}, this.state.details);
         updateDetails[e.target.id] = e.target.value;
+        const numSpaces = updateDetails.searchStr.split(' ').length - 1;
+        if (numSpaces > 0)
+            updateDetails.searchStr = updateDetails.searchStr.split(' ')[0];
         this.setState({
             details: updateDetails
         });
@@ -38,6 +42,7 @@ class GlobalFeed extends Component {
 
     componentDidMount() {
         window.addEventListener('scroll', this.scrolledPage);
+        window.addEventListener('keydown', this.onSearch);
         const last = localStorage.getItem('lastFetchGlobal');
         const {dispatch} = this.props;
         if (this.props.globalFeed.length <= 0 || Date.now() - last > 5000) {
@@ -49,19 +54,67 @@ class GlobalFeed extends Component {
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.scrolledPage);
+        window.removeEventListener('keydown', this.onSearch);
         localStorage.setItem('globalScroll', window.scrollY.toString());
     }
 
+    onSearch(e) {
+        const search = this.state.details.searchStr;
+        if (e.key === 'Enter') {
+            const {dispatch} = this.props;
+            if (this.state.details.searchType === 0) {
+                if (search.length > 0) {
+                    console.log("searching for hashtag: " + search);
+                    const lastTag = (localStorage.getItem('lastHashtag') ? localStorage.getItem('lastHashtag') : "");
+                    let newTag = true;
+                    if (lastTag.length > 0 && lastTag === search)
+                        newTag = false;
+                    localStorage.setItem('lastHashtag', search);
+                    dispatch(fetchHashtagFeed(0, search, this.props.searchFeed, newTag));
+                }
+                else {
+                    dispatch(searchFeedFetched([]));
+                }
+            }
+            else {
+                console.log("searching for user: " + this.state.details.searchStr);
+            }
+        }
+    }
+
     scrolledPage() {
-        //console.log("Page scrolled: ", getScrollPercent());
         const {dispatch} = this.props;
         const last = localStorage.getItem('lastFetchGlobal');
-        // Make sure last fetch was over 5 seconds ago
         if (Date.now() - last > 5000) {
-            if (getScrollPercent() <= 0) {
-                dispatch(fetchGlobalFeed(0, this.props.globalFeed));
-            } else if (getScrollPercent() > 80) {
-                dispatch(fetchGlobalFeed(this.props.globalFeed.length, this.props.globalFeed));
+            if (this.props.searchFeed.length <= 0) {
+                // Make sure last fetch was over 5 seconds ago
+                if (getScrollPercent() <= 0) {
+                    dispatch(fetchGlobalFeed(0, this.props.globalFeed));
+                } else if (getScrollPercent() > 80) {
+                    dispatch(fetchGlobalFeed(this.props.globalFeed.length, this.props.globalFeed));
+                }
+            }
+            else {
+            // Make sure last fetch was over 5 seconds ago
+                if (getScrollPercent() <= 0) {
+                    const lastTag = (localStorage.getItem('lastHashtag') ? localStorage.getItem('lastHashtag') : "");
+                    let newTag = true;
+                    if (lastTag.length > 0 && lastTag === this.state.details.searchStr)
+                        newTag = false;
+                    localStorage.setItem('lastHashtag', this.state.details.searchStr);
+                    dispatch(fetchHashtagFeed(0, this.state.details.searchStr, this.props.searchFeed, newTag));
+                } else if (getScrollPercent() > 80) {
+                    const lastTag = (localStorage.getItem('lastHashtag') ? localStorage.getItem('lastHashtag') : "");
+                    let newTag = true;
+                    if (lastTag.length > 0 && lastTag === this.state.details.searchStr)
+                        newTag = false;
+                    localStorage.setItem('lastHashtag', this.state.details.searchStr);
+                    dispatch(fetchHashtagFeed(
+                        this.props.searchFeed.length,
+                        this.state.details.searchStr,
+                        this.props.searchFeed,
+                        newTag));
+                }
             }
         }
     }
@@ -93,7 +146,7 @@ class GlobalFeed extends Component {
                     </FormGroup>
                 </Col>
                 </Grid>
-                <RenderPosts posts={this.props.globalFeed} />
+                <RenderPosts posts={(this.props.searchFeed.length > 0) ? this.props.searchFeed : this.props.globalFeed} />
                 <Divider />
                 <Divider />
                 <Divider />

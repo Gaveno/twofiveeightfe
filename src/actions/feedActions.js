@@ -42,6 +42,13 @@ function homeFeedFetched(feed) {
     }
 }
 
+export function searchFeedFetched(feed) {
+    return {
+        type: actionTypes.FETCH_SEARCHFEED,
+        searchFeed: feed
+    }
+}
+
 function uploadFile(file) {
     return {
         type: actionTypes.UPLOAD_FILE,
@@ -207,6 +214,49 @@ export function fetchHomeFeed(skip, prevFeed) {
                 }
                 //console.log("New Feed: ", newFeed);
                 dispatch(homeFeedFetched(newFeed));
+            })
+            .catch((e) => console.log(e));
+    }
+}
+
+export function fetchHashtagFeed(skip, hashtag, prevFeed, newTag) {
+    let s = 0;
+    if (skip) s = skip;
+    localStorage.setItem('lastFetchGlobal', Date.now());
+    const env = runtimeEnv();
+    return dispatch => {
+        return fetch(`${env.REACT_APP_API_URL}/posts/hashtag/${hashtag}?skip=${s}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': localStorage.getItem('token')
+            },
+            mode: 'cors'})
+            .then((response) => {
+                if (!response.status) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then((res) => {
+                //console.log(JSON.stringify(res));
+                if (!res.feed) throw (JSON.stringify(res));
+                //console.log("skip: ", s);
+                //console.log("Received Feed: ", res.feed);
+                let newFeed = [];
+                if (!newTag) {
+                    if (s === 0 && prevFeed.length !== 0) {
+                        newFeed = insertFeed(prevFeed, res.feed);
+                    } else {
+                        newFeed = appendFeed(prevFeed, res.feed);
+                    }
+                }
+                else {
+                    newFeed = res.feed;
+                }
+                //console.log("New Feed: ", newFeed);
+                dispatch(searchFeedFetched(newFeed));
             })
             .catch((e) => console.log(e));
     }

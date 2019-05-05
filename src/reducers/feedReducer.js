@@ -26,6 +26,10 @@ export default (state = initialState, action) => {
             updated['globalFeed'] = action.globalFeed;
             return updated;
 
+        case constants.FETCH_SEARCHFEED:
+            updated['searchFeed'] = action.searchFeed;
+            return updated;
+
         case constants.FETCH_USERFEED:
             updated['userFeed'] = action.userFeed;
             updated['selectedUser'] = action.selectedUser;
