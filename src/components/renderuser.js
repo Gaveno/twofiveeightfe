@@ -63,6 +63,7 @@ class RenderUser extends Component {
     onClickUpdateAbout() {
         const {dispatch} = this.props;
         dispatch(submitAbout(this.props.selectedUser, this.state.aboutText));
+        this.setState({editAbout: false});
     }
 
     openPhotoSelect() {
@@ -94,7 +95,7 @@ class RenderUser extends Component {
     }
 
     getValidationState() {
-        const length = this.state.aboutText.length;
+        const length = (this.state.aboutText) ? this.state.aboutText.length : 0;
         if (length > 258) return 'error';
         if (length > 240) return 'warning';
         return 'success';
@@ -199,7 +200,7 @@ class RenderUser extends Component {
                                     <Col xs={2} className="submit-about-button-col">
                                         {(this.getValidationState()==='error' ? <Button disabled>Update</Button> :
                                             <Button onClick={()=>this.onClickUpdateAbout()}>Update</Button>)}
-                                        <HelpBlock>{this.state.aboutText.length}/258</HelpBlock>
+                                        <HelpBlock>{(this.state.aboutText) ? this.state.aboutText.length : 0}/258</HelpBlock>
                                     </Col>
                                 </FormGroup>
                             </Row>
