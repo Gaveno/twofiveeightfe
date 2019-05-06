@@ -9,7 +9,7 @@ import GlobalFeed from './components/globalfeed';
 import CreatePost from './components/createpost';
 import UserFeed from './components/userfeed';
 import store from './stores/store';
-import {getPath} from "./actions/helpers";
+import {getPath, smoothScroll} from "./actions/helpers";
 
 //add routing configuration
 
@@ -18,15 +18,18 @@ class App extends Component {
         let relativePath = getPath();
         switch (relativePath) {
             case "globalfeed":
-                window.scroll({top: 0, left: 0, behavior: 'smooth'});
+                //window.scroll({top: 0, left: 0, behavior: 'smooth'});
+                smoothScroll(0);
                 break;
 
             case "userfeed":
-                window.scroll({top: 0, left: 0, behavior: 'smooth'});
+                //window.scroll({top: 0, left: 0, behavior: 'smooth'});
+                smoothScroll(0);
                 break;
 
             case "homefeed":
-                window.scroll({top: 0, left: 0, behavior: 'smooth'});
+                //window.scroll({top: 0, left: 0, behavior: 'smooth'});
+                smoothScroll(0);
                 break;
 
             case "createpost":

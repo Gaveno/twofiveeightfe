@@ -263,3 +263,13 @@ export function fileToBase64(file) {
         r.onerror = error => rej(error);
     });
 }
+
+export const smoothScroll = (s) => {
+    let i = Math.min(s, 200);
+    if (window.scrollY > 0) {
+        setTimeout(() => {
+            window.scrollTo(0, window.scrollY - i);
+            smoothScroll(i + 10);
+        }, 5);
+    }
+};
