@@ -4,6 +4,7 @@ import Login from './login';
 import Register from './register';
 import { logoutUser } from '../../actions/authActions';
 import { Button, ListGroup, ListGroupItem, Col, Grid, Row } from 'react-bootstrap';
+import {Divider} from "../divider";
 
 class Authentication extends Component {
 
@@ -52,6 +53,14 @@ class Authentication extends Component {
                             </Button>
                         </Col>
                         </Row>
+                        {this.props.error && this.props.error.length > 0 ?
+                            <div>
+                                <Divider />
+                                <b className="error-message">{this.props.error}</b>
+                            </div>
+                            :
+                            ""
+                        }
                     </ListGroupItem>
                 <ListGroupItem>
                     { this.state.toggleReg ? <Register /> : <Login /> }
@@ -75,7 +84,8 @@ class Authentication extends Component {
 const mapStateToProps = state => {
     return {
         loggedIn: state.auth.loggedIn,
-        username: state.auth.username
+        username: state.auth.username,
+        error: state.auth.error
     }
 };
 

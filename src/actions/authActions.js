@@ -14,6 +14,13 @@ function logout(){
     }
 }
 
+export function updateError(error) {
+    return {
+        type: actionTypes.UPDATE_ERROR,
+        error: error
+    }
+}
+
 export function submitLogin(data){
     const env = runtimeEnv();
     return dispatch => {
@@ -27,6 +34,7 @@ export function submitLogin(data){
             mode: 'cors'})
             .then( (response) => {
                 if (!response.ok) {
+                    dispatch(updateError("Invalid credentials"));
                     throw Error(response.statusText);
                 }
                 return response.json();
@@ -38,6 +46,9 @@ export function submitLogin(data){
                     localStorage.setItem('token', res.token);
                     window.location.href = '/#/homefeed';
                     dispatch(userLoggedIn(data.username));
+                }
+                else {
+                    dispatch(updateError(res.message));
                 }
             })
             .catch( (e) => console.log(e) );
@@ -57,13 +68,16 @@ export function submitRegister(data){
             mode: 'cors'})
             .then( (response) => {
                 if (!response.ok) {
+                    dispatch(updateError(response.statusText));
                     throw Error(response.statusText);
                 }
                 return response.json();
             })
             .then( (res) => {
-
-                dispatch(submitLogin(data));
+                if (res.success)
+                    dispatch(submitLogin(data));
+                else
+                    dispatch(updateError(res.message));
             })
             .catch( (e) => console.log(e) );
     }
