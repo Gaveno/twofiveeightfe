@@ -428,7 +428,7 @@ export function fetchFollowers() {
     console.log("yay");
     const env = runtimeEnv();
     return dispatch => {
-        return fetch(`${env.REACT_APP_API_URL}/followers`, {
+        return fetch(`${env.REACT_APP_API_URL}/followers/${getPathUser()}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -457,7 +457,7 @@ export function fetchFollowing() {
     console.log("yay2");
     const env = runtimeEnv();
     return dispatch => {
-        return fetch(`${env.REACT_APP_API_URL}/follows`, {
+        return fetch(`${env.REACT_APP_API_URL}/follows/${getPathUser()}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
