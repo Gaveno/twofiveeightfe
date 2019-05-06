@@ -33,22 +33,25 @@ export function submitLogin(data){
             body: JSON.stringify(data),
             mode: 'cors'})
             .then( (response) => {
-                if (!response.ok) {
+                /*if (!response.ok) {
                     dispatch(updateError("Invalid credentials"));
                     throw Error(response.statusText);
-                }
+                }*/
                 return response.json();
             })
             .then( (res) => {
                 console.log("response: ", res);
-                if (res.success === true) {
+                if (res.success && res.success === true) {
                     localStorage.setItem('username', data.username);
                     localStorage.setItem('token', res.token);
                     window.location.href = '/#/homefeed';
                     dispatch(userLoggedIn(data.username));
                 }
                 else {
-                    dispatch(updateError(res.message));
+                    if (res.message)
+                        dispatch(updateError(res.message));
+                    else
+                        dispatch(updateError("An unknown error occurred."));
                 }
             })
             .catch( (e) => console.log(e) );
@@ -67,17 +70,21 @@ export function submitRegister(data){
             body: JSON.stringify(data),
             mode: 'cors'})
             .then( (response) => {
-                if (!response.ok) {
+                /*if (!response.ok) {
                     dispatch(updateError(response.statusText));
                     throw Error(response.statusText);
-                }
+                }*/
                 return response.json();
             })
             .then( (res) => {
                 if (res.success)
                     dispatch(submitLogin(data));
-                else
-                    dispatch(updateError(res.message));
+                else {
+                    if (res.message)
+                        dispatch(updateError(res.message));
+                    else
+                        dispatch(updateError("An unknown error occurred."));
+                }
             })
             .catch( (e) => console.log(e) );
     }
