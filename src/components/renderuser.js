@@ -218,11 +218,8 @@ class RenderUser extends Component {
                                     {this.props.selectedUser.about}
                                 </div>
                             </div>
-
-
                     }
                 </Row>
-                <Divider/>
             </div>
         )
     }
