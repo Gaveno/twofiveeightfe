@@ -269,7 +269,7 @@ export const smoothScroll = (s) => {
     if (window.scrollY > 0) {
         setTimeout(() => {
             window.scrollTo(0, window.scrollY - i);
-            smoothScroll(i + 10);
-        }, 5);
+            smoothScroll(i + 5);
+        }, 10);
     }
 };

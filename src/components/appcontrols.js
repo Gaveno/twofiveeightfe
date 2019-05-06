@@ -12,19 +12,7 @@ import btnGlobalFeedSel from '../images/btnGlobalFeedSel.png';
 import btnCreatePostSel from '../images/btnCreatePostSel.png';
 import btnHomeFeedSel from '../images/btnHomeFeedSel.png';
 import {setFileUpload} from '../actions/feedActions';
-import {getOrientation, getPath, resetOrientation} from "../actions/helpers";
-
-function fileToBase64(file) {
-    console.log("file to convert: ",file[0]);
-    return new Promise((res, rej) => {
-        const r = new FileReader();
-        r.readAsDataURL(file[0]);
-        r.onload = () => {
-            return res(r.result);
-        };
-        r.onerror = error => rej(error);
-    });
-}
+import {fileToBase64, getOrientation, getPath, getPathUser, resetOrientation, smoothScroll} from "../actions/helpers";
 
 class AppControls extends Component {
     constructor(props) {
@@ -32,6 +20,7 @@ class AppControls extends Component {
         this.inputCaptureRef = React.createRef();
         this.openPhotoSelect = this.openPhotoSelect.bind(this);
         this.onPhotoCapture = this.onPhotoCapture.bind(this);
+        this.onIconClick = this.onIconClick.bind(this);
     }
 
     openPhotoSelect() {
@@ -62,6 +51,17 @@ class AppControls extends Component {
         document.body.style.zoom = "90%";
     }
 
+    onIconClick(pathlink) {
+        if (getPath() === pathlink) {
+            smoothScroll(0);
+            setTimeout(() => {
+                if (getPath() === "userfeed" && this.props.selectedUser.username !== getPathUser()) {
+                    window.location.reload();
+                }
+            }, 10);
+        }
+    }
+
     render() {
         return (
             <div>
@@ -76,14 +76,14 @@ class AppControls extends Component {
                 </FormGroup>
                 <Nav bsStyle="tabs" className="App-footer">
                     <LinkContainer to={"/userfeed/"+localStorage.getItem("username")}>
-                        <NavItem eventKey={1} className="App-footer-navitem">
+                        <NavItem eventKey={1} className="App-footer-navitem" onClick={()=>this.onIconClick("userfeed")}>
                             <img className="App-footer-image" src={
                                 getPath()==="userfeed" ? btnUserFeedSel : btnUserFeed
                             } alt="User Feed" />
                         </NavItem>
                     </LinkContainer>
                     <LinkContainer to="/globalfeed">
-                        <NavItem eventKey={2} className="App-footer-navitem">
+                        <NavItem eventKey={2} className="App-footer-navitem" onClick={()=>this.onIconClick("globalfeed")}>
                             <img className="App-footer-image" src={
                                 getPath()==="globalfeed" ? btnGlobalFeedSel : btnGlobalFeed
                             } alt="Global Feed" />
@@ -99,7 +99,7 @@ class AppControls extends Component {
                         </NavItem>
                     {/*</LinkContainer>*/}
                     <LinkContainer to="/homefeed">
-                        <NavItem eventKey={4} className="App-footer-navitem">
+                        <NavItem eventKey={4} className="App-footer-navitem" onClick={()=>this.onIconClick("homefeed")}>
                             <img className="App-footer-image" src={
                                 getPath()==="homefeed" ? btnHomeFeedSel : btnHomeFeed
                             } alt="Home feed" />
@@ -113,6 +113,7 @@ class AppControls extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        selectedUser: state.feed.selectedUser
     }
 };
 
