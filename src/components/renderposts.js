@@ -20,9 +20,7 @@ class RenderPosts extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.updateDetails = this.updateDetails.bind(this);
         this.state = {
-            details: {
-                commentText: ""
-            }
+            commentText: ""
         }
     }
 
@@ -37,27 +35,34 @@ class RenderPosts extends Component {
     }
 
     updateDetails(e) {
-        let updateDetails = Object.assign({}, this.state.details);
+        /*let updateDetails = Object.assign({}, this.state.details);
         updateDetails[e.target.id] = e.target.value;
         this.setState({
             details: updateDetails
+        });*/
+        this.setState({
+            commentText: e.target.value
         });
     }
 
     getValidationState() {
-        const length = this.state.details.commentText.length;
+        const length = this.state.commentText.length;
         if (length > 258) return 'error';
         if (length > 240) return 'warning';
         return 'success';
     }
 
     submitComment(post) {
+        let text = this.state.commentText;
+        this.setState({
+            commentText: ""
+        });
         const {dispatch} = this.props;
-        dispatch(submitComment(post, this.state.details.commentText, this.props.posts));
+        dispatch(submitComment(post, text, this.props.posts));
     }
 
     render() {
-        const length = this.state.details.commentText.length;
+        const length = this.state.commentText.length;
         //console.log("posts[0]: ", this.props.posts[0]);
         const RenderComments = ({comments}) => {
             return comments.map((comment, i) =>
@@ -108,7 +113,7 @@ class RenderPosts extends Component {
                             <FormGroup controlId="commentText"
                                        validationState={this.getValidationState()}>
                                 <Col xs={6} className="post-center-text">
-                                    <FormControl value={this.state.details.text}
+                                    <FormControl value={this.state.commentText}
                                                  onChange={this.updateDetails}
                                                  componentClass="textarea"
                                                  placeholder="Say something nice..."

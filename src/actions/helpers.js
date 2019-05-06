@@ -14,6 +14,11 @@ export function resizeDataURL(data, wantedWidth, wantedHeight){
             // We set the dimensions at the wanted size.
             canvas.width = wantedWidth;
             canvas.height = wantedHeight;
+            ctx.mozImageSmoothingEnabled    = true;
+            ctx.imageSmoothingQuality       = "high";
+            ctx.webkitImageSmoothingEnabled = true;
+            ctx.msImageSmoothingEnabled     = true;
+            ctx.imageSmoothingEnabled       = true;
             // We resize the image with the canvas method drawImage();
             if (img.width === img.height) {
                 ctx.drawImage(this, 0, 0, wantedWidth, wantedHeight);

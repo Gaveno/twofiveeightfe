@@ -81,7 +81,7 @@ class RenderUser extends Component {
                             // dispatch
                             resetOrientation(data, orientation, (rotated) => {
                                 const {dispatch} = this.props;
-                                dispatch(submitProfilePhoto(data, this.props.selectedUser));
+                                dispatch(submitProfilePhoto(rotated, this.props.selectedUser));
                             })
                         }
                     }
