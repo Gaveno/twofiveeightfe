@@ -188,7 +188,7 @@ class RenderUser extends Component {
                     <Divider/>
                     {
                         (getPathUser() ===  localStorage.getItem("username") && this.state.editAbout) ?
-                            <Row className="about-text">
+                            <Row className="about-textbox">
                                 <FormGroup controlId="aboutText"
                                            validationState={this.getValidationState()}>
                                     <Col xs={6}>
@@ -214,7 +214,9 @@ class RenderUser extends Component {
                                     : ""}
                                     <b>About</b>
                                 </div>
-                                {this.props.selectedUser.about}
+                                <div className="about-text">
+                                    {this.props.selectedUser.about}
+                                </div>
                             </div>
 
 

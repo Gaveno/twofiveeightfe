@@ -320,8 +320,12 @@
   list-style-type: none;
 }
 
-.about-text {
+.about-textbox {
   position: relative;
+  padding-left: 40px;
+}
+
+.about-text {
   padding-left: 40px;
 }
 @keyframes App-logo-spin {
