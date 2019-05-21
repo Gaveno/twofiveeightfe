@@ -344,3 +344,9 @@
 .dynamic-text {
   font-family: "Arial", Arial, sans-serif;
 }
+
+.username {
+  font-family: "Arial", Arial, sans-serif;
+  font-weight: bold;
+  font-size: medium;
+}
