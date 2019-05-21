@@ -44,7 +44,7 @@ export function submitLogin(data){
                 if (res.success && res.success === true) {
                     localStorage.setItem('username', data.username);
                     localStorage.setItem('token', res.token);
-                    window.location.href = '/#/homefeed';
+                    window.location.href = '/#/globalfeed';
                     dispatch(userLoggedIn(data.username));
                 }
                 else {

@@ -104,7 +104,7 @@ export function insertFeed(feedTarget, feedSource) {
 function mergeFeeds(feedTarget, feedSource, type) {
     let newFeed = feedTarget.slice();
     for (let i = 0; i < feedSource.length; i++) {
-        if (feedSource[i].profPhoto.data && feedSource[i].profPhoto.data.data) {
+        if (feedSource[i].profPhoto && feedSource[i].profPhoto.data && feedSource[i].profPhoto.data.data) {
             feedSource[i].profPhoto['data'] = arrayBufferToBase64(feedSource[i].profPhoto.data.data);
         }
         let found = false;
