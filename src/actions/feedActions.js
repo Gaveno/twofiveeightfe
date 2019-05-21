@@ -112,7 +112,10 @@ export function fetchGlobalFeed(skip, prevFeed) {
             },
             mode: 'cors'})
             .then((response) => {
-                if (!response.status) {
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        window.location.href = "/";
+                    }
                     throw Error(response.statusText);
                 }
                 return response.json();
@@ -156,7 +159,10 @@ export function fetchUserFeed(skip, prevFeed) {
             },
             mode: 'cors'})
             .then((response) => {
-                if (!response.status) {
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        window.location.href = "/";
+                    }
                     throw Error(response.statusText);
                 }
                 return response.json();
@@ -203,7 +209,10 @@ export function fetchHomeFeed(skip, prevFeed) {
             },
             mode: 'cors'})
             .then((response) => {
-                if (!response.status) {
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        window.location.href = "/";
+                    }
                     throw Error(response.statusText);
                 }
                 return response.json();
