@@ -37,48 +37,48 @@ class Register extends Component {
         return (
             <Form horizontal>
                 <FormGroup controlId="title">
-                    <Col sm={7}>
+                    <Col>
                     <div style={{'fontSize': '20px'}}>
-                        Register Account
+                        <b>Register Account</b>
                     </div>
                     </Col>
                 </FormGroup>
                 <FormGroup controlId="name">
-                    <Col componentClass={ControlLabel} sm={4} md={3}>
+                    <Col componentClass={ControlLabel}>
                         First Name
                     </Col>
-                    <Col sm={8}>
-                        <FormControl onChange={this.updateDetails}
+                    <Col>
+                        <FormControl className="auth-item" onChange={this.updateDetails}
                                      value={this.state.details.name}
                                      type="text" placeholder="First Name" />
                     </Col>
                 </FormGroup>
 
                 <FormGroup controlId="username">
-                    <Col componentClass={ControlLabel} sm={4} md={3}>
+                    <Col componentClass={ControlLabel}>
                         Username
                     </Col>
-                    <Col sm={8}>
-                        <FormControl onChange={this.updateDetails}
+                    <Col>
+                        <FormControl className="auth-item" onChange={this.updateDetails}
                                      value={this.state.details.username}
                                      type="text" placeholder="Username" />
                     </Col>
                 </FormGroup>
 
                 <FormGroup controlId="password">
-                    <Col componentClass={ControlLabel} sm={4} md={3}>
+                    <Col componentClass={ControlLabel}>
                         Password
                     </Col>
-                    <Col sm={8}>
-                        <FormControl onChange={this.updateDetails}
+                    <Col>
+                        <FormControl className="auth-item" onChange={this.updateDetails}
                                      value={this.state.details.password}
                                      type="password" placeholder="Password" />
                     </Col>
                 </FormGroup>
 
                 <FormGroup>
-                    <Col xs={9}>
-                        <Button onClick={this.register} block>Register</Button>
+                    <Col>
+                        <Button onClick={this.register} className="auth-item">Register</Button>
                     </Col>
                 </FormGroup>
             </Form>

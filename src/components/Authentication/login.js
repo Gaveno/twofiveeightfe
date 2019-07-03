@@ -36,37 +36,37 @@ class Login extends Component {
         return (
             <Form horizontal>
                 <FormGroup controlId="title">
-                    <Col sm={7}>
+                    <Col>
                     <div style={{'fontSize': '20px'}}>
                         <b>Login to Account</b>
                     </div>
                     </Col>
                 </FormGroup>
                 <FormGroup controlId="username">
-                    <Col componentClass={ControlLabel} sm={3} lg={2}>
+                    <Col componentClass={ControlLabel}>
                         <b>Username</b>
                     </Col>
-                    <Col sm={8}>
-                        <FormControl onChange={this.updateDetails}
+                    <Col>
+                        <FormControl className="auth-item" onChange={this.updateDetails}
                                      value={this.state.details.username}
                                      type="text" placeholder="Username" />
                     </Col>
                 </FormGroup>
 
                 <FormGroup controlId="password">
-                    <Col componentClass={ControlLabel} sm={3} lg={2}>
+                    <Col componentClass={ControlLabel} >
                         Password
                     </Col>
-                    <Col sm={8}>
-                        <FormControl onChange={this.updateDetails}
+                    <Col>
+                        <FormControl className="auth-item" onChange={this.updateDetails}
                                      value={this.state.details.password}
                                      type="password" placeholder="Password" />
                     </Col>
                 </FormGroup>
 
                 <FormGroup>
-                    <Col xs={9}>
-                        <Button onClick={this.login} block>Sign in</Button>
+                    <Col>
+                        <Button onClick={this.login} className="auth-item">Sign in</Button>
                     </Col>
                 </FormGroup>
             </Form>

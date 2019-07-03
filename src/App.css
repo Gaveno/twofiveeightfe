@@ -367,3 +367,40 @@
   font-weight: bold;
   font-size: medium;
 }
+
+.auth {
+  width: 90%;
+  margin: auto;
+}
+
+.auth-container {
+  border: 1px solid #dddddd;
+  margin-top: 10%;
+}
+
+.auth-item {
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.auth-option {
+  max-width: 400px;
+  width: 90%;
+}
+
+.about-para {
+  width: 80%;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.about-features {
+  width: 80%;
+  text-align: left;
+  margin-left: 10%;
+  margin-right: 5%;
+}

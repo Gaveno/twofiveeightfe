@@ -5,6 +5,7 @@ import Register from './register';
 import { logoutUser } from '../../actions/authActions';
 import { Button, ListGroup, ListGroupItem, Col, Grid, Row } from 'react-bootstrap';
 import {Divider} from "../divider";
+import About from "./about"
 
 class Authentication extends Component {
 
@@ -12,23 +13,28 @@ class Authentication extends Component {
         super(props);
 
         this.state = {
-            toggleReg: false
+            screen: 0
         };
     }
 
     componentDidMount(){
 
     }
+    showAbout() {
+        this.setState({
+            screen: 0
+        });
+    }
 
     showLogin(){
         this.setState({
-            toggleReg: false
+            screen: 1
         });
     }
 
     showReg(){
         this.setState({
-            toggleReg: true
+            screen: 2
         });
     }
 
@@ -39,35 +45,49 @@ class Authentication extends Component {
     render(){
 
         const userNotLoggedIn = (
-            <div>
-                <Grid>
-                <ListGroup>
-                    <ListGroupItem>
-                        <Row>
-                        <Col smOffset={3} sm={5}>
-                            <Button onClick={this.showLogin.bind(this)} block>
-                                <b>Login to an existing user account</b>
+                <div className="auth">
+                    <Row>
+                    <Col>
+                        <div>
+                            <Button onClick={this.showAbout.bind(this)} className="auth-option">
+                                <b>About</b>
                             </Button>
-                            <Button onClick={this.showReg.bind(this)} block>
-                                <b>Register a new user account</b>
+                        </div>
+                        <div>
+                            <Button onClick={this.showLogin.bind(this)} className="auth-option">
+                                <b>Login</b>
                             </Button>
-                        </Col>
-                        </Row>
-                        {this.props.error && this.props.error.length > 0 ?
-                            <div>
-                                <Divider />
-                                <b className="error-message">{this.props.error}</b>
-                            </div>
-                            :
-                            ""
+                        </div>
+                        <div>
+                            <Button onClick={this.showReg.bind(this)} className="auth-option">
+                                <b>Register</b>
+                            </Button>
+                        </div>
+                    </Col>
+                    </Row>
+                    {this.props.error && this.props.error.length > 0 ?
+                        <div>
+                            <Divider />
+                            <b className="error-message">{this.props.error}</b>
+                        </div>
+                        :
+                        ""
+                    }
+                    <div className="auth-container">
+                        { (this.state.screen === 0) ?
+                            <About />
+                            : ""
                         }
-                    </ListGroupItem>
-                <ListGroupItem>
-                    { this.state.toggleReg ? <Register /> : <Login /> }
-                </ListGroupItem>
-                </ListGroup>
-                </Grid>
-            </div>
+                        { (this.state.screen === 1) ?
+                            <Login />
+                            : ""
+                        }
+                        { (this.state.screen === 2) ?
+                            <Register />
+                            : ""
+                        }
+                    </div>
+                </div>
         );
         const userLoggedIn = (
             <div>Logged in as: {this.props.username} <button onClick={this.logout.bind(this)}>Logout</button></div>
