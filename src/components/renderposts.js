@@ -74,7 +74,7 @@ class RenderPosts extends Component {
         };
         return this.props.posts.map((post, i) =>
             <Grid key={i} className="post">
-                <Col xs={13} sm={8} md={5} className="post-col">
+                <Col className="post-col">
                     <Row>
                         <img className="post-image"
                              src={post.img ? `data:image/jpeg;base64,${post.img.data}` : dummyimage}
