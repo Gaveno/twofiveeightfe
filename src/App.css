@@ -120,6 +120,10 @@
   left: 0;
 }
 
+.post-footer-approved {
+  height: 32px;
+}
+
 .post-footer-crop {
   position: absolute;
   height: 32px;

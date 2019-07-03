@@ -1,5 +1,6 @@
 import {Col, Grid, Row} from "react-bootstrap";
 import dummyimage from "../images/dummyimage.jpg";
+import approvedImage from "../images/approved.png"
 import btnComment from "../images/btnComment.png";
 import defaultProfilePhoto from "../images/defaultProfilePhoto.png";
 import profilePhotoCrop from "../images/profilePhotoCrop.png";
@@ -93,7 +94,7 @@ class RenderPosts extends Component {
                                  src={profilePhotoCrop}
                                  alt="crop overlay"/>
                             <b className="post-footer-username">
-                                <Username username={post.username} />
+                                <Username username={post.username} verified={post.verified} />
                             </b>
                         </Col>
                         <Col xs={4} className="post-footer-rightalign">

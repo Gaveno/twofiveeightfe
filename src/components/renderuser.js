@@ -138,11 +138,15 @@ class RenderUser extends Component {
                                      alt="profile crop"
                                      src={profilePhotoCrop}/>
                                 <NavItem eventKey={3} className="no-bullets">
-                                    <div onClick={this.openPhotoSelect}>
-                                        <img className="edit-profile-photo"
-                                             alt="profile edit"
-                                             src={btnEdit} onClick={this.onClickUpdateProfilePhoto}/>
-                                    </div>
+                                    {
+                                        (getPathUser() ===  localStorage.getItem("username") )?
+                                            <div onClick={this.openPhotoSelect}>
+                                                <img className="edit-profile-photo"
+                                                     alt="profile edit"
+                                                     src={btnEdit} onClick={this.onClickUpdateProfilePhoto}/>
+                                            </div>
+                                            : ""
+                                    }
                                 </NavItem>
                             </Col>
                             <Col xs={5} className="user-feed-right-column">
