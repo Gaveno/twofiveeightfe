@@ -111,7 +111,7 @@ class UserFeed extends Component {
         };
         return (
             <div>
-                <div className="userInfoContainer">
+                <div>
                     <RenderUser />
                 </div>
                 <div className="feed-container">
