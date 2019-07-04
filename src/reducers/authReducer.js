@@ -3,7 +3,8 @@ import constants from '../constants/actionTypes'
 const initialState = {
     loggedIn: localStorage.getItem('token') ? true : false,
     username: localStorage.getItem('username') ? localStorage.getItem('username') : '',
-    error: ""
+    error: "",
+    isAdmin: false
 };
 
 export default (state = initialState, action) => {
@@ -15,6 +16,7 @@ export default (state = initialState, action) => {
             updated['loggedIn'] = true;
             updated['username'] = action.username;
             updated['error'] = "";
+            updated['isAdmin'] = action.isAdmin;
             return updated;
 
         case constants.USER_LOGOUT:

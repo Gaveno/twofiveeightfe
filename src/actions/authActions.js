@@ -1,10 +1,11 @@
 import actionTypes from '../constants/actionTypes';
 import runtimeEnv from '@mars/heroku-js-runtime-env';
 
-function userLoggedIn(username){
+function userLoggedIn(username, isAdmin){
     return {
         type: actionTypes.USER_LOGGEDIN,
-        username: username
+        username: username,
+        isAdmin: isAdmin
     }
 }
 
@@ -40,12 +41,12 @@ export function submitLogin(data){
                 return response.json();
             })
             .then( (res) => {
-                console.log("response: ", res);
+                //console.log("response: ", res);
                 if (res.success && res.success === true) {
                     localStorage.setItem('username', data.username);
                     localStorage.setItem('token', res.token);
                     window.location.href = '/#/globalfeed';
-                    dispatch(userLoggedIn(data.username));
+                    dispatch(userLoggedIn(data.username, res.isAdmin));
                 }
                 else {
                     if (res.message)

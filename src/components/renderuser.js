@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {Button, Col, FormControl, FormGroup, Grid, HelpBlock, NavItem, Row} from "react-bootstrap";
 import defaultProfilePhoto from "../images/defaultProfilePhoto.png";
 import profilePhotoCrop from "../images/profilePhotoCrop.png";
-import {Divider} from './small/divider';
 import {
     fetchFollowers,
     submitFollow,
@@ -14,6 +13,8 @@ import {fetchFollowing} from "../actions/feedActions";
 import {submitAbout} from "../actions/feedActions";
 import btnEdit from "../images/btnEdit.png";
 import {getOrientation, getPathUser, resetOrientation} from "../actions/helpers";
+import {Spacer} from "./small/spacer";
+import {Divider} from "./small/divider";
 
 function fileToBase64(file) {
     console.log("file to convert: ",file[0]);
@@ -189,7 +190,7 @@ class RenderUser extends Component {
                             </Col>
                         </Row>
                     </Grid>
-                    <Divider/>
+                    <Spacer/>
                     {
                         (getPathUser() ===  localStorage.getItem("username") && this.state.editAbout) ?
                             <Row className="about-textbox">
@@ -204,7 +205,9 @@ class RenderUser extends Component {
                                     <Col xs={2} className="submit-about-button-col">
                                         {(this.getValidationState()==='error' ? <Button disabled>Update</Button> :
                                             <Button onClick={()=>this.onClickUpdateAbout()}>Update</Button>)}
-                                        <HelpBlock>{(this.state.aboutText) ? this.state.aboutText.length : 0}/258</HelpBlock>
+                                        <HelpBlock>
+                                            {(this.state.aboutText) ? this.state.aboutText.length : 0}/258
+                                        </HelpBlock>
                                     </Col>
                                 </FormGroup>
                             </Row>
@@ -222,6 +225,7 @@ class RenderUser extends Component {
                                     {this.props.selectedUser.about}
                                 </div>
                             </div>
+
                     }
                 </Row>
             </div>

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Login from './login';
 import Register from './register';
 import { logoutUser } from '../../actions/authActions';
-import { Button, ListGroup, ListGroupItem, Col, Grid, Row } from 'react-bootstrap';
+import { Button, Col } from 'react-bootstrap';
 import {Divider} from "../small/divider";
 import About from "./about"
 import {Spacer} from "../small/spacer";
