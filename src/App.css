@@ -238,7 +238,7 @@
   position: absolute;
   left: 0;
   padding-top: 20px;
-  padding-left: 50px;
+  padding-left: 10px;
 }
 
 .user-feed-profile-crop {
@@ -246,7 +246,7 @@
   height: 95%;
   left: 0;
   padding-top: 20px;
-  padding-left: 50px;
+  padding-left: 10px;
 }
 
 .edit-profile-photo {
@@ -254,7 +254,7 @@
   height: 40px;
   left: 0;
   padding-top: 21px;
-  padding-left: 218px;
+  padding-left: 180px;
 }
 
 .edit-about-text {
@@ -280,14 +280,17 @@
 }
 
 .user-feed-left-column {
-    width: 45%;
-    height: 200px;
+  position: absolute;
+  width: 50%;
+  height: 200px;
 }
 .user-feed-right-column {
-    width: 35%;
-    height: 200px;
-    padding-top: 50px;
-    margin-left: 20%;
+  position: absolute;
+  width: 50%;
+  height: 200px;
+  padding-top: 50px;
+  margin-left: 50%;
+  padding-left: 15%;
 }
 .user-feed-row {
     height: 200px;

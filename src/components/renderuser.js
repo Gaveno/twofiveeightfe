@@ -127,9 +127,9 @@ class RenderUser extends Component {
                     />
                 </FormGroup>
                 <Row>
-                    <Grid className="user-feed">
+                    <div className="user-feed">
                         <Row className="user-feed-row">
-                            <Col xs={5} className="user-feed-left-column">
+                            <Col className="user-feed-left-column">
                                 <img className="user-feed-profile-image"
                                      alt="user profile"
                                      src={(this.props.selectedUser.imgProfile && this.props.selectedUser.imgProfile.data)
@@ -150,7 +150,7 @@ class RenderUser extends Component {
                                     }
                                 </NavItem>
                             </Col>
-                            <Col xs={5} className="user-feed-right-column">
+                            <Col className="user-feed-right-column">
                                 <Row className="user-feed-row-1">
                                     <b className="user-feed-username">{this.props.selectedUser.username
                                         ? this.props.selectedUser.username
@@ -189,7 +189,7 @@ class RenderUser extends Component {
                                 </div>
                             </Col>
                         </Row>
-                    </Grid>
+                    </div>
                     <Spacer/>
                     {
                         (getPathUser() ===  localStorage.getItem("username") && this.state.editAbout) ?
