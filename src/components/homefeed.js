@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import AppControls from './appcontrols';
 import {fetchHomeFeed} from "../actions/feedActions";
 import RenderPosts from "./renderposts";
-import {Divider} from "./divider";
+import {Divider} from "./small/divider";
 import {getScrollPercent} from "../actions/helpers";
 
 class HomeFeed extends Component {

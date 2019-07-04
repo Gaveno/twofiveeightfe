@@ -8,7 +8,7 @@ import AppControls from "./appcontrols";
 import {FormControl, FormGroup, Col, Grid, Button} from 'react-bootstrap';
 import {fetchGlobalFeed, fetchHashtagFeed, fetchUsers, searchFeedFetched, usersFetched} from '../actions/feedActions';
 import RenderPosts from './renderposts';
-import {Divider} from './divider';
+import {Divider} from './small/divider';
 import {getScrollPercent} from "../actions/helpers";
 import {RenderFollowers} from "./renderfollowers";
 

@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
+import {Spacer} from "../small/spacer";
 
 export default class Username extends Component {
     render() {
         return (
             <div>
+                <Spacer />
                 <b>About:</b>
                 <div className="about-para">
                     <b>2FIVEEIGHT</b> is an evolution on social media for the next generation of youth.
@@ -26,6 +28,7 @@ export default class Username extends Component {
                         stop anyone from downloading posts as they happen, no more worrying about your past mistakes
                     coming back to haunt you.
                 </div>
+                <Spacer/>
             </div>
         )
     }

@@ -5,12 +5,12 @@ import btnComment from "../images/btnComment.png";
 import defaultProfilePhoto from "../images/defaultProfilePhoto.png";
 import profilePhotoCrop from "../images/profilePhotoCrop.png";
 import React, {Component} from 'react';
-import {Divider} from './divider';
+import {Divider} from './small/divider';
 import {connect} from "react-redux";
 import {getPostComments, submitComment} from "../actions/feedActions";
 import {FormControl, FormGroup, Button, HelpBlock} from "react-bootstrap";
-import Username from './username';
-import DynamicText from './dynamictext';
+import Username from './small/username';
+import DynamicText from './small/dynamictext';
 
 //export const RenderPosts = ({posts}) => {
 class RenderPosts extends Component {

@@ -3,13 +3,15 @@ import './App.css';
 import {HashRouter,Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import titleImage from './images/Title.png';
-import Authentication from './components/Authentication/authentication';
+import Authentication from './components/authentication/authentication';
 import HomeFeed from './components/homefeed';
 import GlobalFeed from './components/globalfeed';
 import CreatePost from './components/createpost';
 import UserFeed from './components/userfeed';
 import store from './stores/store';
 import {getPath, smoothScroll} from "./actions/helpers";
+import btnLogout from './images/btnLogout.png'
+import Logout from './components/authentication/logout';
 
 //add routing configuration
 
@@ -47,6 +49,7 @@ class App extends Component {
         const Header = () => {
             return (
                 <header className="App-header">
+                    <Logout />
                     <h1>
                         <div className="header-click-area">
                         <img className="App-title-image"

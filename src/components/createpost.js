@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
 import {FormControl, FormGroup, Button, ControlLabel, HelpBlock} from "react-bootstrap";
-import {Divider} from './divider';
+import {Divider} from './small/divider';
 import {submitPost} from "../actions/feedActions";
 import {resizeImage} from "../actions/feedActions";
 import {dataURLtoFile} from "../actions/helpers";

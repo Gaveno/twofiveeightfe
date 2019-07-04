@@ -3,8 +3,7 @@
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
+  border: 1px solid #ddd;
 }
 
 .App-logo {
@@ -22,6 +21,7 @@
   color: black;
   border-bottom: 1px solid #ddd;
   z-index: 2;
+  margin-left: 1px;
 }
 
 .App-title-image {
@@ -202,6 +202,10 @@
   width: 90%;
 }
 
+.spacer {
+  height: 25px;
+}
+
 .popup-box {
   position: fixed;
   left: 10%;
@@ -380,7 +384,7 @@
 
 .auth-container {
   border: 1px solid #dddddd;
-  margin-top: 10%;
+  margin-top: 5%;
 }
 
 .auth-item {
@@ -390,8 +394,28 @@
 }
 
 .auth-option {
-  max-width: 400px;
+  position: relative;
+  max-width: 100px;
   width: 90%;
+  right: 0;
+  text-align: right;
+  margin-right: 0;
+  margin-left: 70%;
+  border: 0;
+}
+
+.auth-footer {
+  font-style: italic;
+  font-size: 9pt;
+  bottom: 0;
+  width: 80%;
+  max-width: 600px;
+  margin-top: 10%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  border-top: 1px solid #dddddd;
 }
 
 .about-para {
@@ -408,4 +432,11 @@
   text-align: left;
   margin-left: 10%;
   margin-right: 5%;
+}
+
+.button-logout {
+  position: absolute;
+  left: 32px;
+  height: 40px;
+  margin-top: 2px;
 }

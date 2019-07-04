@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {LinkContainer} from 'react-router-bootstrap';
-import {getPath} from "../actions/helpers";
-import approvedImage from "../images/approved.png";
+import {getPath} from "../../actions/helpers";
+import approvedImage from "../../images/approved.png";
 
 export default class Username extends Component {
     onClicked() {

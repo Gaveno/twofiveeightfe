@@ -4,8 +4,10 @@ import Login from './login';
 import Register from './register';
 import { logoutUser } from '../../actions/authActions';
 import { Button, ListGroup, ListGroupItem, Col, Grid, Row } from 'react-bootstrap';
-import {Divider} from "../divider";
+import {Divider} from "../small/divider";
 import About from "./about"
+import {Spacer} from "../small/spacer";
+import {AuthFooter} from "./authfooter";
 
 class Authentication extends Component {
 
@@ -46,8 +48,8 @@ class Authentication extends Component {
 
         const userNotLoggedIn = (
                 <div className="auth">
-                    <Row>
                     <Col>
+                        <Spacer />
                         <div>
                             <Button onClick={this.showAbout.bind(this)} className="auth-option">
                                 <b>About</b>
@@ -64,7 +66,6 @@ class Authentication extends Component {
                             </Button>
                         </div>
                     </Col>
-                    </Row>
                     {this.props.error && this.props.error.length > 0 ?
                         <div>
                             <Divider />
@@ -87,6 +88,9 @@ class Authentication extends Component {
                             : ""
                         }
                     </div>
+                    <Spacer />
+                    <Spacer />
+                    <AuthFooter />
                 </div>
         );
         const userLoggedIn = (

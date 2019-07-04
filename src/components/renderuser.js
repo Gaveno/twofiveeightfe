@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Button, Col, FormControl, FormGroup, Grid, HelpBlock, NavItem, Row} from "react-bootstrap";
 import defaultProfilePhoto from "../images/defaultProfilePhoto.png";
 import profilePhotoCrop from "../images/profilePhotoCrop.png";
-import {Divider} from './divider';
+import {Divider} from './small/divider';
 import {
     fetchFollowers,
     submitFollow,

@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
 import RenderPosts from "./renderposts";
 import {fetchUserFeed, userFeedFetchedNOU} from "../actions/feedActions";
-import {Divider} from "./divider";
+import {Divider} from "./small/divider";
 import {RenderFollowers} from "./renderfollowers";
 import RenderUser from "./renderuser";
 import {getPathUser, getScrollPercent} from "../actions/helpers";

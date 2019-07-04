@@ -1,6 +1,6 @@
 import defaultProfilePhoto from "../images/defaultProfilePhoto.png";
 import React from 'react';
-import Username from "./username";
+import Username from "./small/username";
 import {arrayBufferToBase64} from "../actions/helpers";
 import profilePhotoCrop from "../images/profilePhotoCrop.png";
 
