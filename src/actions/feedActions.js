@@ -152,7 +152,6 @@ export function fetchUserFeed(skip, prevFeed) {
     localStorage.setItem('lastUserFetched', getPathUser());
     localStorage.setItem('lastFetchUser', Date.now());
     let changeFeed = !(lastUser === getPathUser());
-    //console.log("Getting user feed")
     let s = 0;
     if (skip && !changeFeed) s = skip;
     const env = runtimeEnv();
@@ -195,7 +194,6 @@ export function fetchUserFeed(skip, prevFeed) {
                         newFeed = appendFeed(prevFeed, res.feed);
                     }
                 }
-                //console.log("New Feed: ", newFeed);
                 return dispatch(userFeedFetched(res.user, newFeed));
             })
             .catch((e) => console.log(e));

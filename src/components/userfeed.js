@@ -7,7 +7,8 @@ import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
 import RenderPosts from "./renderposts";
 import {fetchUserFeed, setLoading, userFeedFetchedNOU} from "../actions/feedActions";
-import {Divider} from "./small/divider";
+import {Spacer} from "./small/spacer";
+import {Divider} from './small/divider';
 import {RenderFollowers} from "./renderfollowers";
 import RenderUser from "./renderuser";
 import {getPathUser, getScrollPercent} from "../actions/helpers";
@@ -42,8 +43,12 @@ class UserFeed extends Component {
         if (this.props.userFeed.length <= 0 || Date.now() - last > 5000) {
             dispatch(fetchUserFeed(0, this.props.userFeed));
         }
-        if (localStorage.getItem('userScroll'))
+        if (localStorage.getItem('userScroll')) {
             window.scroll({top: parseInt(localStorage.getItem('userScroll'))});
+            let posts = document.getElementsByClassName("post");
+            for (let i = 0; i < posts.length; i++)
+                posts[i].style.animation = "none";
+        }
     }
 
     componentWillUnmount() {
@@ -62,10 +67,8 @@ class UserFeed extends Component {
         // Make sure last fetch was over 5 seconds ago
         if (Date.now() - last > 5000) {
             if (getScrollPercent() <= 0) {
-                dispatch(setLoading());
                 dispatch(fetchUserFeed(0, this.props.userFeed));
             } else if (getScrollPercent() > 80) {
-                dispatch(setLoading());
                 dispatch(fetchUserFeed(this.props.userFeed.length, this.props.userFeed));
             }
         }
@@ -85,16 +88,6 @@ class UserFeed extends Component {
                 </div>
             )
         }
-        const RenderUserFeed = ({user, feed}) => {
-            return (
-                    <div>
-                        <RenderPosts posts={feed}/>
-                        <Divider/>
-                        <Divider/>
-                        <Divider/>
-                    </div>
-                )
-        };
         const Followers = ({title, followList}) => {
             return(
                 <div className="user-followers-container">
@@ -106,9 +99,7 @@ class UserFeed extends Component {
                     <div onClick={this.onClickFollowArea}>
                         <RenderFollowers users={followList} />
                     </div>
-                    <Divider />
-                    <Divider />
-                    <Divider />
+
                 </div>
                 )
         };
@@ -119,7 +110,7 @@ class UserFeed extends Component {
                 </div>
                 <div className="feed-container">
                     {(this.props.displayType === 0) ?
-                        <RenderUserFeed user={this.props.selectedUser} feed={this.props.userFeed} /> : ""
+                        <RenderPosts posts={this.props.userFeed} /> : ""
                     }
                     {(this.props.displayType === 1) ?
                         <Followers title="Followers" followList={this.props.followList} /> : ""
@@ -128,6 +119,9 @@ class UserFeed extends Component {
                         <Followers title="Following" followList={this.props.followList}/> : ""
                     }
                 </div>
+                <Spacer />
+                <Spacer />
+                <Spacer />
                 <AppControls/>
                 <Loader />
             </div>

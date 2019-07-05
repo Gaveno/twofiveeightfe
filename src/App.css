@@ -90,6 +90,20 @@
 .post {
   width: 100%;
   margin-left: 5.6%;
+  animation: slide-in-from-top 500ms;
+}
+
+.post-no-anim {
+  animation: 1ms;
+}
+
+@keyframes slide-in-from-top {
+  from {
+    margin-top: 100%;
+  }
+  to {
+    margin-top: 0;
+  }
 }
 
 .post-text {
@@ -236,6 +250,24 @@
   padding-left: 10px;
 }
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .user-feed-profile-crop {
   position: absolute;
   height: 95%;
@@ -304,6 +336,7 @@
   margin-right: auto;
   border-bottom: 3px solid #dddddd;
   margin-bottom: 10px;
+  animation: fade-in 0.5s linear;
 }
 
 .followers {
@@ -382,6 +415,7 @@
 .auth-container {
   border: 1px solid #dddddd;
   margin-top: 5%;
+  animation: fade-in 0.5s linear;
 }
 
 .auth-item {
@@ -441,7 +475,7 @@
 .loading-container {
   position: fixed;
   left: calc(50% - 50px);
-  top: calc(40% - 50px);
+  top: calc(45% - 50px);
   height: 100px;
   width: 100px;
   background-color: #fff;
@@ -453,7 +487,7 @@
 .loading-icon {
   position: fixed;
   left: calc(50% - 32px);
-  top: calc(40% - 32px);
+  top: calc(45% - 32px);
   animation: loading-icon-spin infinite 1s linear;
   height: 64px;
 }
@@ -461,4 +495,26 @@
 @keyframes loading-icon-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.color-cycle {
+  animation: color-cycle 3s infinite linear alternate-reverse;
+}
+
+@keyframes color-cycle {
+  0% {
+    color: #0a00b2;
+  }
+  25% {
+    color: #8400ff;
+  }
+  50% {
+    color: #ff0000;
+  }
+  75% {
+    color: #ffa200;
+  }
+  100% {
+    color: #fffc00;
+  }
 }

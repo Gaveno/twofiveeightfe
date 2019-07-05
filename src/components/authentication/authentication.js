@@ -74,20 +74,25 @@ class Authentication extends Component {
                         :
                         ""
                     }
-                    <div className="auth-container">
+
                         { (this.state.screen === 0) ?
-                            <About />
+                            <div className="auth-container">
+                                <About />
+                            </div>
                             : ""
                         }
                         { (this.state.screen === 1) ?
-                            <Login />
+                            <div className="auth-container">
+                                <Login />
+                            </div>
                             : ""
                         }
                         { (this.state.screen === 2) ?
-                            <Register />
+                            <div className="auth-container">
+                                <Register />
+                            </div>
                             : ""
                         }
-                    </div>
                     <Spacer />
                     <Spacer />
                     <AuthFooter />

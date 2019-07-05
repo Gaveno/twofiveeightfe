@@ -114,121 +114,124 @@ class RenderUser extends Component {
     };
 
     render() {
-        return (
-            <div className="user-feed-container">
-                <FormGroup controlId="file">
-                    <input type="file"
-                           className="hide"
-                           accept="image/*"
-                           id="photoUpload"
-                           ref={this.inputCaptureRef}
-                           onChange={ (e) => this.onPhotoCapture(e.target.files) }
-                    />
-                </FormGroup>
-                <Row>
-                    <div className="user-feed">
-                        <Row className="user-feed-row">
-                            <Col className="user-feed-left-column">
-                                <img className="user-feed-profile-image"
-                                     alt="user profile"
-                                     src={(this.props.selectedUser.imgProfile && this.props.selectedUser.imgProfile.data)
-                                         ? `data:image/jpeg;base64,${this.props.selectedUser.imgProfile.data}`
-                                         : defaultProfilePhoto}/>
-                                <img className="user-feed-profile-crop"
-                                     alt="profile crop"
-                                     src={profilePhotoCrop}/>
-                                <NavItem eventKey={3} className="no-bullets">
+        if (this.props.selectedUser) {
+            return (
+                <div className="user-feed-container">
+                    <FormGroup controlId="file">
+                        <input type="file"
+                               className="hide"
+                               accept="image/*"
+                               id="photoUpload"
+                               ref={this.inputCaptureRef}
+                               onChange={(e) => this.onPhotoCapture(e.target.files)}
+                        />
+                    </FormGroup>
+                    <Row>
+                        <div className="user-feed">
+                            <Row className="user-feed-row">
+                                <Col className="user-feed-left-column">
+                                    <img className="user-feed-profile-image"
+                                         alt="user profile"
+                                         src={(this.props.selectedUser.imgProfile && this.props.selectedUser.imgProfile.data)
+                                             ? `data:image/jpeg;base64,${this.props.selectedUser.imgProfile.data}`
+                                             : defaultProfilePhoto}/>
+                                    <img className="user-feed-profile-crop"
+                                         alt="profile crop"
+                                         src={profilePhotoCrop}/>
+                                    <NavItem eventKey={3} className="no-bullets">
+                                        {
+                                            (getPathUser() === localStorage.getItem("username")) ?
+                                                <div onClick={this.openPhotoSelect}>
+                                                    <img className="edit-profile-photo"
+                                                         alt="profile edit"
+                                                         src={btnEdit} onClick={this.onClickUpdateProfilePhoto}/>
+                                                </div>
+                                                : ""
+                                        }
+                                    </NavItem>
+                                </Col>
+                                <Col className="user-feed-right-column">
+                                    <Row className="user-feed-row-1">
+                                        <b className="user-feed-username">{this.props.selectedUser.username
+                                            ? this.props.selectedUser.username
+                                            : "usernotfound"}</b>
+                                    </Row>
                                     {
-                                        (getPathUser() ===  localStorage.getItem("username") )?
-                                            <div onClick={this.openPhotoSelect}>
-                                                <img className="edit-profile-photo"
-                                                     alt="profile edit"
-                                                     src={btnEdit} onClick={this.onClickUpdateProfilePhoto}/>
-                                            </div>
-                                            : ""
+                                        getPathUser() !== localStorage.getItem("username") ?
+                                            <Row className="user-feed-row-1">
+                                                <Button className="user-feed-follow-button" type="button"
+                                                        onClick={this.onClickFollow}>
+                                                    {
+                                                        this.props.selectedUser.following ? "Unfollow" : "Follow"
+                                                    }
+                                                </Button>
+                                            </Row>
+                                            :
+                                            ""
                                     }
-                                </NavItem>
-                            </Col>
-                            <Col className="user-feed-right-column">
-                                <Row className="user-feed-row-1">
-                                    <b className="user-feed-username">{this.props.selectedUser.username
-                                        ? this.props.selectedUser.username
-                                        : "usernotfound"}</b>
-                                </Row>
-                                {
-                                    getPathUser() !== localStorage.getItem("username") ?
+                                    <div onClick={this.onClickFollowers}>
                                         <Row className="user-feed-row-1">
-                                            <Button className="user-feed-follow-button" type="button"
-                                                    onClick={this.onClickFollow}>
-                                                {
-                                                    this.props.selectedUser.following ? "Unfollow" : "Follow"
-                                                }
-                                            </Button>
+                                            <NavItem className="no-bullets">
+                                                <p className="user-feed-follower-count">{this.props.selectedUser.followersCount
+                                                    ? this.props.selectedUser.followersCount
+                                                    : "0"} Followers</p>
+                                            </NavItem>
                                         </Row>
-                                        :
-                                        ""
-                                }
-                                <div onClick={this.onClickFollowers}>
-                                    <Row className="user-feed-row-1">
-                                        <NavItem className="no-bullets">
-                                            <p className="user-feed-follower-count">{this.props.selectedUser.followersCount
-                                                ? this.props.selectedUser.followersCount
-                                                : "0"} Followers</p>
-                                        </NavItem>
-                                    </Row>
-                                </div>
-                                <div onClick={this.onClickFollowing}>
-                                    <Row className="user-feed-row-1">
-                                        <NavItem className="no-bullets">
-                                            <p className="user-feed-following-count">Following {this.props.selectedUser.followingCount
-                                                ? this.props.selectedUser.followingCount
-                                                : "0"}</p>
-                                        </NavItem>
-                                    </Row>
-                                </div>
-                            </Col>
-                        </Row>
-                    </div>
-                    <Spacer/>
-                    {
-                        (getPathUser() ===  localStorage.getItem("username") && this.state.editAbout) ?
-                            <Row className="about-textbox">
-                                <FormGroup controlId="aboutText"
-                                           validationState={this.getValidationState()}>
-                                    <Col xs={6}>
-                                        <FormControl value={this.state.aboutText}
-                                                     onChange={this.updateAbout}
-                                                     componentClass="textarea"
-                                                     placeholder="Tell us about yourself..."/>
-                                    </Col>
-                                    <Col xs={2} className="submit-about-button-col">
-                                        {(this.getValidationState()==='error' ? <Button disabled>Update</Button> :
-                                            <Button onClick={()=>this.onClickUpdateAbout()}>Update</Button>)}
-                                        <HelpBlock>
-                                            {(this.state.aboutText) ? this.state.aboutText.length : 0}/258
-                                        </HelpBlock>
-                                    </Col>
-                                </FormGroup>
+                                    </div>
+                                    <div onClick={this.onClickFollowing}>
+                                        <Row className="user-feed-row-1">
+                                            <NavItem className="no-bullets">
+                                                <p className="user-feed-following-count">Following {this.props.selectedUser.followingCount
+                                                    ? this.props.selectedUser.followingCount
+                                                    : "0"}</p>
+                                            </NavItem>
+                                        </Row>
+                                    </div>
+                                </Col>
                             </Row>
-                            :
-                            <div>
+                        </div>
+                        <Spacer/>
+                        {
+                            (getPathUser() === localStorage.getItem("username") && this.state.editAbout) ?
+                                <Row className="about-textbox">
+                                    <FormGroup controlId="aboutText"
+                                               validationState={this.getValidationState()}>
+                                        <Col xs={6}>
+                                            <FormControl value={this.state.aboutText}
+                                                         onChange={this.updateAbout}
+                                                         componentClass="textarea"
+                                                         placeholder="Tell us about yourself..."/>
+                                        </Col>
+                                        <Col xs={2} className="submit-about-button-col">
+                                            {(this.getValidationState() === 'error' ? <Button disabled>Update</Button> :
+                                                <Button onClick={() => this.onClickUpdateAbout()}>Update</Button>)}
+                                            <HelpBlock>
+                                                {(this.state.aboutText) ? this.state.aboutText.length : 0}/258
+                                            </HelpBlock>
+                                        </Col>
+                                    </FormGroup>
+                                </Row>
+                                :
                                 <div>
-                                    {getPathUser()===localStorage.getItem('username') ?
-                                        <img className="edit-about-text"
-                                             alt="profile edit"
-                                             src={btnEdit} onClick={this.onClickEditAbout}/>
-                                    : ""}
-                                    <b>About</b>
+                                    <div>
+                                        {getPathUser() === localStorage.getItem('username') ?
+                                            <img className="edit-about-text"
+                                                 alt="profile edit"
+                                                 src={btnEdit} onClick={this.onClickEditAbout}/>
+                                            : ""}
+                                        <b>About</b>
+                                    </div>
+                                    <div className="about-text">
+                                        {this.props.selectedUser.about}
+                                    </div>
                                 </div>
-                                <div className="about-text">
-                                    {this.props.selectedUser.about}
-                                </div>
-                            </div>
 
-                    }
-                </Row>
-            </div>
-        )
+                        }
+                    </Row>
+                </div>
+            )
+        }
+        else return "";
     }
 }
 

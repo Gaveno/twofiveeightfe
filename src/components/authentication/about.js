@@ -8,7 +8,7 @@ export default class Username extends Component {
                 <Spacer />
                 <b>About:</b>
                 <div className="about-para">
-                    <b>2FIVEEIGHT</b> is an evolution on social media for the next generation of youth.
+                    <b className="color-cycle">2FIVEEIGHT</b> is an evolution on social media for the next generation of youth.
                     Designed to be a reduced stress experience in an ever-connected society.
                     With the intentional omission of “likes,” our users will no longer feel the pressure to tie their
                     self-worth to a non-consequential number system.

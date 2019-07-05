@@ -68,7 +68,7 @@ class RenderPosts extends Component {
             )
         };
         return this.props.posts.map((post, i) =>
-            <Grid key={i} className="post">
+            <Grid key={post._id} className="post">
                 <Col className="post-col">
                     <Row>
                         <img className="post-image"

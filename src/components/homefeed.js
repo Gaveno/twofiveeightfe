@@ -5,9 +5,9 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from './appcontrols';
-import {fetchHomeFeed, setLoading} from "../actions/feedActions";
+import {fetchHomeFeed} from "../actions/feedActions";
 import RenderPosts from "./renderposts";
-import {Divider} from "./small/divider";
+import {Spacer} from "./small/spacer";
 import {getScrollPercent} from "../actions/helpers";
 import Loader from "./small/loader";
 
@@ -24,8 +24,12 @@ class HomeFeed extends Component {
         if (this.props.homeFeed.length <= 0 || Date.now() - last > 5000) {
             dispatch(fetchHomeFeed(0, this.props.homeFeed));
         }
-        if (localStorage.getItem('homeScroll'))
+        if (localStorage.getItem('homeScroll')) {
             window.scroll({top: parseInt(localStorage.getItem('homeScroll'))});
+            let posts = document.getElementsByClassName("post");
+            for (let i = 0; i < posts.length; i++)
+                posts[i].style.animation = "none";
+        }
     }
 
     componentWillUnmount() {
@@ -53,9 +57,9 @@ class HomeFeed extends Component {
             <div className="feed-container">
                 <RenderPosts posts={this.props.homeFeed} />
                 {(localStorage.getItem('loading')==="true") ? <Loader /> : ""}
-                <Divider />
-                <Divider />
-                <Divider />
+                <Spacer />
+                <Spacer />
+                <Spacer />
                 <AppControls />
                 <Loader />
             </div>

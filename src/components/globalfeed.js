@@ -19,6 +19,7 @@ import {Divider} from './small/divider';
 import {getScrollPercent} from "../actions/helpers";
 import {RenderFollowers} from "./renderfollowers";
 import Loader from "./small/loader";
+import {Spacer} from "./small/spacer";
 
 const TYPE_HASHTAG = 0;
 
@@ -63,6 +64,9 @@ class GlobalFeed extends Component {
         }
         if (localStorage.getItem('globalScroll')) {
             window.scroll({top: parseInt(localStorage.getItem('globalScroll'))});
+            let posts = document.getElementsByClassName("post");
+            for (let i = 0; i < posts.length; i++)
+                posts[i].style.animation = "none";
         }
     }
 
@@ -190,9 +194,9 @@ class GlobalFeed extends Component {
                     :
                     <RenderFollowers users={this.props.searchUsers} />
                 }
-                <Divider />
-                <Divider />
-                <Divider />
+                <Spacer />
+                <Spacer />
+                <Spacer />
                 <AppControls />
                 <Loader />
             </div>
