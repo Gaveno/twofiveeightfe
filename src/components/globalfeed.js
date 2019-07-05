@@ -6,11 +6,19 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
 import {FormControl, FormGroup, Col, Grid, Button} from 'react-bootstrap';
-import {fetchGlobalFeed, fetchHashtagFeed, fetchUsers, searchFeedFetched, usersFetched} from '../actions/feedActions';
+import {
+    fetchGlobalFeed,
+    fetchHashtagFeed,
+    fetchUsers,
+    searchFeedFetched,
+    setLoading,
+    usersFetched
+} from '../actions/feedActions';
 import RenderPosts from './renderposts';
 import {Divider} from './small/divider';
 import {getScrollPercent} from "../actions/helpers";
 import {RenderFollowers} from "./renderfollowers";
+import Loader from "./small/loader";
 
 const TYPE_HASHTAG = 0;
 
@@ -92,10 +100,12 @@ class GlobalFeed extends Component {
                 }
             } else {
                 //console.log("searching for user: " + this.state.details.searchStr);
-                if (search.length > 0)
+                if (search.length > 0) {
                     dispatch(fetchUsers(search));
-                else
+                }
+                else {
                     dispatch(usersFetched([]));
+                }
             }
         }
     }
@@ -180,11 +190,11 @@ class GlobalFeed extends Component {
                     :
                     <RenderFollowers users={this.props.searchUsers} />
                 }
-
                 <Divider />
                 <Divider />
                 <Divider />
                 <AppControls />
+                <Loader />
             </div>
         )
     }

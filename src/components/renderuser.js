@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {Button, Col, FormControl, FormGroup, Grid, HelpBlock, NavItem, Row} from "react-bootstrap";
+import {Button, Col, FormControl, FormGroup, HelpBlock, NavItem, Row} from "react-bootstrap";
 import defaultProfilePhoto from "../images/defaultProfilePhoto.png";
 import profilePhotoCrop from "../images/profilePhotoCrop.png";
 import {
@@ -14,7 +14,6 @@ import {submitAbout} from "../actions/feedActions";
 import btnEdit from "../images/btnEdit.png";
 import {getOrientation, getPathUser, resetOrientation} from "../actions/helpers";
 import {Spacer} from "./small/spacer";
-import {Divider} from "./small/divider";
 
 function fileToBase64(file) {
     console.log("file to convert: ",file[0]);

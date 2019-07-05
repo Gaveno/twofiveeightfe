@@ -10,7 +10,6 @@ import CreatePost from './components/createpost';
 import UserFeed from './components/userfeed';
 import store from './stores/store';
 import {getPath, smoothScroll} from "./actions/helpers";
-import btnLogout from './images/btnLogout.png'
 import Logout from './components/authentication/logout';
 
 //add routing configuration

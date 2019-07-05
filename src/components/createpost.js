@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
 import {FormControl, FormGroup, Button, ControlLabel, HelpBlock} from "react-bootstrap";
 import {Divider} from './small/divider';
-import {submitPost} from "../actions/feedActions";
+import {setLoading, submitPost} from "../actions/feedActions";
 import {resizeImage} from "../actions/feedActions";
 import {dataURLtoFile} from "../actions/helpers";
 
@@ -32,6 +32,8 @@ class CreatePost extends Component {
             {type: 'image/jpeg', encoding: 'utf-8'});*/
         //let file = new Blob(['data:image/jpeg;base64,'+this.props.fileUpload], {type: 'image/jpeg', encoding: 'utf-8'});
         //let file = dataURItoBlob(this.props.fileUpload);
+        const {dispatch} = this.props;
+        dispatch(setLoading());
         submitPost(file, this.state.details.text);
     }
 

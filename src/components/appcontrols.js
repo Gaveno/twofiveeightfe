@@ -11,7 +11,7 @@ import btnUserFeedSel from '../images/btnUserFeedSel.png';
 import btnGlobalFeedSel from '../images/btnGlobalFeedSel.png';
 import btnCreatePostSel from '../images/btnCreatePostSel.png';
 import btnHomeFeedSel from '../images/btnHomeFeedSel.png';
-import {setFileUpload} from '../actions/feedActions';
+import {setFileUpload, setLoading} from '../actions/feedActions';
 import {fileToBase64, getOrientation, getPath, getPathUser, resetOrientation, smoothScroll} from "../actions/helpers";
 
 class AppControls extends Component {
@@ -29,6 +29,8 @@ class AppControls extends Component {
 
     onPhotoCapture(file) {
         if (file && file[0]) {
+            const {dispatch} = this.props;
+            dispatch(setLoading());
             let orientation = 0;
             getOrientation(file[0], (ori) => {
                 orientation = ori;

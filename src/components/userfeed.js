@@ -6,12 +6,13 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from "./appcontrols";
 import RenderPosts from "./renderposts";
-import {fetchUserFeed, userFeedFetchedNOU} from "../actions/feedActions";
+import {fetchUserFeed, setLoading, userFeedFetchedNOU} from "../actions/feedActions";
 import {Divider} from "./small/divider";
 import {RenderFollowers} from "./renderfollowers";
 import RenderUser from "./renderuser";
 import {getPathUser, getScrollPercent} from "../actions/helpers";
 import {Button} from "react-bootstrap";
+import Loader from "./small/loader";
 //import btnClose from "../images/btnClose.png";
 
 class UserFeed extends Component {
@@ -61,8 +62,10 @@ class UserFeed extends Component {
         // Make sure last fetch was over 5 seconds ago
         if (Date.now() - last > 5000) {
             if (getScrollPercent() <= 0) {
+                dispatch(setLoading());
                 dispatch(fetchUserFeed(0, this.props.userFeed));
             } else if (getScrollPercent() > 80) {
+                dispatch(setLoading());
                 dispatch(fetchUserFeed(this.props.userFeed.length, this.props.userFeed));
             }
         }
@@ -115,11 +118,18 @@ class UserFeed extends Component {
                     <RenderUser />
                 </div>
                 <div className="feed-container">
-                    {(this.props.displayType === 0) ? <RenderUserFeed user={this.props.selectedUser} feed={this.props.userFeed} /> : ""}
-                    {(this.props.displayType === 1) ? <Followers title="Followers" followList={this.props.followList} /> : ""}
-                    {(this.props.displayType === 2) ? <Followers title="Following" followList={this.props.followList}/> : ""}
+                    {(this.props.displayType === 0) ?
+                        <RenderUserFeed user={this.props.selectedUser} feed={this.props.userFeed} /> : ""
+                    }
+                    {(this.props.displayType === 1) ?
+                        <Followers title="Followers" followList={this.props.followList} /> : ""
+                    }
+                    {(this.props.displayType === 2) ?
+                        <Followers title="Following" followList={this.props.followList}/> : ""
+                    }
                 </div>
                 <AppControls/>
+                <Loader />
             </div>
         );
     }

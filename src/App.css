@@ -6,11 +6,6 @@
   border: 1px solid #ddd;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
 .App-header {
   position: -webkit-sticky; /* for Safari */
   position: sticky;
@@ -368,10 +363,6 @@
   width: 100%;
   padding-bottom: 20px;
 }
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
 
 .dynamic-text {
   font-family: "Arial", Arial, sans-serif;
@@ -445,4 +436,17 @@
   left: 32px;
   height: 40px;
   margin-top: 2px;
+}
+
+.loading-icon {
+  position: fixed;
+  left: calc(50% - 32px);
+  top: 40%;
+  animation: loading-icon-spin infinite 1s linear;
+  height: 64px;
+}
+
+@keyframes loading-icon-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

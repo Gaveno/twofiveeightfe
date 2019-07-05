@@ -5,10 +5,11 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppControls from './appcontrols';
-import {fetchHomeFeed} from "../actions/feedActions";
+import {fetchHomeFeed, setLoading} from "../actions/feedActions";
 import RenderPosts from "./renderposts";
 import {Divider} from "./small/divider";
 import {getScrollPercent} from "../actions/helpers";
+import Loader from "./small/loader";
 
 class HomeFeed extends Component {
     constructor(props) {
@@ -51,10 +52,12 @@ class HomeFeed extends Component {
 
             <div className="feed-container">
                 <RenderPosts posts={this.props.homeFeed} />
+                {(localStorage.getItem('loading')==="true") ? <Loader /> : ""}
                 <Divider />
                 <Divider />
                 <Divider />
                 <AppControls />
+                <Loader />
             </div>
         )
     }

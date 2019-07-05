@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { submitLogin } from '../../actions/authActions';
 import { connect } from 'react-redux';
 import { Col, Form, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import {setLoading} from "../../actions/feedActions";
+import Loader from "../small/loader";
 
 class Login extends Component {
 
@@ -29,6 +31,7 @@ class Login extends Component {
 
     login() {
         const {dispatch} = this.props;
+        dispatch(setLoading());
         dispatch(submitLogin(this.state.details));
     }
 
@@ -69,6 +72,7 @@ class Login extends Component {
                         <Button onClick={this.login} className="auth-item">Sign in</Button>
                     </Col>
                 </FormGroup>
+                <Loader />
             </Form>
         )
     }

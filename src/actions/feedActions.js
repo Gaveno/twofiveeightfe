@@ -97,12 +97,19 @@ function uploadedProfilePhoto(user) {
     }
 }
 
+export function setLoading() {
+    return {
+        type: actionTypes.SET_LOADING
+    }
+}
+
 export function fetchGlobalFeed(skip, prevFeed) {
     let s = 0;
     if (skip) s = skip;
     localStorage.setItem('lastFetchGlobal', Date.now());
     const env = runtimeEnv();
     return dispatch => {
+        dispatch(setLoading());
         return fetch(`${env.REACT_APP_API_URL}/posts/global/?skip=${s}`, {
             method: 'GET',
             headers: {
@@ -150,6 +157,7 @@ export function fetchUserFeed(skip, prevFeed) {
     if (skip && !changeFeed) s = skip;
     const env = runtimeEnv();
     return dispatch => {
+        dispatch(setLoading());
         return fetch(`${env.REACT_APP_API_URL}/posts/user/${getPathUser()}?skip=${s}`, {
             method: 'GET',
             headers: {
@@ -200,6 +208,7 @@ export function fetchHomeFeed(skip, prevFeed) {
     localStorage.setItem('lastFetchHome', Date.now());
     const env = runtimeEnv();
     return dispatch => {
+        dispatch(setLoading());
         return fetch(`${env.REACT_APP_API_URL}/posts/home/?skip=${s}`, {
             method: 'GET',
             headers: {
@@ -242,6 +251,7 @@ export function fetchHashtagFeed(skip, hashtag, prevFeed, newTag) {
     localStorage.setItem('lastFetchGlobal', Date.now());
     const env = runtimeEnv();
     return dispatch => {
+        dispatch(setLoading());
         return fetch(`${env.REACT_APP_API_URL}/posts/hashtag/${hashtag}?skip=${s}`, {
             method: 'GET',
             headers: {
@@ -281,6 +291,7 @@ export function fetchHashtagFeed(skip, hashtag, prevFeed, newTag) {
 
 export function setFileUpload(file) {
     return dispatch => {
+        dispatch(setLoading());
         window.location.href = "/#/createpost";
         dispatch(uploadFile(file));
     }
@@ -288,6 +299,7 @@ export function setFileUpload(file) {
 
 export function resizeImage(img) {
     return dispatch => {
+        dispatch(setLoading());
         if (img) {
             resizeDataURL(img, 258, 258).then((img) => (
                 dispatch(resizedImage(img))
@@ -302,7 +314,7 @@ export function resizeImage(img) {
 export function submitPost(img, text) {
     const env = runtimeEnv();
     let formData = new FormData();
-    console.log("photo to upload: ", img);
+    //console.log("photo to upload: ", img);
     formData.append('file', img);
     formData.append('text', text);
     return fetch(`${env.REACT_APP_API_URL}/posts`, {
@@ -331,6 +343,7 @@ export function submitPost(img, text) {
 export function getPostComments(feed, post) {
     const env = runtimeEnv();
     return dispatch => {
+        dispatch(setLoading());
         // Duplicate feed and find index of post
         let newFeed = feed.slice();
         let index = 0;
@@ -381,6 +394,7 @@ export function getPostComments(feed, post) {
 export function submitComment(post, text, posts) {
     const env = runtimeEnv();
     return dispatch => {
+        dispatch(setLoading());
         return fetch(`${env.REACT_APP_API_URL}/comments`, {
             method: 'POST',
             headers: {
@@ -409,6 +423,7 @@ export function submitComment(post, text, posts) {
 export function fetchUsers(name) {
     const env = runtimeEnv();
     return dispatch => {
+        dispatch(setLoading());
         return fetch(`${env.REACT_APP_API_URL}/users/${name}`, {
             method: 'GET',
             headers: {
@@ -437,6 +452,7 @@ export function fetchFollowers() {
     console.log("yay");
     const env = runtimeEnv();
     return dispatch => {
+        dispatch(setLoading());
         return fetch(`${env.REACT_APP_API_URL}/followers/${getPathUser()}`, {
             method: 'GET',
             headers: {
@@ -466,6 +482,7 @@ export function fetchFollowing() {
     console.log("yay2");
     const env = runtimeEnv();
     return dispatch => {
+        dispatch(setLoading());
         return fetch(`${env.REACT_APP_API_URL}/follows/${getPathUser()}`, {
             method: 'GET',
             headers: {
@@ -493,6 +510,7 @@ export function fetchFollowing() {
 
 export function submitProfilePhoto(img, user) {
     return dispatch => {
+        dispatch(setLoading());
         resizeDataURL(img, 128, 128).then((img) => {
             console.log("file1: ", img);
             let file = dataURLtoFile('data:image/jpeg;base64,'+img, 'img.jpeg');
@@ -528,6 +546,7 @@ export function submitProfilePhoto(img, user) {
 
 export function submitAbout(user, about) {
     return dispatch => {
+        dispatch(setLoading());
         const env = runtimeEnv();
         return fetch(`${env.REACT_APP_API_URL}/users/about`, {
             method: 'PUT',
@@ -561,6 +580,7 @@ export function submitAbout(user, about) {
 export function submitFollow(feed) {
     const env = runtimeEnv();
     return dispatch => {
+        dispatch(setLoading());
         return fetch(`${env.REACT_APP_API_URL}/follow/${getPathUser()}`, {
             method: 'POST',
             headers: {
@@ -587,6 +607,7 @@ export function submitFollow(feed) {
 export function submitUnfollow(feed) {
     const env = runtimeEnv();
     return dispatch => {
+        dispatch(setLoading());
         return fetch(`${env.REACT_APP_API_URL}/follow/${getPathUser()}`, {
             method: 'DELETE',
             headers: {

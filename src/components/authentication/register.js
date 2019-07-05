@@ -2,6 +2,8 @@ import React, { Component} from 'react';
 import { submitRegister } from '../../actions/authActions';
 import { connect } from 'react-redux';
 import { Col, Form, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import {setLoading} from "../../actions/feedActions";
+import Loader from "../small/loader";
 
 class Register extends Component {
 
@@ -30,6 +32,7 @@ class Register extends Component {
 
     register(){
         const {dispatch} = this.props;
+        dispatch(setLoading());
         dispatch(submitRegister(this.state.details));
     }
 
@@ -81,6 +84,7 @@ class Register extends Component {
                         <Button onClick={this.register} className="auth-item">Register</Button>
                     </Col>
                 </FormGroup>
+                <Loader />
             </Form>
         )
     }

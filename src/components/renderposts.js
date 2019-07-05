@@ -1,6 +1,5 @@
 import {Col, Grid, Row} from "react-bootstrap";
 import dummyimage from "../images/dummyimage.jpg";
-import approvedImage from "../images/approved.png"
 import btnComment from "../images/btnComment.png";
 import defaultProfilePhoto from "../images/defaultProfilePhoto.png";
 import profilePhotoCrop from "../images/profilePhotoCrop.png";
@@ -36,11 +35,6 @@ class RenderPosts extends Component {
     }
 
     updateDetails(e) {
-        /*let updateDetails = Object.assign({}, this.state.details);
-        updateDetails[e.target.id] = e.target.value;
-        this.setState({
-            details: updateDetails
-        });*/
         this.setState({
             commentText: e.target.value
         });
