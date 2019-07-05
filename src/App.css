@@ -438,10 +438,22 @@
   margin-top: 2px;
 }
 
+.loading-container {
+  position: fixed;
+  left: calc(50% - 50px);
+  top: calc(40% - 50px);
+  height: 100px;
+  width: 100px;
+  background-color: #fff;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  opacity: 0.7;
+}
+
 .loading-icon {
   position: fixed;
   left: calc(50% - 32px);
-  top: 40%;
+  top: calc(40% - 32px);
   animation: loading-icon-spin infinite 1s linear;
   height: 64px;
 }

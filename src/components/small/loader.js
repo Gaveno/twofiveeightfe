@@ -4,17 +4,20 @@ import {connect} from "react-redux";
 
 class Loader extends Component {
     render() {
-        return (
-            <div>
-                {
-                    (this.props.loading===true) ?
-                        <img className="loading-icon"
-                             src={ProcessingIcon}
-                             alt="Loading"/>
-                         : ""
-                }
-            </div>
-        );
+        if (this.props.loading===true) {
+            return (
+                <div>
+                    <div className="loading-container" />
+                    <img className="loading-icon"
+                         src={ProcessingIcon}
+                         alt="Loading"/>
+
+                </div>
+            );
+        }
+        else {
+            return "";
+        }
     }
 }
 
