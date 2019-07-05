@@ -12,6 +12,7 @@ import {Divider} from './small/divider';
 import {setLoading, submitPost} from "../actions/feedActions";
 import {resizeImage} from "../actions/feedActions";
 import {dataURLtoFile} from "../actions/helpers";
+import Loader from "./small/loader";
 
 class CreatePost extends Component {
     constructor(props) {
@@ -103,7 +104,8 @@ class CreatePost extends Component {
                                      placeholder="What about it...?"
                         />
                         <HelpBlock>{length}/258 characters. {numHash}/5 hashtags.</HelpBlock>
-                        {(this.getValidationState()==='error' ? <Button disabled>Submit post</Button> :
+                        {((this.getValidationState()==='error' || this.props.loading) ?
+                            <Button disabled>Submit post</Button> :
                             <Button onClick={this.submitPost}>Submit post</Button>)}
                         <Divider />
                         <Divider />
@@ -111,6 +113,7 @@ class CreatePost extends Component {
                     </FormGroup>
                 </div>
                 <AppControls />
+                <Loader />
             </div>
         )
     }
@@ -119,7 +122,8 @@ class CreatePost extends Component {
 const mapStateToProps = (state) => {
     return {
         fileUpload: state.feed.fileUpload,
-        imageResized: state.feed.imageResized
+        imageResized: state.feed.imageResized,
+        loading: state.feed.loading
     }
 };
 
