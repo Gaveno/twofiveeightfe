@@ -110,7 +110,7 @@ export function fetchGlobalFeed(skip, prevFeed) {
     const env = runtimeEnv();
     return dispatch => {
         dispatch(setLoading());
-        return fetch(`${env.REACT_APP_API_URL}/posts/global/?skip=${s}`, {
+        return fetch(`${process.env.REACT_APP_API_URL}/posts/global/?skip=${s}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -157,7 +157,7 @@ export function fetchUserFeed(skip, prevFeed) {
     const env = runtimeEnv();
     return dispatch => {
         dispatch(setLoading());
-        return fetch(`${env.REACT_APP_API_URL}/posts/user/${getPathUser()}?skip=${s}`, {
+        return fetch(`${process.env.REACT_APP_API_URL}/posts/user/${getPathUser()}?skip=${s}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -207,7 +207,7 @@ export function fetchHomeFeed(skip, prevFeed) {
     const env = runtimeEnv();
     return dispatch => {
         dispatch(setLoading());
-        return fetch(`${env.REACT_APP_API_URL}/posts/home/?skip=${s}`, {
+        return fetch(`${process.env.REACT_APP_API_URL}/posts/home/?skip=${s}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -250,7 +250,7 @@ export function fetchHashtagFeed(skip, hashtag, prevFeed, newTag) {
     const env = runtimeEnv();
     return dispatch => {
         dispatch(setLoading());
-        return fetch(`${env.REACT_APP_API_URL}/posts/hashtag/${hashtag}?skip=${s}`, {
+        return fetch(`${process.env.REACT_APP_API_URL}/posts/hashtag/${hashtag}?skip=${s}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -315,7 +315,7 @@ export function submitPost(img, text) {
     //console.log("photo to upload: ", img);
     formData.append('file', img);
     formData.append('text', text);
-    return fetch(`${env.REACT_APP_API_URL}/posts`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/posts`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -353,7 +353,7 @@ export function getPostComments(feed, post) {
             }
         }
         // Fetch comments
-        return fetch(`${env.REACT_APP_API_URL}/comments/${post._id}`, {
+        return fetch(`${process.env.REACT_APP_API_URL}/comments/${post._id}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -393,7 +393,7 @@ export function submitComment(post, text, posts) {
     const env = runtimeEnv();
     return dispatch => {
         dispatch(setLoading());
-        return fetch(`${env.REACT_APP_API_URL}/comments`, {
+        return fetch(`${process.env.REACT_APP_API_URL}/comments`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -422,7 +422,7 @@ export function fetchUsers(name) {
     const env = runtimeEnv();
     return dispatch => {
         dispatch(setLoading());
-        return fetch(`${env.REACT_APP_API_URL}/users/${name}`, {
+        return fetch(`${process.env.REACT_APP_API_URL}/users/${name}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -451,7 +451,7 @@ export function fetchFollowers() {
     const env = runtimeEnv();
     return dispatch => {
         dispatch(setLoading());
-        return fetch(`${env.REACT_APP_API_URL}/followers/${getPathUser()}`, {
+        return fetch(`${process.env.REACT_APP_API_URL}/followers/${getPathUser()}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -481,7 +481,7 @@ export function fetchFollowing() {
     const env = runtimeEnv();
     return dispatch => {
         dispatch(setLoading());
-        return fetch(`${env.REACT_APP_API_URL}/follows/${getPathUser()}`, {
+        return fetch(`${process.env.REACT_APP_API_URL}/follows/${getPathUser()}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -516,7 +516,7 @@ export function submitProfilePhoto(img, user) {
             const env = runtimeEnv();
             let formData = new FormData();
             formData.append('file', file);
-            return fetch(`${env.REACT_APP_API_URL}/users/photo`, {
+            return fetch(`${process.env.REACT_APP_API_URL}/users/photo`, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
@@ -546,7 +546,7 @@ export function submitAbout(user, about) {
     return dispatch => {
         dispatch(setLoading());
         const env = runtimeEnv();
-        return fetch(`${env.REACT_APP_API_URL}/users/about`, {
+        return fetch(`${process.env.REACT_APP_API_URL}/users/about`, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -579,7 +579,7 @@ export function submitFollow(feed) {
     const env = runtimeEnv();
     return dispatch => {
         dispatch(setLoading());
-        return fetch(`${env.REACT_APP_API_URL}/follow/${getPathUser()}`, {
+        return fetch(`${process.env.REACT_APP_API_URL}/follow/${getPathUser()}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -606,7 +606,7 @@ export function submitUnfollow(feed) {
     const env = runtimeEnv();
     return dispatch => {
         dispatch(setLoading());
-        return fetch(`${env.REACT_APP_API_URL}/follow/${getPathUser()}`, {
+        return fetch(`${process.env.REACT_APP_API_URL}/follow/${getPathUser()}`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
