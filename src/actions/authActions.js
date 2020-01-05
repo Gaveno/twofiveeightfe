@@ -32,7 +32,7 @@ export function submitLogin(data){
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
-            mode: '*cors'})
+            mode: 'cors'})
             .then( (response) => {
                 /*if (!response.ok) {
                     dispatch(updateError("Invalid credentials"));
