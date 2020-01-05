@@ -24,7 +24,7 @@ export default class Username extends Component {
                     •	Global <i>chronological feed</i> to find new artists and personalities. Everyone has <b>equal visibility</b>.<br /><br />
                     •	Chronological follower feed. See posts when they happen; you are <b>not</b> at the mercy of
                     the <b>algorithms</b>.<br /><br />
-                    •	<b>Long term privacy!</b> Your posts will be automatically deleted after a week. While this doesn’t
+                    •	<b>Long term privacy!</b> Your posts will be automatically deleted after 2 weeks. While this doesn’t
                         stop anyone from downloading posts as they happen, no more worrying about your past mistakes
                     coming back to haunt you.
                 </div>
